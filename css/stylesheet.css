@@ -1,0 +1,86 @@
+@import 'normalize.css';
+
+/* Page Layout */
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* on desktop change to grid view */
+@media (min-width: 760px) {
+  .container {
+    display: grid;
+    grid-template-rows: auto;
+
+  }
+}
+
+/* ######################### */
+
+/* Base Styles */
+body {
+  font-family: arial;
+}
+
+header {
+  padding: 30px;
+  text-align: center;
+  font-size: 1.4em;
+  background-color: #369;
+  color: white;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+}
+
+nav {
+  background-color: #f90;
+  padding: 20px;
+}
+ 
+aside {
+  padding: 20px;
+  background-color: #936;
+}
+
+footer {
+  padding: 30px;
+  text-align: center;
+  font-size: 1.4em;
+  background-color: #690;
+  color: white;
+}
+
+h1 {
+  margin-bottom: 1em;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+/* ################################ */
+
+/* Theme Styles*/
+.background-primary {
+  background:rgb(109, 125, 162);
+}
+.background-secondary {
+  background: rgb(217, 221, 229);
+}
+.background-tertiary {
+  background: rgb(46, 65, 114);
+}
+.background-quarternary {
+  background: rgb(9, 26, 66);
+}
+
+/* Navbar modules */
+.nav
+.nav {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+}
