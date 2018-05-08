@@ -119,3 +119,16 @@ h1 {
   padding: 10px 15px;
   font-size: 1.125em;
 }
+
+/* on desktop change to grid view */
+@media (min-width: 760px) {
+  .container {
+    display: grid;
+    grid-template-rows: auto;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
