@@ -77,10 +77,14 @@ h1 {
 }
 
 /* Navbar modules */
-.nav
+
 .nav {
   list-style: none;
   padding: 0px;
   margin: 0px;
   text-align: center;
+}
+
+.nav-link {
+  text-decoration: none;
 }
