@@ -76,8 +76,34 @@ h1 {
   background: rgb(9, 26, 66);
 }
 
-/* Navbar modules */
 
+/* button modules */
+/* ###################### */
+.btn {
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-image: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 12px 30px;
+  font-size: 1.313em;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: all 0.3s ease 0s;
+}
+
+.btn:hover {
+  background: none;
+  border-color: white;
+  text-decoration: none;
+}
+
+
+/* Navbar modules */
+/* ########################### */
 .nav {
   list-style: none;
   padding: 0px;
@@ -87,4 +113,10 @@ h1 {
 
 .nav-link {
   text-decoration: none;
+}
+
+.nav-btn {
+  height: 30px;
+  padding: 10px 15px;
+  font-size: 1.125em;
 }
