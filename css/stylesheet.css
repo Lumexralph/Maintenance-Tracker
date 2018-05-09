@@ -35,16 +35,6 @@ main {
   flex: 1;
 }
 
-nav {
-  background-color: #f90;
-  padding: 20px;
-}
- 
-aside {
-  padding: 20px;
-  background-color: #936;
-}
-
 footer {
   padding: 30px;
   text-align: center;
