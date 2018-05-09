@@ -133,6 +133,7 @@ footer {
 .heading {
   text-align: center;
   padding: 10px;
+  background-color: rgba(46, 65, 114, 0.38);
 }
 .heading-text {
   font-size: 1.2em;
