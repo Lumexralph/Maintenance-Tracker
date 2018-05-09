@@ -160,6 +160,17 @@ footer {
   background-position: center;
   background-size: cover;
 }
+.signup-login {
+  display: grid;
+    grid-template-rows: auto;
+    grid-row-gap: 1em;
+    /* text-align: center; */
+    justify-content: center;
+}
+.signup-login-btn {
+  width: 200px;
+  height: 60px;
+}
 
 /* on desktop change */
 @media (min-width: 760px) {
