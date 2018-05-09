@@ -1,0 +1,175 @@
+@import 'normalize.css';
+
+/* Page Layout */
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* on desktop change to grid view */
+@media (min-width: 760px) {
+  .container {
+    display: grid;
+    grid-template-rows: auto;
+
+  }
+}
+
+/* ######################### */
+
+/* Base Styles */
+body {
+  font-family: arial;
+}
+
+header {
+  padding: 30px;
+  text-align: center;
+  font-size: 1.4em;
+  background-color: #369;
+  color: white;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  padding: 30px;
+  text-align: center;
+  font-size: 1.4em;
+  background-color: #690;
+  color: white;
+}
+
+/* h1 {
+  margin-bottom: 1em;
+  font-size: 1.3em;
+  font-weight: bold;
+} */
+
+/* ################################ */
+
+/* Theme Styles*/
+.background-primary {
+  background:rgb(109, 125, 162);
+}
+.background-secondary {
+  background: rgb(217, 221, 229);
+}
+.background-tertiary {
+  background: rgb(46, 65, 114);
+}
+.background-quarternary {
+  background: rgb(9, 26, 66);
+}
+
+.text-primary {
+  color: rgb(240, 242, 246);
+}
+.text-secondary {
+  color: rgb(206, 220, 252);
+}
+
+
+/* button modules */
+/* ###################### */
+.btn {
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-image: none;
+  border: 3px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 12px 30px;
+  font-size: 1.313em;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: all 0.3s ease 0s;
+}
+
+.btn:hover {
+  background: none;
+  border-color: white;
+  text-decoration: none;
+}
+
+
+/* Navbar modules */
+/* ########################### */
+.nav {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+}
+
+.nav-link {
+  text-decoration: none;
+}
+
+.nav-btn {
+  padding: 10px 15px;
+  font-size: 1.125em;
+}
+
+/* on desktop change to grid view */
+@media (min-width: 760px) {
+  .container {
+    display: grid;
+    grid-template-rows: auto;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
+
+/* Heading Section Modules*/
+.heading {
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(46, 65, 114, 0.38);
+}
+.heading-text {
+  font-size: 1.2em;
+}
+.site-name {
+  color: #3397e6;
+}
+.heading-body-text {
+  font-size: 1.5em;
+}
+.heading-title-text {
+  font-size: 2.3em;
+}
+.heading > h1 {
+  font-size: 2.6em;
+}
+.heading > p, h4 {
+  color: white;
+}
+.heading-img {
+  width: 100%;
+  background-image: url('./../img/header-imageA-3.jpeg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* on desktop change */
+@media (min-width: 760px) {
+  .heading-title-text {
+    font-size: 3em;
+  }
+  .heading-text {
+    font-size: 1.6em;
+  }
+  .heading > h1 {
+    font-size: 3.3em;
+  } 
+}
