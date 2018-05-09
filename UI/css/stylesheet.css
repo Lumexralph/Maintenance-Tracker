@@ -183,4 +183,9 @@ footer {
   .heading > h1 {
     font-size: 3.3em;
   } 
+  /* make buttons align together */
+  .signup-login {
+    grid-template-columns: auto auto;
+    grid-column-gap: 2em;
+  }
 }
