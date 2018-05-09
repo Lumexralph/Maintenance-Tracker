@@ -76,6 +76,13 @@ footer {
   background: rgb(9, 26, 66);
 }
 
+.text-primary {
+  color: rgb(0, 5, 17);
+}
+.text-secondary {
+  color: rgb(9, 26, 66);
+}
+
 
 /* button modules */
 /* ###################### */
