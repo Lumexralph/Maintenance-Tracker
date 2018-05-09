@@ -150,3 +150,6 @@ footer {
 .heading-title-text {
   font-size: 2.3em;
 }
+.heading > h1 {
+  font-size: 2.6em;
+} 
