@@ -139,3 +139,14 @@ footer {
     justify-content: space-evenly;
   }
 }
+
+/* Heading Section Modules*/
+.heading-text {
+  font-size: 1.2em;
+}
+.heading-body-text {
+  font-size: 1.5em;
+}
+.heading-title-text {
+  font-size: 2.3em;
+}
