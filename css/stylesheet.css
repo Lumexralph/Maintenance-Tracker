@@ -153,3 +153,16 @@ footer {
 .heading > h1 {
   font-size: 2.6em;
 } 
+
+/* on desktop change */
+@media (min-width: 760px) {
+  .heading-title-text {
+    font-size: 3em;
+  }
+  .heading-text {
+    font-size: 1.6em;
+  }
+  .heading > h1 {
+    font-size: 3.3em;
+  } 
+}
