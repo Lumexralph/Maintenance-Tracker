@@ -280,4 +280,31 @@ footer {
     grid-template-rows: auto;
     grid-row-gap: 2em;
   }
+
+  .footer-links {
+    display: flex;
+  }
+  .footer-links-copyright {
+    flex: 1;
+    text-align: left
+  }
+  .footer-nav-links-container {
+    flex: 1;
+  }
+  .footer-nav-links {
+    display: flex;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    justify-content: space-evenly;
+  }
+
+  .footer-info {
+    display: flex;
+  }
+
+  .footer-info > div {
+    flex: 1;
+  }
+  
 }
