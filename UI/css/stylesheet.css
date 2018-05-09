@@ -189,3 +189,10 @@ footer {
     grid-column-gap: 2em;
   }
 }
+
+
+/* Recent Requests Module */
+.request-container {
+  text-align: center;
+  padding: 10px;
+}
