@@ -234,3 +234,12 @@ footer {
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }
+
+/* on desktop change to grid view */
+@media (min-width: 760px) {
+  .request-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 2em;
+  }
+}
