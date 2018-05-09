@@ -259,3 +259,7 @@ footer {
   display: grid;
   grid-template-rows: auto;
 }
+
+.footer-nav-links {
+  list-style: none;
+}
