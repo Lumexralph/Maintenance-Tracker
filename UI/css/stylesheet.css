@@ -253,3 +253,9 @@ footer {
     grid-column-gap: 2em;
   }
 }
+
+/* footer module */
+.footer {
+  display: grid;
+  grid-template-rows: auto;
+}
