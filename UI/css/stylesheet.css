@@ -197,6 +197,13 @@ footer {
   padding: 10px;
 }
 
+.recent-request-img {
+  background-image: url('./../img/imageD-2.jpeg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 /* accordion for Recent Module */
 .accordion {
   background-color: #eee;
