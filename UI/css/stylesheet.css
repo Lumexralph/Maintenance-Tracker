@@ -274,4 +274,10 @@ footer {
     grid-template-columns: 260px auto;
     grid-column-gap: 2em;
   }
+
+  .footer-details {
+    display: grid;
+    grid-template-rows: auto;
+    grid-row-gap: 2em;
+  }
 }
