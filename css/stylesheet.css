@@ -66,10 +66,10 @@ footer {
 }
 
 .text-primary {
-  color: rgb(0, 5, 17);
+  color: rgb(240, 242, 246);
 }
 .text-secondary {
-  color: rgb(95, 106, 131);
+  color: rgb(206, 220, 252);
 }
 
 
@@ -137,6 +137,9 @@ footer {
 .heading-text {
   font-size: 1.2em;
 }
+.site-name {
+  color: #3397e6;
+}
 .heading-body-text {
   font-size: 1.5em;
 }
@@ -145,8 +148,10 @@ footer {
 }
 .heading > h1 {
   font-size: 2.6em;
-} 
-
+}
+.heading > p, h4 {
+  color: white;
+}
 .heading-img {
   width: 100%;
   background-image: url('./../img/header-imageA-3.jpeg');
