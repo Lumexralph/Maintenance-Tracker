@@ -263,3 +263,7 @@ footer {
 .footer-nav-links {
   list-style: none;
 }
+
+.footer-links a:hover {
+  color: silver;
+}
