@@ -143,6 +143,7 @@ footer {
 /* Heading Section Modules*/
 .heading {
   text-align: center;
+  padding: 10px;
 }
 .heading-text {
   font-size: 1.2em;
