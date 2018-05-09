@@ -197,6 +197,10 @@ footer {
   padding: 10px;
 }
 
+.recent-request-text {
+  color: #ffffff;
+}
+
 .recent-request-img {
   background-image: url('./../img/imageD-2.jpeg');
   background-repeat: no-repeat;
