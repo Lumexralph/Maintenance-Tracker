@@ -267,3 +267,11 @@ footer {
 .footer-links a:hover {
   color: silver;
 }
+
+/* on desktop viewport */
+@media (min-width: 760px) {
+  .footer {
+    grid-template-columns: 260px auto;
+    grid-column-gap: 2em;
+  }
+}
