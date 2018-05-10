@@ -28,7 +28,25 @@
           
           <div id="makeRequest" class="tabcontent">
             <h3>Create a request</h3>
-            <p>will have request form and contacts</p>
+            <div class="container">
+              <form action="">
+                             
+                <label for="title"></label>
+                <input type="text" id="request-title" name="request-title" placeholder="Your request title..">
+            
+                <label for="department">Department</label>
+                <select id="department" name="department">
+                  <option value="operations">Operations</option>
+                  <option value="Repairs">Repairs</option>
+                </select>
+            
+                <label for="requestSubject"></label>
+                <textarea id="subject" name="requestSubject" placeholder="Compose your requests.." style="height:200px"></textarea>
+            
+                <input type="submit" value="Send Request">
+            
+              </form>
+            </div>
           </div>
           
           <div id="myRequests" class="tabcontent">
