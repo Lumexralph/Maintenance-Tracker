@@ -513,3 +513,15 @@ SIGNUP PAGE
 .admin-panel-1:nth-child(3) {
   flex: 1;
 }
+
+/* panel 2 */
+.admin-panel-2 {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.admin-panel-2-text > p {
+  margin: 0px;
+  font-size: 1.4em;
+}
