@@ -333,7 +333,8 @@ SIGNUP PAGE
 @media only screen and (min-width: 560px) {
   .signup-container {
     grid-template-columns: auto auto;
-    padding: 70px;
+    padding: 40px;
+    grid-column-gap: 5em;
   }
 } 
 
@@ -342,6 +343,7 @@ SIGNUP PAGE
   .signup-container {
     grid-template-columns: auto auto;
     padding: 100px;
+    grid-column-gap: 5em;
   }
 } 
 
@@ -350,6 +352,7 @@ SIGNUP PAGE
   .signup-container {
     grid-template-columns: auto auto;
     padding: 200px;
+    grid-column-gap: 5em;
   }
 } 
 
@@ -357,6 +360,7 @@ SIGNUP PAGE
 @media only screen and (min-width: 1200px) {
   .signup-container {
     grid-template-columns: auto auto;
-    padding: 300px;
+    padding: 200px;
+    grid-column-gap: 5em;
   }
 }
