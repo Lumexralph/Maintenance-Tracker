@@ -481,3 +481,15 @@ SIGNUP PAGE
   background-color: #4CAF50;
   opacity: 0.8;
 }
+
+/* ########################
+  ADMIN PAGE
+########################### */
+.admin-container {
+  display: grid;
+  grid-auto-rows: auto;
+}
+
+.admin-nav {
+  display: flex;
+}
