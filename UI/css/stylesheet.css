@@ -318,7 +318,7 @@ SIGNUP PAGE
   grid-template-rows: auto auto;
   text-align: center;
   justify-content: center;
-  padding: 50px;
+  padding: 25px;
   grid-row-gap: 2em;
 }
 
@@ -333,8 +333,8 @@ SIGNUP PAGE
 @media only screen and (min-width: 560px) {
   .signup-container {
     grid-template-columns: auto auto;
-    padding: 40px;
-    grid-column-gap: 5em;
+    padding: 20px;
+    grid-column-gap: 2em;
   }
 } 
 
@@ -351,7 +351,7 @@ SIGNUP PAGE
 @media only screen and (min-width: 992px) {
   .signup-container {
     grid-template-columns: auto auto;
-    padding: 200px;
+    padding: 100px;
     grid-column-gap: 5em;
   }
 } 
