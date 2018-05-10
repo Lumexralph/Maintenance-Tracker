@@ -418,7 +418,7 @@ SIGNUP PAGE
   grid-auto-columns: auto;
  }
  .user-home-bg-img {
-    background-image: url('./../images/imageB-1.jpg');
+    background-image: url('./../img/imageB-1.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
