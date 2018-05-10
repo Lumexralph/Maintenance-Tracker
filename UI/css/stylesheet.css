@@ -472,3 +472,12 @@ SIGNUP PAGE
   border: 1px solid #ccc;
   border-top: none;
 }
+
+.btn-send {
+  background-color: #4CAF50;
+}
+
+.btn-send:hover {
+  background-color: #4CAF50;
+  opacity: 0.8;
+}
