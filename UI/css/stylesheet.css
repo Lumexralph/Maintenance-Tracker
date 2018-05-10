@@ -313,3 +313,14 @@ footer {
 SIGNUP PAGE
 #########################
 */
+.signup-container {
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
+/* on desktop change to grid view */
+@media (min-width: 760px) {
+  .signup-container {
+    grid-template-columns: auto auto;
+  }
+ }
