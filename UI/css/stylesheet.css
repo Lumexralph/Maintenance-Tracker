@@ -333,6 +333,13 @@ SIGNUP PAGE
   background-size: cover;
 }
 
+.signup-btn {
+  border-color:cadetblue;
+}
+.signup-btn:hover {
+  background-color: cadetblue;
+}
+
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 560px) {
   .signup-container {
