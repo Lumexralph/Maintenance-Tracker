@@ -516,7 +516,6 @@ SIGNUP PAGE
 
 /* panel 2 */
 .admin-panel-2 {
-  display: flex;
   justify-content: space-between;
   padding: 10px;
 }
@@ -524,4 +523,12 @@ SIGNUP PAGE
 .admin-panel-2-text > p {
   margin: 0px;
   font-size: 1.4em;
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .admin-panel-2 {
+    display: flex;
+
+  }
 }
