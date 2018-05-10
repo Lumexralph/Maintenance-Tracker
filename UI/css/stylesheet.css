@@ -341,6 +341,14 @@ SIGNUP PAGE
   background-color: cadetblue;
 }
 
+.signup-container  h1 {
+  color: rgb(31, 81, 196);
+}
+
+.container > p {
+  font-weight: bold;
+}
+
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 560px) {
   .signup-container {
