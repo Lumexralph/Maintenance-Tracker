@@ -384,3 +384,17 @@ SIGNUP PAGE
     grid-column-gap: 5em;
   }
 }
+
+
+/* #############
+  LOGIN PAGE
+################*/
+
+.psw > p {
+  float: left;
+}
+
+.remember-box {
+  text-align: left;
+    padding: 10px;
+}
