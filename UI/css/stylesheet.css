@@ -398,3 +398,13 @@ SIGNUP PAGE
   text-align: left;
     padding: 10px;
 }
+
+/* Extra styles for the cancel button */
+.cancel-btn {
+  width: auto;
+  background-color: orangered;
+}
+ .cancel-btn:hover {
+   background-color: #f44336;
+   opacity: 0.8;
+ }
