@@ -329,5 +329,6 @@ SIGNUP PAGE
 @media (min-width: 760px) {
   .signup-container {
     grid-template-columns: auto auto;
+    padding: 200px;
   }
  }
