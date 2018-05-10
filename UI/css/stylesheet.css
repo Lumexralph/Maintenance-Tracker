@@ -328,10 +328,34 @@ SIGNUP PAGE
   background-size: cover;
 }
 
-/* on desktop change to grid view */
-@media (min-width: 760px) {
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .signup-container {
+    grid-template-columns: auto auto;
+    padding: 70px;
+  }
+} 
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .signup-container {
+    grid-template-columns: auto auto;
+    padding: 100px;
+  }
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
   .signup-container {
     grid-template-columns: auto auto;
     padding: 200px;
   }
- }
+} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .signup-container {
+    grid-template-columns: auto auto;
+    padding: 300px;
+  }
+}
