@@ -318,6 +318,7 @@ SIGNUP PAGE
   grid-template-rows: auto auto;
   text-align: center;
   justify-content: center;
+  padding: 50px;
 }
 
 .signup-container-img {
