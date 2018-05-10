@@ -316,6 +316,8 @@ SIGNUP PAGE
 .signup-container {
   display: grid;
   grid-template-rows: auto auto;
+  text-align: center;
+  justify-content: center;
 }
 
 .signup-container-img {
