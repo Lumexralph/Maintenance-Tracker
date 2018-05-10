@@ -50,6 +50,7 @@ input[type=text], input[type=password], input[type=email] {
   display: inline-block;
   border: 2px solid #837f7f;
   box-sizing: border-box;
+  border-radius: 5px;
 }
 
 /* ################################ */
