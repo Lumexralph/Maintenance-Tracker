@@ -318,6 +318,13 @@ SIGNUP PAGE
   grid-template-rows: auto auto;
 }
 
+.signup-container-img {
+  background-image: url('./../img/imageC-2.jpeg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 /* on desktop change to grid view */
 @media (min-width: 760px) {
   .signup-container {
