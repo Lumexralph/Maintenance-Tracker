@@ -408,3 +408,18 @@ SIGNUP PAGE
    background-color: #f44336;
    opacity: 0.8;
  }
+
+
+ /* #######################
+    USER-PAGE
+ ##########################*/
+ .user-home-container {
+  display: grid;
+  grid-auto-columns: auto;
+ }
+ .user-home-bg-img {
+    background-image: url('./../images/imageB-1.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+ }
