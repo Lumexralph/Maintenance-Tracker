@@ -491,25 +491,25 @@ SIGNUP PAGE
 }
 
 /* Admin Navbar 1 Module */
-.admin-nav-1 {
+.admin-panel-1 {
   display: flex;
   justify-content: space-between;
   padding: 10px;
 }
 
-.admin-nav-1-text > p {
+.admin-panel-1-text > p {
   margin: 0px;
   font-size: 1.2em;
 }
 
 /* for each bar content */
-.admin-nav-1:nth-child(1) {
+.admin-panel-1:nth-child(1) {
   flex: 1;
 }
-.admin-nav-1:nth-child(2) {
+.admin-panel-1:nth-child(2) {
   flex: 2;
 }
 
-.admin-nav-1:nth-child(3) {
+.admin-panel-1:nth-child(3) {
   flex: 1;
 }
