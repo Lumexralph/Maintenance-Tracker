@@ -301,6 +301,12 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   color: silver;
 }
 
+/* Social Media Icons */
+.footer-icon {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 /* on desktop viewport */
 @media (min-width: 760px) {
   .footer {
