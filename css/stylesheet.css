@@ -70,6 +70,10 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 .background-tertiary {
   background: rgb(46, 65, 114);
 }
+.background-tertiary-2 {
+  background: darkcyan;
+}
+
 .background-quarternary {
   background: rgb(9, 26, 66);
 }
@@ -105,6 +109,20 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   border-color: white;
   text-decoration: none;
 }
+
+.signup-login {
+  display: grid;
+  grid-template-rows: auto;
+  grid-row-gap: 1em;
+  justify-content: center;
+  margin: 80px 0px;
+}
+.signup-login-btn {
+  width: 200px;
+  height: 60px;
+  color: white;
+}
+
 
 /* header module */
 .header-logo {
@@ -172,17 +190,6 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-}
-.signup-login {
-  display: grid;
-    grid-template-rows: auto;
-    grid-row-gap: 1em;
-    /* text-align: center; */
-    justify-content: center;
-}
-.signup-login-btn {
-  width: 200px;
-  height: 60px;
 }
 
 /* on desktop change */
