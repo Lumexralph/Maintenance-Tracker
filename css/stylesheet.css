@@ -212,13 +212,21 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 
 
 /* Recent Requests Module */
+.request-container {
+  margin: 40px 0;
+}
 .recent-request {
   text-align: center;
   padding: 10px;
 }
 
+.recent-request-title {
+  color: azure;
+  font-size: 2em;
+}
+
 .recent-request-text {
-  color: #ffffff;
+  color: #e54e18;
 }
 
 .recent-request-img {
