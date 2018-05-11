@@ -24,7 +24,7 @@ body {
 }
 
 header {
-  padding: 30px;
+  padding: 15px;
   text-align: center;
   font-size: 1.4em;
   background-color: #369;
@@ -101,6 +101,10 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   text-decoration: none;
 }
 
+/* header module */
+.header-logo {
+  max-width: 20%;
+}
 
 /* Navbar modules */
 /* ########################### */
