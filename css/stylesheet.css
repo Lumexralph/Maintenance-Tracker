@@ -307,6 +307,14 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   justify-content: space-evenly;
 }
 
+.footer-icon .fab {
+  color: azure;
+}
+
+.footer-icon .fab:hover {
+  color: silver;
+}
+
 /* on desktop viewport */
 @media (min-width: 760px) {
   .footer {
