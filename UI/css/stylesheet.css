@@ -492,9 +492,13 @@ SIGNUP PAGE
 
 /* Admin Navbar 1 Module */
 .admin-panel-1 {
-  display: flex;
   justify-content: space-between;
   padding: 10px;
+}
+
+.admin-panel-1  select {
+  width: 80%;
+  padding: 5px;
 }
 
 .admin-panel-1-text > p {
@@ -512,6 +516,13 @@ SIGNUP PAGE
 
 .admin-panel-1:nth-child(3) {
   flex: 1;
+}
+
+/* not very small screens */
+@media only screen and (min-width: 400px) {
+  .admin-panel-1 {
+    display: flex;
+  }
 }
 
 /* panel 2 */
