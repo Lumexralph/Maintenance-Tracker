@@ -525,6 +525,29 @@ SIGNUP PAGE
   font-size: 1.4em;
 }
 
+/* admin 3 panel */
+.admin-panel-3 {
+  padding: 10px;
+}
+/* container to make table responsive */
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:hover {
+  background-color: #f2f2f2;
+}
+
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
   .admin-panel-2 {
