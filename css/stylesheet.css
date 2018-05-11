@@ -289,6 +289,10 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   grid-template-rows: auto;
 }
 
+.footer-logo {
+  max-width: 15%;
+}
+
 .footer-nav-links {
   list-style: none;
 }
@@ -302,6 +306,10 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   .footer {
     grid-template-columns: 260px auto;
     grid-column-gap: 2em;
+  }
+
+  .footer-logo {
+    max-width: 30%;
   }
 
   .footer-details {
@@ -336,6 +344,12 @@ input[type=text], input[type=password], input[type=email], select, textarea {
     flex: 1;
   }
   
+}
+
+@media only screen and (min-width: 450px) {
+  .footer-logo {
+    max-width: 10;
+  }
 }
 
 /* ######################### 
