@@ -59,6 +59,11 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 .background-primary {
   background:rgb(109, 125, 162);
 }
+
+.background-primary-2 {
+  background: rgb(38, 49, 76)
+}
+
 .background-secondary {
   background: rgb(217, 221, 229);
 }
