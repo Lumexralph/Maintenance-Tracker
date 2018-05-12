@@ -133,8 +133,12 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   text-align: right;
 }
 
-.header-nav > a {
+.header-nav  a {
   color: steelblue;
+}
+
+.header-nav p {
+  margin: 0;
 }
 
 /* Navbar modules */
