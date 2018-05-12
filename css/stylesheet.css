@@ -589,6 +589,25 @@ SIGNUP PAGE
   flex: 1;
 }
 
+.admin-table-btn {
+    width: 60px;
+    margin-top: 3px;
+    border-radius: 10%;
+    border: none;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.accept-btn {
+  background: green;
+}
+
+.reject-btn {
+  background: #fe5f24;
+}
+
 /* not very small screens */
 @media only screen and (min-width: 400px) {
   .admin-panel-1 {
