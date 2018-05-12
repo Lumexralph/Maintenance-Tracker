@@ -466,11 +466,7 @@ SIGNUP PAGE
   width: auto;
   background-color: orangered;
 }
- /* .cancel-btn:hover {
-   background-color: #f44336;
-   opacity: 0.8;
- } */
-
+ 
 
  /* #######################
     USER-PAGE
@@ -478,6 +474,7 @@ SIGNUP PAGE
  .user-home-container {
   display: grid;
   grid-auto-columns: auto;
+  padding: 20px;
  }
  .user-home-bg-img {
     background-image: url('./../img/imageB-1.jpg');
@@ -505,7 +502,9 @@ SIGNUP PAGE
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
-  font-size: 17px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: cadetblue;
 }
 
 /* Change background color of buttons on hover */
@@ -515,7 +514,8 @@ SIGNUP PAGE
 
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: #ccc;
+  background-color: #608661;
+  color: azure;
 }
 
 /* override the previously set active class setting */
@@ -533,6 +533,7 @@ SIGNUP PAGE
 
 .btn-send {
   background-color: #4CAF50;
+  color: white;
 }
 
 .btn-send:hover {
