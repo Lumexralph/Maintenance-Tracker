@@ -397,10 +397,10 @@ SIGNUP PAGE
 }
 
 .signup-btn {
-  border-color:cadetblue;
+  color: white;
 }
 .signup-btn:hover {
-  background-color: cadetblue;
+  color: black;
 }
 
 .signup-container  h1 {
@@ -466,10 +466,10 @@ SIGNUP PAGE
   width: auto;
   background-color: orangered;
 }
- .cancel-btn:hover {
+ /* .cancel-btn:hover {
    background-color: #f44336;
    opacity: 0.8;
- }
+ } */
 
 
  /* #######################
