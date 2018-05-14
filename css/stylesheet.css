@@ -401,6 +401,17 @@ SIGNUP PAGE
   grid-row-gap: 2em;
 }
 
+.left-part {
+  text-align: left;
+}
+
+.left-part-text {
+  font-size: 3em;
+  color: #4e9dc3;
+  text-shadow: 1px 2px black;
+}
+
+
 .signup-container-img {
   background-image: url('./../img/imageC-2.jpeg');
   background-repeat: no-repeat;
@@ -415,13 +426,12 @@ SIGNUP PAGE
   color: black;
 }
 
-.signup-container  h1 {
-  color: rgb(31, 81, 196);
-}
 
 .container > p {
-  font-weight: bold;
+  color: brown;
+  text-shadow: 1px 1px azure;
 }
+
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 560px) {
