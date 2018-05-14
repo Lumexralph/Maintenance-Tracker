@@ -238,7 +238,8 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 }
 
 .recent-request-text {
-  color: #e54e18;
+  color: #d8967e;
+  text-shadow: 1px 1px black;
 }
 
 .recent-request-img {
