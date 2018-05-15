@@ -4,7 +4,7 @@ let id = 0;
 class DataStorageSystem {
   static createData(data) {
     return new Promise((resolve, reject) => {
-      
+
       localDataStore.set(id += 1, data);
       const newData = localDataStore.get(id);
 
@@ -14,6 +14,16 @@ class DataStorageSystem {
 
       reject(new Error('Data Could not be saved'));
     });
+  }
+
+  static getAllData() {
+    const allData = [];
+    for (const [key, value] of localDataStore) {
+      console.log(typeof key);
+      allData.push({ [String(key)]: value });
+    }
+
+    return allData;
   }
 
   static getDataSize() {
