@@ -16,12 +16,18 @@ class DataStorageSystem {
   }
 
   static getAllData() {
-    const allData = {};
+    return new Promise((resolve, reject) => {
+      const allData = {};
     localDataStore.forEach((value, key) => {
       allData[String(key)] = value;
     });
+    
+    if (allData) {
+      resolve(allData);
+    }
 
-    return allData;
+    reject(new Error('Error fetching all data'));
+    });
   }
 
   static getDataSize() {

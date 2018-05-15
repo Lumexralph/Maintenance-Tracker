@@ -28,6 +28,12 @@ app.post('/api/v1/users/requests', (req, res) => {
 });
 
 
+// GET all requests
+app.get('/api/v1/users/requests', (re, res) => {
+
+});
+
+
 app.listen(3000, () => console.log('Started on port 3000'));
 
 
