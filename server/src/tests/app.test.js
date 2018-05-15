@@ -24,9 +24,12 @@ describe('POST /users/requests', () => {
         if (err) {
           return done(err);
         }
-        done();
-        // check to see data store is okay
+      
+        const dataSize = DataStorageSystem.getDataSize();
 
+        expect(dataSize).toBe(1);
+        done();
       });
   });
 });
+

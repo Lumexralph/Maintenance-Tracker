@@ -35,8 +35,11 @@ describe('POST /users/requests', function () {
       if (err) {
         return done(err);
       }
+
+      var dataSize = _dataStore2.default.getDataSize();
+
+      (0, _expect2.default)(dataSize).toBe(1);
       done();
-      // check to see data store is okay
     });
   });
 });
