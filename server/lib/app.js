@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -41,3 +45,5 @@ app.post('/api/v1/users/requests', function (req, res) {
 app.listen(3000, function () {
   return console.log('Started on port 3000');
 });
+
+exports.default = app;
