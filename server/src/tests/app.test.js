@@ -45,6 +45,7 @@ describe('POST /users/requests', () => {
       .expect(400)
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('The field has missing values');
       })
       .end((err, res) => {
         if (err) {
@@ -57,6 +58,32 @@ describe('POST /users/requests', () => {
         done();
       });
   });
+
+  it('should not create a new request with empty field', (done) => {
+    const clientRequest = {
+      content: ''
+    };
+
+    request(app)
+      .post('/api/v1/users/requests')
+      .send(clientRequest)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('One of the field is empty');
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+      
+        const dataSize = DataStorageSystem.getDataSize();
+
+        expect(dataSize).toBe(1);
+        done();
+      });
+  });
+
 
 });
 

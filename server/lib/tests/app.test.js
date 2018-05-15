@@ -52,6 +52,27 @@ describe('POST /users/requests', function () {
 
     (0, _supertest2.default)(_app2.default).post('/api/v1/users/requests').send(clientRequest).expect(400).expect(function (res) {
       (0, _expect2.default)(res.body).toHaveProperty('message');
+      (0, _expect2.default)(res.body.message).toBe('The field has missing values');
+    }).end(function (err, res) {
+      if (err) {
+        return done(err);
+      }
+
+      var dataSize = _dataStore2.default.getDataSize();
+
+      (0, _expect2.default)(dataSize).toBe(1);
+      done();
+    });
+  });
+
+  it('should not create a new request with empty field', function (done) {
+    var clientRequest = {
+      content: ''
+    };
+
+    (0, _supertest2.default)(_app2.default).post('/api/v1/users/requests').send(clientRequest).expect(400).expect(function (res) {
+      (0, _expect2.default)(res.body).toHaveProperty('message');
+      (0, _expect2.default)(res.body.message).toBe('One of the field is empty');
     }).end(function (err, res) {
       if (err) {
         return done(err);
