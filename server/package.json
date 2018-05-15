@@ -4,9 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "node lib/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d lib",
-    "build-watch" : "babel src --watch -d lib"
+    "build-watch": "babel src --watch -d lib"
   },
   "author": "Olumide Ogundele",
   "license": "ISC",
@@ -16,5 +17,9 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
   }
 }

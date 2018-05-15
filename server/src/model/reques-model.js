@@ -1,6 +1,3 @@
-import DataStorageSystem from '../data-store/data-store';
-
-
 // create a class for every request
 
 class UserRequest {
@@ -13,3 +10,5 @@ class UserRequest {
     this.dateCreated = new Date().toDateString();
   }
 }
+
+export default UserRequest;

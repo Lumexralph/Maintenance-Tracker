@@ -7,7 +7,7 @@ class DataStorageSystem {
     const currentId = id;
 
     localDataStore.set(currentId, data);
-    console.log(`Data successfully created with ${JSON.stringify(localDataStore.get(currentId))}`);
+    return `Data successfully created with ${JSON.stringify(localDataStore.get(currentId))}`;
   }
 
   static getDataSize() {

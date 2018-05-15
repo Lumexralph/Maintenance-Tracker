@@ -1,10 +1,8 @@
 'use strict';
 
-var _dataStore = require('../data-store/data-store');
-
-var _dataStore2 = _interopRequireDefault(_dataStore);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -22,3 +20,5 @@ var UserRequest = function UserRequest(title, content) {
   this.resolved = false;
   this.dateCreated = new Date().toDateString();
 };
+
+exports.default = UserRequest;
