@@ -20,15 +20,14 @@ var DataStorageSystem = function () {
     key: 'createData',
     value: function createData(data) {
       return new Promise(function (resolve, reject) {
-
         localDataStore.set(id += 1, data);
         var newData = localDataStore.get(id);
+
         if (newData) {
-          var stringData = JSON.stringify(newData);
           resolve(newData);
-        } else {
-          reject(new Error('Data could not be saved'));
         }
+
+        reject(new Error('Data Could not be saved'));
       });
     }
   }, {

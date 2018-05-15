@@ -31,10 +31,10 @@ app.post('/api/v1/users/requests', function (req, res) {
   var newRequest = new _requesModel2.default(title, content);
 
   // Add the new request
-  var result = _dataStore2.default.createData(newRequest).then(function (data) {
+  _dataStore2.default.createData(newRequest).then(function (data) {
     return console.log(data);
-  }, function (err) {
-    return console.log(e);
+  }, function (e) {
+    return console.log(e.message);
   });
 });
 
