@@ -3,11 +3,18 @@ let id = 0;
 
 class DataStorageSystem {
   static createData(data) {
-    id += 1;   // new id of data
-    const currentId = id;
-
-    localDataStore.set(currentId, data);
-    return `Data successfully created with ${JSON.stringify(localDataStore.get(currentId))}`;
+    return new Promise((resolve, reject) => {
+      
+      localDataStore.set(id += 1, data);
+      let newData = localDataStore.get(id);
+      if(newData) {
+        let stringData = JSON.stringify(newData);
+        resolve(newData);
+      } else {
+        reject(new Error('Data could not be saved'));
+      }
+      
+    });
   }
 
   static getDataSize() {

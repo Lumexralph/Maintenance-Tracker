@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -17,16 +17,22 @@ var DataStorageSystem = function () {
   }
 
   _createClass(DataStorageSystem, null, [{
-    key: "createData",
+    key: 'createData',
     value: function createData(data) {
-      id += 1; // new id of data
-      var currentId = id;
+      return new Promise(function (resolve, reject) {
 
-      localDataStore.set(currentId, data);
-      return "Data successfully created with " + JSON.stringify(localDataStore.get(currentId));
+        localDataStore.set(id += 1, data);
+        var newData = localDataStore.get(id);
+        if (newData) {
+          var stringData = JSON.stringify(newData);
+          resolve(newData);
+        } else {
+          reject(new Error('Data could not be saved'));
+        }
+      });
     }
   }, {
-    key: "getDataSize",
+    key: 'getDataSize',
     value: function getDataSize() {
       return localDataStore.size;
     }
