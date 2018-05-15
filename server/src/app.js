@@ -14,7 +14,7 @@ app.post('/api/v1/users/requests', (req, res) => {
   const newRequest = new UserRequest(title, content);
 
   // Add the new request
-  DataStorageSystem.createData(newRequest).then(data => console.log(data), e => console.log(e.message));
+  DataStorageSystem.createData(newRequest).then(data => res.status(201).send(data), e => res.status(400).send(e.message));
 
 });
 

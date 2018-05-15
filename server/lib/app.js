@@ -32,9 +32,9 @@ app.post('/api/v1/users/requests', function (req, res) {
 
   // Add the new request
   _dataStore2.default.createData(newRequest).then(function (data) {
-    return console.log(data);
+    return res.status(201).send(data);
   }, function (e) {
-    return console.log(e.message);
+    return res.status(400).send(e.message);
   });
 });
 
