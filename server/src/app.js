@@ -10,6 +10,15 @@ const app = express();
 app.use(bodyParser.json());
 // create routes version 1
 app.post('/api/v1/users/requests', (req, res) => {
+  // check and validate the data
+  if (!req.body.hasOwnProperty('content') || !req.body.hasOwnProperty('title')) {
+    return res.status(400).send({ message: 'The data field has missing values' });
+  } 
+    if(!req.body.title || !req.body.content) {
+      return res.status(400).send({ message: 'One of the field is empty'});
+    }
+  
+
   const { title, content } = req.body;
   const newRequest = new UserRequest(title, content);
 

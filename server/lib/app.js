@@ -28,6 +28,14 @@ var app = (0, _express2.default)();
 app.use(_bodyParser2.default.json());
 // create routes version 1
 app.post('/api/v1/users/requests', function (req, res) {
+  // check and validate the data
+  if (!req.body.hasOwnProperty('content') || !req.body.hasOwnProperty('title')) {
+    return res.status(400).send({ message: 'The data field has missing values' });
+  }
+  if (!req.body.title || !req.body.content) {
+    return res.status(400).send({ message: 'One of the field is empty' });
+  }
+
   var _req$body = req.body,
       title = _req$body.title,
       content = _req$body.content;

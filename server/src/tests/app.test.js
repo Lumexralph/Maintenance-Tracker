@@ -7,6 +7,7 @@ import DataStorageSystem from '../data-store/data-store';
 
 
 describe('POST /users/requests', () => {
+
   it('should create a new request', (done) => {
     const clientRequest = {
       title: 'Soccer',
@@ -31,5 +32,31 @@ describe('POST /users/requests', () => {
         done();
       });
   });
+
+  it('should not create a new request with empty field value', (done) => {
+    const clientRequest = {
+      title: '',
+      content: ''
+    };
+
+    request(app)
+      .post('/api/v1/users/requests')
+      .send(clientRequest)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+      
+        const dataSize = DataStorageSystem.getDataSize();
+
+        expect(dataSize).toBe(1);
+        done();
+      });
+  });
+
 });
 

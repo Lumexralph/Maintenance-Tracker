@@ -4,7 +4,7 @@ let id = 0;
 class DataStorageSystem {
   static createData(data) {
     return new Promise((resolve, reject) => {
-      // validate if it has title and content
+      
       localDataStore.set(id += 1, data);
       const newData = localDataStore.get(id);
 
