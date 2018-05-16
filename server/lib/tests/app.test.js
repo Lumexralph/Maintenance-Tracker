@@ -85,3 +85,45 @@ describe('POST /users/requests', function () {
     });
   });
 });
+
+describe('GET /users/requests', function (done) {
+
+  it('should return all requests', function (done) {
+    (0, _supertest2.default)(_app2.default).get('/api/v1/users/requests').expect(200).expect(function (res) {
+      (0, _expect2.default)(res.body.requests.length).toBe(1);
+      (0, _expect2.default)(res.body).toHaveProperty('requests');
+      (0, _expect2.default)(_dataStore2.default.getDataSize()).toBe(1);
+    }).end(done);
+  });
+
+  describe('GET users/requests/requestId', function () {
+    it('should return request', function (done) {
+      var returnedObj = {
+        title: 'Soccer',
+        department: 'Maintenance',
+        content: 'It is a physical game where there 2 teams of 11 players each',
+        requestStatus: 'accept',
+        resolved: false,
+        dateCreated: 'Wed May 16 2018'
+      };
+      var requestId = 1;
+
+      (0, _supertest2.default)(_app2.default).get('/api/v1/users/requests/' + requestId).expect(200).expect(function (res) {
+        (0, _expect2.default)(res.body).toMatchObject(returnedObj);
+        (0, _expect2.default)(res.body.title).toBe(returnedObj.title);
+        (0, _expect2.default)(_dataStore2.default.validateId(requestId)).toBeTruthy();
+      }).end(done);
+    });
+
+    it('should not return a  request', function (done) {
+
+      var requestId = 2;
+
+      (0, _supertest2.default)(_app2.default).get('/api/v1/users/requests/' + requestId).expect(404).expect(function (res) {
+        (0, _expect2.default)(res.body).toMatchObject({});
+        (0, _expect2.default)(res.body.title).toBeUndefined();
+        (0, _expect2.default)(_dataStore2.default.validateId(requestId)).toBeFalsy();
+      }).end(done);
+    });
+  });
+});

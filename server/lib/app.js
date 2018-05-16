@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -45,8 +47,36 @@ app.post('/api/v1/users/requests', function (req, res) {
   // Add the new request
   _dataStore2.default.createData(newRequest).then(function (data) {
     return res.status(201).send(data);
-  }, function (e) {
-    return res.status(400).send(e.message);
+  }, function (err) {
+    return res.status(400).send(err.message);
+  });
+});
+
+// GET all requests
+app.get('/api/v1/users/requests', function (req, res) {
+  _dataStore2.default.getAllData().then(function (requests) {
+    return res.status(200).send({ requests: requests });
+  }, function (err) {
+    return res.status(500).send({
+      message: err.message
+    });
+  });
+});
+
+// GET a request from user by id
+app.get('/api/v1/users/requests/:requestId', function (req, res) {
+  var requestId = req.params.requestId;
+
+  console.log(typeof requestId === 'undefined' ? 'undefined' : _typeof(requestId));
+
+  // if validdates requestId go ahead to look for it in DataStorageSystem
+
+  _dataStore2.default.getById(requestId).then(function (request) {
+    return res.status(200).send(request);
+  }, function (err) {
+    return res.status(404).send({
+      message: err.message
+    });
   });
 });
 

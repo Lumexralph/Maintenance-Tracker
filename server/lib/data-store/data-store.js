@@ -20,7 +20,6 @@ var DataStorageSystem = function () {
     key: 'createData',
     value: function createData(data) {
       return new Promise(function (resolve, reject) {
-        // validate if it has title and content
         localDataStore.set(id += 1, data);
         var newData = localDataStore.get(id);
 
@@ -29,6 +28,55 @@ var DataStorageSystem = function () {
         }
 
         reject(new Error('Data Could not be saved'));
+      });
+    }
+  }, {
+    key: 'getAllData',
+    value: function getAllData() {
+      return new Promise(function (resolve, reject) {
+        var allData = [];
+        localDataStore.forEach(function (value, key) {
+          allData.push({
+            id: String(key),
+            requests: value
+          });
+        });
+
+        if (allData) {
+          resolve(allData);
+        }
+
+        reject(new Error('Error fetching all data'));
+      });
+    }
+
+    // check to know if we have a valid Id for request
+
+  }, {
+    key: 'validateId',
+    value: function validateId(requestId) {
+      return localDataStore.has(requestId);
+    }
+
+    // get a value by id
+
+  }, {
+    key: 'getById',
+    value: function getById(stringRequestId) {
+      return new Promise(function (resolve, reject) {
+        var requestId = Number(stringRequestId);
+        // validate the id
+        if (!DataStorageSystem.validateId(requestId)) {
+          reject(new Error('Id could not be validated'));
+        }
+
+        var data = localDataStore.get(Number(requestId));
+
+        if (data) {
+          resolve(data);
+        }
+
+        reject(new Error('Error occurred while fetching data'));
       });
     }
   }, {
