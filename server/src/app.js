@@ -24,7 +24,6 @@ app.post('/api/v1/users/requests', (req, res) => {
 
   // Add the new request
   DataStorageSystem.createData(newRequest).then(data => res.status(201).send(data), err => res.status(400).send(err.message));
-
 });
 
 
@@ -55,13 +54,16 @@ app.put('/api/v1/users/requests/:requestId', (req, res) => {
   // update the new data
   DataStorageSystem.getByIdAndUpdate(requestId, data).then((newRequest) => {
     if (!newRequest) {
-      return res.status(404).send();
+      return res.status(404).send({
+        message: 'Request to be updated not found'
+      });
     }
 
-    res.status(201).send({ newRequest });
-
+    res.status(201).send(newRequest);
   })
-    .catch(e => res.status(400).send(e.message));
+    .catch(err => res.status(400).send({
+      message: err.message
+    }));
 });
 
 
