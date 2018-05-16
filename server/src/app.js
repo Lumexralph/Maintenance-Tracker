@@ -23,8 +23,16 @@ app.post('/api/v1/users/requests', (req, res) => {
   const newRequest = new UserRequest(title, content);
 
   // Add the new request
-  DataStorageSystem.createData(newRequest).then(data => res.status(201).send(data), e => res.status(400).send(e.message));
+  DataStorageSystem.createData(newRequest).then(data => res.status(201).send(data), err => res.status(400).send(err.message));
 
+});
+
+
+// GET all requests
+app.get('/api/v1/users/requests', (req, res) => {
+  DataStorageSystem.getAllData().then(requests => res.status(200).send({ requests }), err => res.status(500).send({
+    message: err.message
+  }));
 });
 
 
