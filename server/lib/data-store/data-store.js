@@ -20,7 +20,7 @@ var DataStorageSystem = function () {
     key: 'createData',
     value: function createData(data) {
       return new Promise(function (resolve, reject) {
-        // validate if it has title and content
+
         localDataStore.set(id += 1, data);
         var newData = localDataStore.get(id);
 
