@@ -38,6 +38,26 @@ class DataStorageSystem {
     return localDataStore.has(requestId);
   }
 
+  // get a value by id
+  static getById(stringRequestId) {
+    return new Promise((resolve, reject) => {
+      const requestId = Number(stringRequestId);
+      // validate the id
+      if (!DataStorageSystem.validateId(requestId)) {
+        reject(new Error('Id could not be validated'))
+      }
+      
+
+      const data = localDataStore.get(Number(requestId));
+
+      if (data) {
+        resolve(data);
+      }
+
+      reject(new Error('Error occurred while fetching data'));
+    });
+  }
+
   static getDataSize() {
     return localDataStore.size;
   }

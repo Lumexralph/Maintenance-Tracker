@@ -57,6 +57,28 @@ var DataStorageSystem = function () {
     value: function validateId(requestId) {
       return localDataStore.has(requestId);
     }
+
+    // get a value by id
+
+  }, {
+    key: 'getById',
+    value: function getById(stringRequestId) {
+      return new Promise(function (resolve, reject) {
+        var requestId = Number(stringRequestId);
+        // validate the id
+        if (!DataStorageSystem.validateId(requestId)) {
+          reject(new Error('Id could not be validated'));
+        }
+
+        var data = localDataStore.get(Number(requestId));
+
+        if (data) {
+          resolve(data);
+        }
+
+        reject(new Error('Error occurred while fetching data'));
+      });
+    }
   }, {
     key: 'getDataSize',
     value: function getDataSize() {

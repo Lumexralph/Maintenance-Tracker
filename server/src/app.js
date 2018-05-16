@@ -39,10 +39,14 @@ app.get('/api/v1/users/requests', (req, res) => {
 
 // GET a request from user by id
 app.get('/api/v1/users/requests/:requestId', (req, res) => {
-  const requestId = req.params.requestId;
-  res.send(req.params);
+  const { requestId } = req.params;
+  console.log(typeof requestId);
 
-  // first validate the id
+  // if validdates requestId go ahead to look for it in DataStorageSystem
+
+  DataStorageSystem.getById(requestId).then(request => res.status(200).send(request), err => res.status(404).send({
+    message: err.message
+  }));
 });
 
 
