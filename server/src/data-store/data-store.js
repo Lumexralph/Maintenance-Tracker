@@ -33,6 +33,11 @@ class DataStorageSystem {
     });
   }
 
+  // check to know if we have a valid Id for request
+  static validateId(requestId) {
+    return localDataStore.has(requestId);
+  }
+
   static getDataSize() {
     return localDataStore.size;
   }

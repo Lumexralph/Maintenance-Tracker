@@ -49,6 +49,14 @@ var DataStorageSystem = function () {
         reject(new Error('Error fetching all data'));
       });
     }
+
+    // check to know if we have a valid Id for request
+
+  }, {
+    key: 'validateId',
+    value: function validateId(requestId) {
+      return localDataStore.has(requestId);
+    }
   }, {
     key: 'getDataSize',
     value: function getDataSize() {

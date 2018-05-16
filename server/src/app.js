@@ -36,6 +36,16 @@ app.get('/api/v1/users/requests', (req, res) => {
 });
 
 
+
+// GET a request from user by id
+app.get('/api/v1/users/requests/:requestId', (req, res) => {
+  const requestId = req.params.requestId;
+  res.send(req.params);
+
+  // first validate the id
+});
+
+
 app.listen(3000, () => console.log('Started on port 3000'));
 
 
