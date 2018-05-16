@@ -45,8 +45,19 @@ app.post('/api/v1/users/requests', function (req, res) {
   // Add the new request
   _dataStore2.default.createData(newRequest).then(function (data) {
     return res.status(201).send(data);
-  }, function (e) {
-    return res.status(400).send(e.message);
+  }, function (err) {
+    return res.status(400).send(err.message);
+  });
+});
+
+// GET all requests
+app.get('/api/v1/users/requests', function (req, res) {
+  _dataStore2.default.getAllData().then(function (requests) {
+    return res.status(200).send({ requests: requests });
+  }, function (err) {
+    return res.status(500).send({
+      message: err.message
+    });
   });
 });
 

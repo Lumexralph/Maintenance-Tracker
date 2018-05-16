@@ -20,7 +20,6 @@ var DataStorageSystem = function () {
     key: 'createData',
     value: function createData(data) {
       return new Promise(function (resolve, reject) {
-        // validate if it has title and content
         localDataStore.set(id += 1, data);
         var newData = localDataStore.get(id);
 
@@ -29,6 +28,25 @@ var DataStorageSystem = function () {
         }
 
         reject(new Error('Data Could not be saved'));
+      });
+    }
+  }, {
+    key: 'getAllData',
+    value: function getAllData() {
+      return new Promise(function (resolve, reject) {
+        var allData = [];
+        localDataStore.forEach(function (value, key) {
+          allData.push({
+            id: String(key),
+            requests: value
+          });
+        });
+
+        if (allData) {
+          resolve(allData);
+        }
+
+        reject(new Error('Error fetching all data'));
       });
     }
   }, {

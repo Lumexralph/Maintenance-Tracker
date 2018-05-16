@@ -17,16 +17,19 @@ class DataStorageSystem {
 
   static getAllData() {
     return new Promise((resolve, reject) => {
-      const allData = {};
-    localDataStore.forEach((value, key) => {
-      allData[String(key)] = value;
-    });
-    
-    if (allData) {
-      resolve(allData);
-    }
+      const allData = [];
+      localDataStore.forEach((value, key) => {
+        allData.push({
+          id: String(key),
+          requests: value,
+        });
+      });
 
-    reject(new Error('Error fetching all data'));
+      if (allData) {
+        resolve(allData);
+      }
+
+      reject(new Error('Error fetching all data'));
     });
   }
 
