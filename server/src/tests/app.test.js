@@ -102,45 +102,108 @@ describe('GET /users/requests', (done) => {
       .end(done);
   });
 
-  describe('GET users/requests/requestId', () => {
-    it('should return request', (done) => {
-      const returnedObj = {
-        title: 'Soccer',
-        department: 'Maintenance',
-        content: 'It is a physical game where there 2 teams of 11 players each',
-        requestStatus: 'accept',
-        resolved: false,
-        dateCreated: 'Wed May 16 2018'
-      };
-      const requestId = 1;
+});
 
-      request(app)
-        .get(`/api/v1/users/requests/${requestId}`)
-        .expect(200)
-        .expect((res) => {
-          expect(res.body).toMatchObject(returnedObj);
-          expect(res.body.title).toBe(returnedObj.title);
-          expect(DataStorageSystem.validateId(requestId)).toBeTruthy();
-        })
-        .end(done);
-    });
+describe('GET users/requests/requestId', () => {
+  it('should return request', (done) => {
+    const returnedObj = {
+      title: 'Soccer',
+      department: 'Maintenance',
+      content: 'It is a physical game where there 2 teams of 11 players each',
+      requestStatus: 'accept',
+      resolved: false,
+      dateCreated: 'Wed May 16 2018',
+    };
+    const requestId = 1;
 
-    it('should not return a  request', (done) => {
-      
-      const requestId = 2;
+    request(app)
+      .get(`/api/v1/users/requests/${requestId}`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body).toMatchObject(returnedObj);
+        expect(res.body.title).toBe(returnedObj.title);
+        expect(DataStorageSystem.validateId(requestId)).toBeTruthy();
+      })
+      .end(done);
+  });
 
-      request(app)
-        .get(`/api/v1/users/requests/${requestId}`)
-        .expect(404)
-        .expect((res) => {
-          expect(res.body).toMatchObject({});
-          expect(res.body.title).toBeUndefined();
-          expect(DataStorageSystem.validateId(requestId)).toBeFalsy();
-        })
-        .end(done);
-    });
+  it('should not return a  request', (done) => {
 
-    
+    const requestId = 2;
+
+    request(app)
+      .get(`/api/v1/users/requests/${requestId}`)
+      .expect(404)
+      .expect((res) => {
+        expect(res.body).toMatchObject({});
+        expect(res.body.title).toBeUndefined();
+        expect(DataStorageSystem.validateId(requestId)).toBeFalsy();
+      })
+      .end(done);
+  });
+
+});
+
+describe('PUT users/requests/requestId', () => {
+
+  it('should modify and return the new data', (done) => {
+    const clientRequest = {
+      title: 'Soccer',
+      content: 'It is a physical game where there 2 teams of 11 players each',
+      department: 'Repairs',
+    };
+
+    const returnedObj = {
+      title: 'Soccer',
+      department: 'Repairs',
+      content: 'It is a physical game where there 2 teams of 11 players each',
+      requestStatus: 'accept',
+      resolved: false,
+      dateCreated: 'Wed May 16 2018',
+    };
+    const requestId = 1;
+
+    request(app)
+      .put(`/api/v1/users/requests/${requestId}`)
+      .send(clientRequest)
+      .expect(201)
+      .expect((res) => {
+        expect(res.body).toMatchObject(returnedObj);
+        expect(res.body).toHaveProperty('department');
+        expect(res.body.title).toBe(returnedObj.title);
+        expect(res.body.department).toBe(returnedObj.department);
+        expect(DataStorageSystem.getDataSize()).toBe(1);
+        expect(DataStorageSystem.validateId(requestId)).toBeTruthy();
+      })
+      .end(done);
+  });
+
+  it('should not modify data with invalid requestId', (done) => {
+    const clientRequest = {
+      title: 'Soccer',
+      content: 'It is a physical game where there 2 teams of 11 players each'
+    };
+
+    const returnedObj = {
+      title: 'Soccer',
+      department: 'Maintenance',
+      content: 'It is a physical game where there 2 teams of 11 players each',
+      requestStatus: 'accept',
+      resolved: false,
+      dateCreated: 'Wed May 16 2018',
+    };
+    const requestId = 2;
+
+    request(app)
+      .put(`/api/v1/users/requests/${requestId}`)
+      .send(clientRequest)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(DataStorageSystem.getDataSize()).toBe(1);
+        expect(DataStorageSystem.validateId(requestId)).toBeFalsy();
+      })
+      .end(done);
   });
 
 });

@@ -85,12 +85,16 @@ app.put('/api/v1/users/requests/:requestId', function (req, res) {
   // update the new data
   _dataStore2.default.getByIdAndUpdate(requestId, data).then(function (newRequest) {
     if (!newRequest) {
-      return res.status(404).send();
+      return res.status(404).send({
+        message: 'Request to be updated not found'
+      });
     }
 
-    res.status(201).send({ newRequest: newRequest });
-  }).catch(function (e) {
-    return res.status(400).send(e.message);
+    res.status(201).send(newRequest);
+  }).catch(function (err) {
+    return res.status(400).send({
+      message: err.message
+    });
   });
 });
 
