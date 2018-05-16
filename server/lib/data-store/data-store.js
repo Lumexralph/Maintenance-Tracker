@@ -79,6 +79,41 @@ var DataStorageSystem = function () {
         reject(new Error('Error occurred while fetching data'));
       });
     }
+
+    // get a value by id and update it
+
+  }, {
+    key: 'getByIdAndUpdate',
+    value: function getByIdAndUpdate(stringRequestId, data) {
+      return new Promise(function (resolve, reject) {
+        var requestId = Number(stringRequestId);
+        // validate the id
+        if (!DataStorageSystem.validateId(requestId)) {
+          reject(new Error('Id could not be found'));
+        }
+
+        // get the data
+        var storageData = localDataStore.get(requestId);
+        var title = data.title,
+            content = data.content,
+            department = data.department;
+
+        // update the part that needs to be updated
+
+        storageData.title = title;
+        storageData.content = content;
+        storageData.department = department;
+
+        localDataStore.set(requestId, storageData);
+        var newData = localDataStore.get(requestId);
+
+        if (newData) {
+          resolve(newData);
+        }
+
+        reject(new Error('Data could not be updated'));
+      });
+    }
   }, {
     key: 'getDataSize',
     value: function getDataSize() {
