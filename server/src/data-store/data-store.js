@@ -66,8 +66,17 @@ class DataStorageSystem {
       if (!DataStorageSystem.validateId(requestId)) {
         reject(new Error('Id could not be found'));
       }
-      // update the new data
-      localDataStore.set(requestId, data);
+
+      // get the data
+      const storageData = localDataStore.get(requestId);
+      const { title, content, department } = data;
+
+      // update the part that needs to be updated
+      storageData.title = title;
+      storageData.content = content;
+      storageData.department = department;
+
+      localDataStore.set(requestId, storageData);
       const newData = localDataStore.get(requestId);
 
       if (newData) {

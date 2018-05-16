@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -67,8 +65,6 @@ app.get('/api/v1/users/requests', function (req, res) {
 app.get('/api/v1/users/requests/:requestId', function (req, res) {
   var requestId = req.params.requestId;
 
-  console.log(typeof requestId === 'undefined' ? 'undefined' : _typeof(requestId));
-
   // if validdates requestId go ahead to look for it in DataStorageSystem
 
   _dataStore2.default.getById(requestId).then(function (request) {
@@ -77,6 +73,24 @@ app.get('/api/v1/users/requests/:requestId', function (req, res) {
     return res.status(404).send({
       message: err.message
     });
+  });
+});
+
+// PUT modify a request by id
+app.put('/api/v1/users/requests/:requestId', function (req, res) {
+  var requestId = req.params.requestId;
+
+  var data = req.body;
+
+  // update the new data
+  _dataStore2.default.getByIdAndUpdate(requestId, data).then(function (newRequest) {
+    if (!newRequest) {
+      return res.status(404).send();
+    }
+
+    res.status(201).send({ newRequest: newRequest });
+  }).catch(function (e) {
+    return res.status(400).send(e.message);
   });
 });
 

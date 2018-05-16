@@ -91,8 +91,20 @@ var DataStorageSystem = function () {
         if (!DataStorageSystem.validateId(requestId)) {
           reject(new Error('Id could not be found'));
         }
-        // update the new data
-        localDataStore.set(requestId, data);
+
+        // get the data
+        var storageData = localDataStore.get(requestId);
+        var title = data.title,
+            content = data.content,
+            department = data.department;
+
+        // update the part that needs to be updated
+
+        storageData.title = title;
+        storageData.content = content;
+        storageData.department = department;
+
+        localDataStore.set(requestId, storageData);
         var newData = localDataStore.get(requestId);
 
         if (newData) {
