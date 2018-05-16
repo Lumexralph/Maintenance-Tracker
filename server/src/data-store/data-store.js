@@ -44,9 +44,9 @@ class DataStorageSystem {
       const requestId = Number(stringRequestId);
       // validate the id
       if (!DataStorageSystem.validateId(requestId)) {
-        reject(new Error('Id could not be validated'))
+        reject(new Error('Id could not be validated'));
       }
-      
+
 
       const data = localDataStore.get(Number(requestId));
 
@@ -57,6 +57,27 @@ class DataStorageSystem {
       reject(new Error('Error occurred while fetching data'));
     });
   }
+
+  // get a value by id and update it
+  static getByIdAndUpdate(stringRequestId, data) {
+    return new Promise((resolve, reject) => {
+      const requestId = Number(stringRequestId);
+      // validate the id
+      if (!DataStorageSystem.validateId(requestId)) {
+        reject(new Error('Id could not be found'));
+      }
+      // update the new data
+      localDataStore.set(requestId, data);
+      const newData = localDataStore.get(requestId);
+
+      if (newData) {
+        resolve(newData);
+      }
+
+      reject(new Error('Data could not be updated'));
+    });
+  }
+
 
   static getDataSize() {
     return localDataStore.size;
