@@ -11,7 +11,7 @@ describe('POST /users/requests', () => {
   it('should create a new request', (done) => {
     const clientRequest = {
       title: 'Soccer',
-      content: 'It is a physical game where there 2 teams of 11 players each'
+      content: 'It is a physical game where there 2 teams of 11 players each',
     };
 
     request(app)
@@ -25,7 +25,7 @@ describe('POST /users/requests', () => {
         if (err) {
           return done(err);
         }
-      
+
         const dataSize = DataStorageSystem.getDataSize();
 
         expect(dataSize).toBe(1);
@@ -36,7 +36,7 @@ describe('POST /users/requests', () => {
   it('should not create a new request with empty field value', (done) => {
     const clientRequest = {
       title: '',
-      content: ''
+      content: '',
     };
 
     request(app)
@@ -51,7 +51,7 @@ describe('POST /users/requests', () => {
         if (err) {
           return done(err);
         }
-      
+
         const dataSize = DataStorageSystem.getDataSize();
 
         expect(dataSize).toBe(1);
@@ -61,7 +61,7 @@ describe('POST /users/requests', () => {
 
   it('should not create a new request with empty field', (done) => {
     const clientRequest = {
-      content: ''
+      content: '',
     };
 
     request(app)
@@ -76,7 +76,7 @@ describe('POST /users/requests', () => {
         if (err) {
           return done(err);
         }
-      
+
         const dataSize = DataStorageSystem.getDataSize();
 
         expect(dataSize).toBe(1);
@@ -87,3 +87,19 @@ describe('POST /users/requests', () => {
 
 });
 
+
+describe('GET /users/requests', (done) => {
+
+  it('should return all requests', (done) => {
+    request(app)
+      .get('/api/v1/users/requests')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.requests.length).toBe(1);
+        expect(res.body).toHaveProperty('requests');
+        expect(DataStorageSystem.getDataSize()).toBe(1);
+      })
+      .end(done);
+  });
+
+});

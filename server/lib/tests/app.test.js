@@ -85,3 +85,14 @@ describe('POST /users/requests', function () {
     });
   });
 });
+
+describe('GET /users/requests', function (done) {
+
+  it('should return all requests', function (done) {
+    (0, _supertest2.default)(_app2.default).get('/api/v1/users/requests').expect(200).expect(function (res) {
+      (0, _expect2.default)(res.body.requests.length).toBe(1);
+      (0, _expect2.default)(res.body).toHaveProperty('requests');
+      (0, _expect2.default)(_dataStore2.default.getDataSize()).toBe(1);
+    }).end(done);
+  });
+});
