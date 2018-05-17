@@ -34,6 +34,7 @@ var UserStorageSystem = function () {
   }, {
     key: 'verifyDetails',
     value: function verifyDetails(userData) {
+
       localUserStore.forEach(function (value, key) {
         if (value.username === userData.username) {
           usernameExists = true;
@@ -49,13 +50,16 @@ var UserStorageSystem = function () {
       return new Promise(function (resolve, reject) {
         // check if email is valid
         if (!UserStorageSystem.validateEmail(userData.email)) {
-          reject(new Error('Please provide a valid email'));
+          throw new Error('Please provide a valid email');
         }
 
         // check for uniqueness
         UserStorageSystem.verifyDetails(userData);
         if (usernameExists || emailExists) {
-          reject(new Error('username or email already exists'));
+          usernameExists = false;
+          emailExists = false;
+
+          throw new Error('username or email already exists');
         }
 
         // if the data doesn't exist yet

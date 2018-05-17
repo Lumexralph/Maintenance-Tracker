@@ -20,12 +20,21 @@ var _dataStore = require('./data-store/data-store');
 
 var _dataStore2 = _interopRequireDefault(_dataStore);
 
+var _userDatastore = require('./data-store/user-datastore');
+
+var _userDatastore2 = _interopRequireDefault(_userDatastore);
+
+var _user = require('./model/user');
+
+var _user2 = _interopRequireDefault(_user);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
 
 // configure third party middleware
 app.use(_bodyParser2.default.json());
+
 // create routes version 1
 app.post('/api/v1/users/requests', function (req, res) {
   // check and validate the data
@@ -93,6 +102,27 @@ app.put('/api/v1/users/requests/:requestId', function (req, res) {
     res.status(201).send(newRequest);
   }).catch(function (err) {
     return res.status(400).send({
+      message: err.message
+    });
+  });
+});
+
+// POST /api/v1/users/ .... user signup
+app.post('/api/v1/users', function (req, res) {
+  var _req$body2 = req.body,
+      username = _req$body2.username,
+      email = _req$body2.email,
+      password = _req$body2.password;
+
+  // make a new instance
+
+  var userData = new _user2.default(username, email, password);
+
+  // create new user
+  _userDatastore2.default.createUser(userData).then(function (user) {
+    return res.status(201).send(user);
+  }, function (err) {
+    res.status(401).send({
       message: err.message
     });
   });
