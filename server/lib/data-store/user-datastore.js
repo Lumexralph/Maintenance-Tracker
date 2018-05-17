@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _validator = require('validator');
@@ -29,23 +33,47 @@ var UserStorageSystem = function () {
     }
   }, {
     key: 'verifyDetails',
-    value: function verifyDetails(username, email) {
-      localUserStore.forEach(function (value, key) {});
+    value: function verifyDetails(userData) {
+      localUserStore.forEach(function (value, key) {
+        if (value.username === userData.username) {
+          usernameExists = true;
+        }
+        if (value.email === userData.email) {
+          emailExists = true;
+        }
+      });
     }
-    /*3. just like 2 above method to verify email
-    4. method to create user
-        a. validate email
-        b. verify email and username
-        if they come out false, means not yet in storage
-              go ahead and create user giving it an id
-        
-        if method 1 comes as false
-              reject with provide valid email message
-        if can not username exists from verification, reject with username exists, please provide another one
-          if Email verification is true do as above
-    */
+  }, {
+    key: 'createUser',
+    value: function createUser(userData) {
+      return new Promise(function (resole, reject) {
+        // check if email is valid
+        if (!UserStorageSystem.validateEmail(userData.email)) {
+          reject(new Error('Please provide a valid email'));
+        }
 
+        // check for uniqueness
+        UserStorageSystem.verifyDetails(userData);
+        if (usernameExists || emailExists) {
+          reject(new Error('username or email already exists'));
+        }
+
+        // if the data doesn't exist yet
+        // add new user and increase count
+        id += 1;
+        userData.id = id;
+        localUserStore.set(id, userData);
+
+        var newUser = localUserStore.get(id);
+        if (newUser) {
+          resolve(newUser);
+        }
+        reject(new Error('User data not saved'));
+      });
+    }
   }]);
 
   return UserStorageSystem;
 }();
+
+exports.default = UserStorageSystem;
