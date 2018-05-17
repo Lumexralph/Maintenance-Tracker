@@ -36,7 +36,7 @@ class UserStorageSystem {
       UserStorageSystem.verifyDetails(userData);
       if (usernameExists || emailExists) {
         usernameExists = false;
-        emailExists = false;  
+        emailExists = false;
 
         throw new Error('username or email already exists');
       }
@@ -45,6 +45,10 @@ class UserStorageSystem {
       // add new user and increase count
       id += 1;
       userData.id = id;
+
+      // generate the token
+      userData.generateAuthToken();
+      
       localUserStore.set(id, userData);
 
       const newUser = localUserStore.get(id);

@@ -77,8 +77,14 @@ app.post('/api/v1/users', (req, res) => {
   // make a new instance
   const userData = new User(username, email, password);
 
+
+
   // create new user
-  UserStorageSystem.createUser(userData).then(user => res.status(201).send(user), (err) => {
+  UserStorageSystem.createUser(userData).then((user) => {
+    const {id, email, username} = user;
+    
+    res.header('x-auth', user.token[0].token).status(201).send({id, email, username });
+  }, (err) => {
     res.status(401).send({
       message: err.message,
     });

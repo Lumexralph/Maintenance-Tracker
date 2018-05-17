@@ -66,6 +66,10 @@ var UserStorageSystem = function () {
         // add new user and increase count
         id += 1;
         userData.id = id;
+
+        // generate the token
+        userData.generateAuthToken();
+
         localUserStore.set(id, userData);
 
         var newUser = localUserStore.get(id);
