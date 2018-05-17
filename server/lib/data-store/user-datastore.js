@@ -46,7 +46,7 @@ var UserStorageSystem = function () {
   }, {
     key: 'createUser',
     value: function createUser(userData) {
-      return new Promise(function (resole, reject) {
+      return new Promise(function (resolve, reject) {
         // check if email is valid
         if (!UserStorageSystem.validateEmail(userData.email)) {
           reject(new Error('Please provide a valid email'));
