@@ -181,7 +181,7 @@ describe('PUT users/requests/requestId', () => {
   it('should not modify data with invalid requestId', (done) => {
     const clientRequest = {
       title: 'Soccer',
-      content: 'It is a physical game where there 2 teams of 11 players each'
+      content: 'It is a physical game where there 2 teams of 11 players each',
     };
 
     const returnedObj = {
