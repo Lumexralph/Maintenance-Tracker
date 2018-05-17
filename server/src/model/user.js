@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 // this class will build new instances of users that will be stored
 
 class User {
@@ -8,6 +10,13 @@ class User {
     this.password = password;
     this.role = 'Non-Admin';
     this.token = [];
+  }
+
+  generateAuthToken() {
+    const access = 'auth';
+    const token = jwt.sign({ _id: String(this.id), access }, 'abc').toString();
+
+    this.token.push({ access, token });
   }
 }
 
