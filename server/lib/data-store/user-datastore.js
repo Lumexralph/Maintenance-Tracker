@@ -74,6 +74,10 @@ var UserStorageSystem = function () {
         // generate the token
         userData.generateAuthToken();
 
+        // hash the password before saving
+        userData.hashPassword();
+
+        // save the data
         localUserStore.set(id, userData);
 
         var newUser = localUserStore.get(id);

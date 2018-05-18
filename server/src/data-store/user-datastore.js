@@ -50,6 +50,10 @@ class UserStorageSystem {
       // generate the token
       userData.generateAuthToken();
 
+      // hash the password before saving
+      userData.hashPassword();
+      
+      // save the data
       localUserStore.set(id, userData);
 
       const newUser = localUserStore.get(id);
