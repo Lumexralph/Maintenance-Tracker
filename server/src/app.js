@@ -5,6 +5,7 @@ import UserRequest from './model/reques-model';
 import DataStorageSystem from './data-store/data-store';
 import UserStorageSystem from './data-store/user-datastore';
 import User from './model/user';
+import authenticate from './middleware/authenticate';
 
 const app = express();
 
@@ -78,12 +79,11 @@ app.post('/api/v1/users', (req, res) => {
   const userData = new User(username, email, password);
 
 
-
   // create new user
   UserStorageSystem.createUser(userData).then((user) => {
-    const {id, email, username} = user;
-    
-    res.header('x-auth', user.token[0].token).status(201).send({id, email, username });
+    const { id, email, username } = user;
+
+    res.header('x-auth', user.token[0].token).status(201).send({ id, email, username });
   }, (err) => {
     res.status(401).send({
       message: err.message,

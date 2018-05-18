@@ -1,4 +1,5 @@
 import validator from 'validator';
+import jwt from 'jsonwebtoken';
 
 const localUserStore = new Map();
 let id = 0;
@@ -48,7 +49,7 @@ class UserStorageSystem {
 
       // generate the token
       userData.generateAuthToken();
-      
+
       localUserStore.set(id, userData);
 
       const newUser = localUserStore.get(id);
@@ -56,6 +57,37 @@ class UserStorageSystem {
         resolve(newUser);
       }
       reject(new Error('User data not saved'));
+    });
+  }
+  // needed to verify user id from token in header
+
+  static findByToken(token) {
+    return new Promise((resolve, reject) => {
+      let decodedUser = null;
+
+      // if secret pattern was changed or token was altered JWT will throw an error
+
+      try {
+        decodedUser = jwt.verify(token, 'abc');
+      } catch (error) {
+        throw new Error(error);
+      }
+
+      // if there's successful verification of token get the id
+      // check the data store, if found check the token and return the user
+      const userWithId = localUserStore.get(Number(decodedUser.id));
+
+      if (userWithId.token[0].token === token && userWithId.token[0].access === decodedUser.access) {
+        resolve(userWithId);
+      }
+
+      // if the user can not be found
+      if (!userWithId) {
+        throw new Error('User id does not exists');
+      }
+
+      reject(new Error('No user with the token'));
+
     });
   }
 

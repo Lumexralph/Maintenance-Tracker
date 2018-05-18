@@ -10,6 +10,10 @@ var _validator = require('validator');
 
 var _validator2 = _interopRequireDefault(_validator);
 
+var _jsonwebtoken = require('jsonwebtoken');
+
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -77,6 +81,38 @@ var UserStorageSystem = function () {
           resolve(newUser);
         }
         reject(new Error('User data not saved'));
+      });
+    }
+    // needed to verify user id from token in header
+
+  }, {
+    key: 'findByToken',
+    value: function findByToken(token) {
+      return new Promise(function (resolve, reject) {
+        var decodedUser = null;
+
+        // if secret pattern was changed or token was altered JWT will throw an error
+
+        try {
+          decodedUser = _jsonwebtoken2.default.verify(token, 'abc');
+        } catch (error) {
+          throw new Error(error);
+        }
+
+        // if there's successful verification of token get the id
+        // check the data store, if found check the token and return the user
+        var userWithId = localUserStore.get(Number(decodedUser.id));
+
+        if (userWithId.token[0].token === token && userWithId.token[0].access === decodedUser.access) {
+          resolve(userWithId);
+        }
+
+        // if the user can not be found
+        if (!userWithId) {
+          throw new Error('User id does not exists');
+        }
+
+        reject(new Error('No user with the token'));
       });
     }
   }]);

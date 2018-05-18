@@ -14,7 +14,7 @@ class User {
 
   generateAuthToken() {
     const access = 'auth';
-    const token = jwt.sign({ _id: String(this.id), access }, 'abc').toString();
+    const token = jwt.sign({ id: String(this.id), access }, 'abc').toString();
 
     this.token.push({ access, token });
   }
