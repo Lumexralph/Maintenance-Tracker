@@ -32,7 +32,7 @@ var User = function () {
     key: 'generateAuthToken',
     value: function generateAuthToken() {
       var access = 'auth';
-      var token = _jsonwebtoken2.default.sign({ _id: String(this.id), access: access }, 'abc').toString();
+      var token = _jsonwebtoken2.default.sign({ id: String(this.id), access: access }, 'abc').toString();
 
       this.token.push({ access: access, token: token });
     }

@@ -28,6 +28,10 @@ var _user = require('./model/user');
 
 var _user2 = _interopRequireDefault(_user);
 
+var _authenticate = require('./middleware/authenticate');
+
+var _authenticate2 = _interopRequireDefault(_authenticate);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
