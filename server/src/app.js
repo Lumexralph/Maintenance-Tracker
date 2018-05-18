@@ -81,9 +81,9 @@ app.post('/api/v1/users', (req, res) => {
 
   // create new user
   UserStorageSystem.createUser(userData).then((user) => {
-    const { id, email, username } = user;
+    const { id, email, username, password } = user;
 
-    res.header('x-auth', user.token[0].token).status(201).send({ id, email, username });
+    res.header('x-auth', user.token[0].token).status(201).send({ id, email, username, password });
   }, (err) => {
     res.status(401).send({
       message: err.message,

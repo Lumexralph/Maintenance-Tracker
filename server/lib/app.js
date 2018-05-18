@@ -126,10 +126,11 @@ app.post('/api/v1/users', function (req, res) {
   _userDatastore2.default.createUser(userData).then(function (user) {
     var id = user.id,
         email = user.email,
-        username = user.username;
+        username = user.username,
+        password = user.password;
 
 
-    res.header('x-auth', user.token[0].token).status(201).send({ id: id, email: email, username: username });
+    res.header('x-auth', user.token[0].token).status(201).send({ id: id, email: email, username: username, password: password });
   }, function (err) {
     res.status(401).send({
       message: err.message
