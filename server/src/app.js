@@ -92,7 +92,13 @@ app.post('/api/v1/users', (req, res) => {
 
 });
 
-app.listen(3000, () => console.log('Started on port 3000'));
+// test for making route private
+app.get('/api/v1/users/authentication', authenticate, (req, res) => {
+    res.status(200).send(req.user);
+});
 
+if(!module.parent){ 
+  app.listen(3000, () => console.log('Started on port 3000')); 
+}
 
 export default app;
