@@ -40,7 +40,7 @@ var app = (0, _express2.default)();
 app.use(_bodyParser2.default.json());
 
 // create routes version 1
-app.post('/api/v1/users/requests', function (req, res) {
+app.post('/api/v1/users/requests', _authenticate2.default, function (req, res) {
   // check and validate the data
   if (!req.body.hasOwnProperty('content') || !req.body.hasOwnProperty('title')) {
     return res.status(400).send({ message: 'One of the field is empty' });
@@ -64,7 +64,7 @@ app.post('/api/v1/users/requests', function (req, res) {
 });
 
 // GET all requests
-app.get('/api/v1/users/requests', function (req, res) {
+app.get('/api/v1/users/requests', _authenticate2.default, function (req, res) {
   _dataStore2.default.getAllData().then(function (requests) {
     return res.status(200).send({ requests: requests });
   }, function (err) {
@@ -75,7 +75,7 @@ app.get('/api/v1/users/requests', function (req, res) {
 });
 
 // GET a request from user by id
-app.get('/api/v1/users/requests/:requestId', function (req, res) {
+app.get('/api/v1/users/requests/:requestId', _authenticate2.default, function (req, res) {
   var requestId = req.params.requestId;
 
   // if validdates requestId go ahead to look for it in DataStorageSystem
@@ -90,7 +90,7 @@ app.get('/api/v1/users/requests/:requestId', function (req, res) {
 });
 
 // PUT modify a request by id
-app.put('/api/v1/users/requests/:requestId', function (req, res) {
+app.put('/api/v1/users/requests/:requestId', _authenticate2.default, function (req, res) {
   var requestId = req.params.requestId;
 
   var data = req.body;

@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 
 // create routes version 1
-app.post('/api/v1/users/requests', (req, res) => {
+app.post('/api/v1/users/requests', authenticate, (req, res) => {
   // check and validate the data
   if (!req.body.hasOwnProperty('content') || !req.body.hasOwnProperty('title')) {
     return res.status(400).send({ message: 'One of the field is empty' });
@@ -33,7 +33,7 @@ app.post('/api/v1/users/requests', (req, res) => {
 
 
 // GET all requests
-app.get('/api/v1/users/requests', (req, res) => {
+app.get('/api/v1/users/requests', authenticate, (req, res) => {
   DataStorageSystem.getAllData().then(requests => res.status(200).send({ requests }), err => res.status(500).send({
     message: err.message,
   }));
@@ -41,7 +41,7 @@ app.get('/api/v1/users/requests', (req, res) => {
 
 
 // GET a request from user by id
-app.get('/api/v1/users/requests/:requestId', (req, res) => {
+app.get('/api/v1/users/requests/:requestId', authenticate, (req, res) => {
   const { requestId } = req.params;
 
   // if validdates requestId go ahead to look for it in DataStorageSystem
@@ -52,7 +52,7 @@ app.get('/api/v1/users/requests/:requestId', (req, res) => {
 });
 
 // PUT modify a request by id
-app.put('/api/v1/users/requests/:requestId', (req, res) => {
+app.put('/api/v1/users/requests/:requestId', authenticate, (req, res) => {
   const { requestId } = req.params;
   const data = req.body;
 
