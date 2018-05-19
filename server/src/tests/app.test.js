@@ -3,7 +3,18 @@ import request from 'supertest';
 
 import app from '../app';
 import UserRequest from '../model/reques-model';
+import User from '../model/user';
 import DataStorageSystem from '../data-store/data-store';
+import UserStorageSystem from '../data-store/user-datastore';
+
+
+// create mock user
+let user1 = new User('lumex', 'olumideralph@gmail.com', '12345');
+// save in system
+UserStorageSystem.createUser(user1)
+  .then(user => user1 = user);
+
+
 
 
 describe('POST /users/requests', () => {
@@ -16,6 +27,7 @@ describe('POST /users/requests', () => {
 
     request(app)
       .post('/api/v1/users/requests')
+      .set('x-auth', user1.token[0].token)
       .send(clientRequest)
       .expect(201)
       .expect((res) => {
@@ -41,6 +53,7 @@ describe('POST /users/requests', () => {
 
     request(app)
       .post('/api/v1/users/requests')
+      .set('x-auth', user1.token[0].token)
       .send(clientRequest)
       .expect(400)
       .expect((res) => {
@@ -66,6 +79,7 @@ describe('POST /users/requests', () => {
 
     request(app)
       .post('/api/v1/users/requests')
+      .set('x-auth', user1.token[0].token)
       .send(clientRequest)
       .expect(400)
       .expect((res) => {
@@ -93,6 +107,7 @@ describe('GET /users/requests', (done) => {
   it('should return all requests', (done) => {
     request(app)
       .get('/api/v1/users/requests')
+      .set('x-auth', user1.token[0].token)
       .expect(200)
       .expect((res) => {
         expect(res.body.requests.length).toBe(1);
@@ -112,12 +127,13 @@ describe('GET users/requests/requestId', () => {
       content: 'It is a physical game where there 2 teams of 11 players each',
       requestStatus: 'accept',
       resolved: false,
-      dateCreated: 'Wed May 16 2018',
+      dateCreated: new Date().toDateString(),
     };
     const requestId = 1;
 
     request(app)
       .get(`/api/v1/users/requests/${requestId}`)
+      .set('x-auth', user1.token[0].token)
       .expect(200)
       .expect((res) => {
         expect(res.body).toMatchObject(returnedObj);
@@ -133,6 +149,7 @@ describe('GET users/requests/requestId', () => {
 
     request(app)
       .get(`/api/v1/users/requests/${requestId}`)
+      .set('x-auth', user1.token[0].token)
       .expect(404)
       .expect((res) => {
         expect(res.body).toMatchObject({});
@@ -159,13 +176,14 @@ describe('PUT users/requests/requestId', () => {
       content: 'It is a physical game where there 2 teams of 11 players each',
       requestStatus: 'accept',
       resolved: false,
-      dateCreated: 'Wed May 16 2018',
+      dateCreated: new Date().toDateString(),
     };
     const requestId = 1;
 
     request(app)
       .put(`/api/v1/users/requests/${requestId}`)
       .send(clientRequest)
+      .set('x-auth', user1.token[0].token)
       .expect(201)
       .expect((res) => {
         expect(res.body).toMatchObject(returnedObj);
@@ -190,12 +208,13 @@ describe('PUT users/requests/requestId', () => {
       content: 'It is a physical game where there 2 teams of 11 players each',
       requestStatus: 'accept',
       resolved: false,
-      dateCreated: 'Wed May 16 2018',
+      dateCreated: new Date().toDateString(),
     };
     const requestId = 2;
 
     request(app)
       .put(`/api/v1/users/requests/${requestId}`)
+      .set('x-auth', user1.token[0].token)
       .send(clientRequest)
       .expect(400)
       .expect((res) => {
@@ -206,4 +225,74 @@ describe('PUT users/requests/requestId', () => {
       .end(done);
   });
 
+});
+
+
+describe('POST /users', () => {
+  it('should not create a user with invalid email', (done) => {
+    const user2 = new User('mexy', 'olumide@', '2345');
+
+    request(app)
+      .post('/api/v1/users')
+      .send(user2)
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Please provide a valid email');
+        expect(user2.token.length).toBe(0);
+      })
+      .end(done);
+
+  });
+
+  it('should create user with valid username and email', (done) => {
+    const user2 = new User('mexy', 'olumide@gmail.com', '2345');
+
+      request(app)
+        .post('/api/v1/users')
+        .send(user2)
+        .expect(201)
+        .expect((res) => {
+          expect(res.header).toBeTruthy();
+          expect(res.header).toHaveProperty('x-auth');
+          expect(res.header['x-auth']).toBeDefined();
+          expect(res.body.id).toBe(2);
+          expect(res.body.password).not.toBe(user2.password)
+        })
+        .end(done);
+
+  }); 
+
+  it('should not create user if email exists', (done) => {
+    const user2 = new User('Lumexmexy', 'olumide@gmail.com', '2345');
+
+    request(app)
+      .post('/api/v1/users')
+      .send(user2)
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('username or email already exists');
+        expect(user2.token.length).toBe(0);
+        expect(res.body.id).toBeFalsy();
+      })
+      .end(done);
+
+  });
+  
+  it('should not create user if username exists', (done) => {
+    const user2 = new User('mexy', 'oljdjumide@gmail.com', '2345');
+
+    request(app)
+      .post('/api/v1/users')
+      .send(user2)
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('username or email already exists');
+        expect(user2.token.length).toBe(0);
+        expect(res.body.id).toBeFalsy();
+      })
+      .end(done);
+  });
 });
