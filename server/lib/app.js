@@ -134,7 +134,7 @@ app.post('/api/v1/users', function (req, res) {
       id: id, email: email, username: username, password: password
     });
   }, function (err) {
-    res.status(401).send({
+    res.status(400).send({
       message: err.message
     });
   });
@@ -148,9 +148,9 @@ app.post('/api/v1/users/login', function (req, res) {
 
 
   _userDatastore2.default.findByCredentials({ username: username, password: password }).then(function (user) {
-    res.send(user);
+    res.status(200).send(user);
   }, function (err) {
-    res.send({ message: err.message });
+    res.status(401).send({ message: err.message });
   });
 });
 

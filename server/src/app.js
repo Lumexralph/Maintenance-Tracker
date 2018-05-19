@@ -89,7 +89,7 @@ app.post('/api/v1/users', (req, res) => {
       id, email, username, password,
     });
   }, (err) => {
-    res.status(401).send({
+    res.status(400).send({
       message: err.message,
     });
   });
@@ -101,7 +101,7 @@ app.post('/api/v1/users/login', (req, res) => {
   const { username, password } = req.body;
 
   UserStorageSystem.findByCredentials({ username, password })
-    .then((user) => { res.send(user) ;}, (err) => { res.send({ message: err.message }) ;});
+    .then((user) => { res.status(200).send(user) }, (err) => { res.status(401).send({ message: err.message }) ;});
 });
 
 // test for making route private

@@ -235,7 +235,7 @@ describe('POST /users', () => {
     request(app)
       .post('/api/v1/users')
       .send(user2)
-      .expect(401)
+      .expect(400)
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
         expect(res.body.message).toBe('Please provide a valid email');
@@ -269,7 +269,7 @@ describe('POST /users', () => {
     request(app)
       .post('/api/v1/users')
       .send(user2)
-      .expect(401)
+      .expect(400)
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
         expect(res.body.message).toBe('username or email already exists');
@@ -286,7 +286,7 @@ describe('POST /users', () => {
     request(app)
       .post('/api/v1/users')
       .send(user2)
-      .expect(401)
+      .expect(400)
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
         expect(res.body.message).toBe('username or email already exists');
