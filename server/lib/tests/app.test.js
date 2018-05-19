@@ -195,3 +195,49 @@ describe('PUT users/requests/requestId', function () {
     }).end(done);
   });
 });
+
+describe('POST /users', function () {
+  it('should not create a user with invalid email', function (done) {
+    var user2 = new _user2.default('mexy', 'olumide@', '2345');
+
+    (0, _supertest2.default)(_app2.default).post('/api/v1/users').send(user2).expect(401).expect(function (res) {
+      (0, _expect2.default)(res.body).toHaveProperty('message');
+      (0, _expect2.default)(res.body.message).toBe('Please provide a valid email');
+      (0, _expect2.default)(user2.token.length).toBe(0);
+    }).end(done);
+  });
+
+  it('should create user with valid username and email', function (done) {
+    var user2 = new _user2.default('mexy', 'olumide@gmail.com', '2345');
+
+    (0, _supertest2.default)(_app2.default).post('/api/v1/users').send(user2).expect(201).expect(function (res) {
+      (0, _expect2.default)(res.header).toBeTruthy();
+      (0, _expect2.default)(res.header).toHaveProperty('x-auth');
+      (0, _expect2.default)(res.header['x-auth']).toBeDefined();
+      (0, _expect2.default)(res.body.id).toBe(2);
+      (0, _expect2.default)(res.body.password).not.toBe(user2.password);
+    }).end(done);
+  });
+
+  it('should not create user if email exists', function (done) {
+    var user2 = new _user2.default('Lumexmexy', 'olumide@gmail.com', '2345');
+
+    (0, _supertest2.default)(_app2.default).post('/api/v1/users').send(user2).expect(401).expect(function (res) {
+      (0, _expect2.default)(res.body).toHaveProperty('message');
+      (0, _expect2.default)(res.body.message).toBe('username or email already exists');
+      (0, _expect2.default)(user2.token.length).toBe(0);
+      (0, _expect2.default)(res.body.id).toBeFalsy();
+    }).end(done);
+  });
+
+  it('should not create user if username exists', function (done) {
+    var user2 = new _user2.default('mexy', 'oljdjumide@gmail.com', '2345');
+
+    (0, _supertest2.default)(_app2.default).post('/api/v1/users').send(user2).expect(401).expect(function (res) {
+      (0, _expect2.default)(res.body).toHaveProperty('message');
+      (0, _expect2.default)(res.body.message).toBe('username or email already exists');
+      (0, _expect2.default)(user2.token.length).toBe(0);
+      (0, _expect2.default)(res.body.id).toBeFalsy();
+    }).end(done);
+  });
+});

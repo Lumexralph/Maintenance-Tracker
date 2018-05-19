@@ -227,3 +227,72 @@ describe('PUT users/requests/requestId', () => {
 
 });
 
+
+describe('POST /users', () => {
+  it('should not create a user with invalid email', (done) => {
+    const user2 = new User('mexy', 'olumide@', '2345');
+
+    request(app)
+      .post('/api/v1/users')
+      .send(user2)
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Please provide a valid email');
+        expect(user2.token.length).toBe(0);
+      })
+      .end(done);
+
+  });
+
+  it('should create user with valid username and email', (done) => {
+    const user2 = new User('mexy', 'olumide@gmail.com', '2345');
+
+      request(app)
+        .post('/api/v1/users')
+        .send(user2)
+        .expect(201)
+        .expect((res) => {
+          expect(res.header).toBeTruthy();
+          expect(res.header).toHaveProperty('x-auth');
+          expect(res.header['x-auth']).toBeDefined();
+          expect(res.body.id).toBe(2);
+          expect(res.body.password).not.toBe(user2.password)
+        })
+        .end(done);
+
+  }); 
+
+  it('should not create user if email exists', (done) => {
+    const user2 = new User('Lumexmexy', 'olumide@gmail.com', '2345');
+
+    request(app)
+      .post('/api/v1/users')
+      .send(user2)
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('username or email already exists');
+        expect(user2.token.length).toBe(0);
+        expect(res.body.id).toBeFalsy();
+      })
+      .end(done);
+
+  });
+  
+  it('should not create user if username exists', (done) => {
+    const user2 = new User('mexy', 'oljdjumide@gmail.com', '2345');
+
+    request(app)
+      .post('/api/v1/users')
+      .send(user2)
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('username or email already exists');
+        expect(user2.token.length).toBe(0);
+        expect(res.body.id).toBeFalsy();
+      })
+      .end(done);
+  });
+});
