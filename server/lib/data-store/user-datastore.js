@@ -1,31 +1,31 @@
-'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+const _createClass = (function () { function defineProperties(target, props) { for (let i = 0; i < props.length; i++) { const descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }());
 
-var _validator = require('validator');
+const _validator = require('validator');
 
-var _validator2 = _interopRequireDefault(_validator);
+const _validator2 = _interopRequireDefault(_validator);
 
-var _jsonwebtoken = require('jsonwebtoken');
+const _jsonwebtoken = require('jsonwebtoken');
 
-var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+const _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var localUserStore = new Map();
-var id = 0;
-var usernameExists = false;
-var emailExists = false;
+const localUserStore = new Map();
+let id = 0;
+let usernameExists = false;
+let emailExists = false;
 
 // import validator library to validate email
 
-var UserStorageSystem = function () {
+const UserStorageSystem = (function () {
   function UserStorageSystem() {
     _classCallCheck(this, UserStorageSystem);
   }
@@ -34,17 +34,17 @@ var UserStorageSystem = function () {
     key: 'validateEmail',
     value: function validateEmail(email) {
       return _validator2.default.isEmail(email);
-    }
+    },
   }, {
     key: 'verifyDetails',
     value: function verifyDetails(userData) {
-      var userWithDetails = null;
+      let userWithDetails = null;
 
       // reset every time
       usernameExists = false;
       emailExists = false;
 
-      localUserStore.forEach(function (value, key) {
+      localUserStore.forEach((value, key) => {
         if (value.username === userData.username) {
           usernameExists = true;
 
@@ -57,11 +57,11 @@ var UserStorageSystem = function () {
         }
       });
       return userWithDetails;
-    }
+    },
   }, {
     key: 'createUser',
     value: function createUser(userData) {
-      return new Promise(function (resolve, reject) {
+      return new Promise(((resolve, reject) => {
         // check if email is valid
         if (!UserStorageSystem.validateEmail(userData.email)) {
           throw new Error('Please provide a valid email');
@@ -70,7 +70,6 @@ var UserStorageSystem = function () {
         // check for uniqueness
         UserStorageSystem.verifyDetails(userData);
         if (usernameExists || emailExists) {
-
           throw new Error('username or email already exists');
         }
 
@@ -88,20 +87,20 @@ var UserStorageSystem = function () {
         // save the data
         localUserStore.set(id, userData);
 
-        var newUser = localUserStore.get(id);
+        const newUser = localUserStore.get(id);
         if (newUser) {
           resolve(newUser);
         }
         reject(new Error('User data not saved'));
-      });
-    }
+      }));
+    },
     // needed to verify user id from token in header
 
   }, {
     key: 'findByToken',
     value: function findByToken(token) {
-      return new Promise(function (resolve, reject) {
-        var decodedUser = null;
+      return new Promise(((resolve, reject) => {
+        let decodedUser = null;
 
         // if secret pattern was changed or token was altered JWT will throw an error
 
@@ -113,7 +112,7 @@ var UserStorageSystem = function () {
 
         // if there's successful verification of token get the id
         // check the data store, if found check the token and return the user
-        var userWithId = localUserStore.get(Number(decodedUser.id));
+        const userWithId = localUserStore.get(Number(decodedUser.id));
 
         if (userWithId.token[0].token === token && userWithId.token[0].access === decodedUser.access) {
           resolve(userWithId);
@@ -125,19 +124,19 @@ var UserStorageSystem = function () {
         }
 
         reject(new Error('No user with the token'));
-      });
-    }
+      }));
+    },
   }, {
     key: 'findByCredentials',
     value: function findByCredentials(userdata) {
-      return new Promise(function (resolve, reject) {
-        var validUser = UserStorageSystem.verifyDetails(userdata);
+      return new Promise(((resolve, reject) => {
+        let validUser = UserStorageSystem.verifyDetails(userdata);
 
         if (validUser) {
           // generate another token on successful login
           validUser.generateAuthToken();
           // save it in store
-          var userid = Number(validUser.id);
+          const userid = Number(validUser.id);
           localUserStore.set(id, validUser);
           // retrieve it
           validUser = localUserStore.get(userid);
@@ -145,13 +144,13 @@ var UserStorageSystem = function () {
         }
 
         reject(new Error('Username or password incorrect'));
-      });
-    }
+      }));
+    },
   }, {
     key: 'endUserProcess',
     value: function endUserProcess(user) {
-      return new Promise(function (resolve, reject) {
-        var result = user.clearToken();
+      return new Promise(((resolve, reject) => {
+        const result = user.clearToken();
 
         // save in storage
         localUserStore.set(Number(user.id), user);
@@ -161,11 +160,11 @@ var UserStorageSystem = function () {
         }
 
         reject(new Error('Unable to end user process'));
-      });
-    }
+      }));
+    },
   }]);
 
   return UserStorageSystem;
-}();
+}());
 
 exports.default = UserStorageSystem;
