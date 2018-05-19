@@ -53,6 +53,13 @@ var User = function () {
     value: function checkPassword(userStringPassword) {
       return _bcryptjs2.default.compareSync(userStringPassword, this.password);
     }
+  }, {
+    key: 'clearToken',
+    value: function clearToken() {
+      this.token = [];
+
+      return !this.token.length;
+    }
   }]);
 
   return User;

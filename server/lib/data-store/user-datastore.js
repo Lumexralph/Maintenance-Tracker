@@ -147,6 +147,22 @@ var UserStorageSystem = function () {
         reject(new Error('Username or password incorrect'));
       });
     }
+  }, {
+    key: 'endUserProcess',
+    value: function endUserProcess(user) {
+      return new Promise(function (resolve, reject) {
+        var result = user.clearToken();
+
+        // save in storage
+        localUserStore.set(Number(user.id), user);
+
+        if (result) {
+          resolve('token removed');
+        }
+
+        reject(new Error('Unable to end user process'));
+      });
+    }
   }]);
 
   return UserStorageSystem;
