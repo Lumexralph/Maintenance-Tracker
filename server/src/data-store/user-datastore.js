@@ -95,6 +95,10 @@ class UserStorageSystem {
     });
   }
 
+  static findByCredentials(username, password) {
+    
+  }
+
 }
 
 export default UserStorageSystem;

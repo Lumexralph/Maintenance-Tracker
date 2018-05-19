@@ -81,9 +81,13 @@ app.post('/api/v1/users', (req, res) => {
 
   // create new user
   UserStorageSystem.createUser(userData).then((user) => {
-    const { id, email, username, password } = user;
+    const {
+ id, email, username, password 
+} = user;
 
-    res.header('x-auth', user.token[0].token).status(201).send({ id, email, username, password });
+    res.header('x-auth', user.token[0].token).status(201).send({
+ id, email, username, password 
+});
   }, (err) => {
     res.status(401).send({
       message: err.message,
@@ -92,13 +96,19 @@ app.post('/api/v1/users', (req, res) => {
 
 });
 
-// test for making route private
-app.get('/api/v1/users/authentication', authenticate, (req, res) => {
-    res.status(200).send(req.user);
+// POST /users/login {username, password}
+app.post('/api/v1/users/login', (req, res) => {
+  const { username, password } = req.body;
+  res.send({ username, password });
 });
 
-if(!module.parent){ 
-  app.listen(3000, () => console.log('Started on port 3000')); 
+// test for making route private
+app.get('/api/v1/users/authentication', authenticate, (req, res) => {
+  res.status(200).send(req.user);
+});
+
+if (!module.parent) {
+  app.listen(3000, () => console.log('Started on port 3000'));
 }
 
 

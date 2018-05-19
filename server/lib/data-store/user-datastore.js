@@ -119,6 +119,9 @@ var UserStorageSystem = function () {
         reject(new Error('No user with the token'));
       });
     }
+  }, {
+    key: 'findByCredentials',
+    value: function findByCredentials(username, password) {}
   }]);
 
   return UserStorageSystem;
