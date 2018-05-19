@@ -101,7 +101,11 @@ app.post('/api/v1/users/login', (req, res) => {
   const { username, password } = req.body;
 
   UserStorageSystem.findByCredentials({ username, password })
-    .then((user) => { res.status(200).send(user) }, (err) => { res.status(401).send({ message: err.message }) ;});
+    .then((user) => {
+      res.header('x-auth', user.token[0].token).status(200).send(user);
+    }, (err) => {
+      res.status(401).send({ message: err.message });
+    });
 });
 
 // test for making route private
@@ -112,7 +116,6 @@ app.get('/api/v1/users/authentication', authenticate, (req, res) => {
 if (!module.parent) {
   app.listen(3000, () => console.log('Started on port 3000'));
 }
-
 
 
 export default app;

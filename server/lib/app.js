@@ -148,7 +148,7 @@ app.post('/api/v1/users/login', function (req, res) {
 
 
   _userDatastore2.default.findByCredentials({ username: username, password: password }).then(function (user) {
-    res.status(200).send(user);
+    res.header('x-auth', user.token[0].token).status(200).send(user);
   }, function (err) {
     res.status(401).send({ message: err.message });
   });

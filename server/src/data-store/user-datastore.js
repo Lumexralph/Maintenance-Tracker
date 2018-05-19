@@ -107,9 +107,16 @@ class UserStorageSystem {
 
   static findByCredentials(userdata) {
     return new Promise((resolve, reject) => {
-      const validUser = UserStorageSystem.verifyDetails(userdata);
+      let validUser = UserStorageSystem.verifyDetails(userdata);
 
-      if(validUser) {
+      if (validUser) {
+        // generate another token on successful login
+        validUser.generateAuthToken();
+        // save it in store
+        const userid = Number(validUser.id);
+        localUserStore.set(id, validUser);
+        // retrieve it
+        validUser = localUserStore.get(userid);
         resolve(validUser);
       }
 
