@@ -16,7 +16,7 @@ class User {
     const access = 'auth';
     const token = jwt.sign({ id: String(this.id), access }, 'abc').toString();
 
-    this.token.push({ access, token });
+    this.token[0] = { access, token };
   }
 
   hashPassword() {

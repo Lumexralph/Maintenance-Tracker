@@ -37,7 +37,7 @@ var User = function () {
       var access = 'auth';
       var token = _jsonwebtoken2.default.sign({ id: String(this.id), access: access }, 'abc').toString();
 
-      this.token.push({ access: access, token: token });
+      this.token[0] = { access: access, token: token };
     }
   }, {
     key: 'hashPassword',

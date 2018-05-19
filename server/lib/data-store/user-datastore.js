@@ -134,6 +134,13 @@ var UserStorageSystem = function () {
         var validUser = UserStorageSystem.verifyDetails(userdata);
 
         if (validUser) {
+          // generate another token on successful login
+          validUser.generateAuthToken();
+          // save it in store
+          var userid = Number(validUser.id);
+          localUserStore.set(id, validUser);
+          // retrieve it
+          validUser = localUserStore.get(userid);
           resolve(validUser);
         }
 
