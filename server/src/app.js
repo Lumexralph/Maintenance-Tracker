@@ -82,12 +82,12 @@ app.post('/api/v1/users', (req, res) => {
   // create new user
   UserStorageSystem.createUser(userData).then((user) => {
     const {
- id, email, username, password 
-} = user;
+      id, email, username, password,
+    } = user;
 
     res.header('x-auth', user.token[0].token).status(201).send({
- id, email, username, password 
-});
+      id, email, username, password,
+    });
   }, (err) => {
     res.status(401).send({
       message: err.message,
@@ -99,7 +99,9 @@ app.post('/api/v1/users', (req, res) => {
 // POST /users/login {username, password}
 app.post('/api/v1/users/login', (req, res) => {
   const { username, password } = req.body;
-  res.send({ username, password });
+
+  UserStorageSystem.findByCredentials({ username, password })
+    .then((user) => { res.send(user) ;}, (err) => { res.send({ message: err.message }) ;});
 });
 
 // test for making route private

@@ -38,15 +38,25 @@ var UserStorageSystem = function () {
   }, {
     key: 'verifyDetails',
     value: function verifyDetails(userData) {
+      var userWithDetails = null;
+
+      // reset every time
+      usernameExists = false;
+      emailExists = false;
 
       localUserStore.forEach(function (value, key) {
         if (value.username === userData.username) {
           usernameExists = true;
+
+          if (value.checkPassword(userData.password)) {
+            userWithDetails = value;
+          }
         }
         if (value.email === userData.email) {
           emailExists = true;
         }
       });
+      return userWithDetails;
     }
   }, {
     key: 'createUser',
@@ -60,8 +70,6 @@ var UserStorageSystem = function () {
         // check for uniqueness
         UserStorageSystem.verifyDetails(userData);
         if (usernameExists || emailExists) {
-          usernameExists = false;
-          emailExists = false;
 
           throw new Error('username or email already exists');
         }
@@ -121,7 +129,17 @@ var UserStorageSystem = function () {
     }
   }, {
     key: 'findByCredentials',
-    value: function findByCredentials(username, password) {}
+    value: function findByCredentials(userdata) {
+      return new Promise(function (resolve, reject) {
+        var validUser = UserStorageSystem.verifyDetails(userdata);
+
+        if (validUser) {
+          resolve(validUser);
+        }
+
+        reject(new Error('Username or password incorrect'));
+      });
+    }
   }]);
 
   return UserStorageSystem;

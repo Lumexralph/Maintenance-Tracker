@@ -15,15 +15,26 @@ class UserStorageSystem {
   }
 
   static verifyDetails(userData) {
+    let userWithDetails = null;
+
+    // reset every time
+    usernameExists = false;
+    emailExists = false;
 
     localUserStore.forEach((value, key) => {
       if (value.username === userData.username) {
         usernameExists = true;
+
+        if (value.checkPassword(userData.password)) {
+          userWithDetails = value;
+        }
+
       }
       if (value.email === userData.email) {
         emailExists = true;
       }
     });
+    return userWithDetails;
   }
 
   static createUser(userData) {
@@ -36,8 +47,7 @@ class UserStorageSystem {
       // check for uniqueness
       UserStorageSystem.verifyDetails(userData);
       if (usernameExists || emailExists) {
-        usernameExists = false;
-        emailExists = false;
+        
 
         throw new Error('username or email already exists');
       }
@@ -52,7 +62,7 @@ class UserStorageSystem {
 
       // hash the password before saving
       userData.hashPassword();
-      
+
       // save the data
       localUserStore.set(id, userData);
 
@@ -95,8 +105,17 @@ class UserStorageSystem {
     });
   }
 
-  static findByCredentials(username, password) {
-    
+  static findByCredentials(userdata) {
+    return new Promise((resolve, reject) => {
+      const validUser = UserStorageSystem.verifyDetails(userdata);
+
+      if(validUser) {
+        resolve(validUser);
+      }
+
+      reject(new Error('Username or password incorrect'));
+
+    });
   }
 
 }

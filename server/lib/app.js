@@ -146,7 +146,12 @@ app.post('/api/v1/users/login', function (req, res) {
       username = _req$body3.username,
       password = _req$body3.password;
 
-  res.send({ username: username, password: password });
+
+  _userDatastore2.default.findByCredentials({ username: username, password: password }).then(function (user) {
+    res.send(user);
+  }, function (err) {
+    res.send({ message: err.message });
+  });
 });
 
 // test for making route private
