@@ -130,11 +130,27 @@ app.post('/api/v1/users', function (req, res) {
         password = user.password;
 
 
-    res.header('x-auth', user.token[0].token).status(201).send({ id: id, email: email, username: username, password: password });
+    res.header('x-auth', user.token[0].token).status(201).send({
+      id: id, email: email, username: username, password: password
+    });
   }, function (err) {
-    res.status(401).send({
+    res.status(400).send({
       message: err.message
     });
+  });
+});
+
+// POST /users/login {username, password}
+app.post('/api/v1/users/login', function (req, res) {
+  var _req$body3 = req.body,
+      username = _req$body3.username,
+      password = _req$body3.password;
+
+
+  _userDatastore2.default.findByCredentials({ username: username, password: password }).then(function (user) {
+    res.status(200).send(user);
+  }, function (err) {
+    res.status(401).send({ message: err.message });
   });
 });
 
