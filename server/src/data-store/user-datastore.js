@@ -125,6 +125,21 @@ class UserStorageSystem {
     });
   }
 
+  static endUserProcess(user) {
+    return new Promise((resolve, reject) => {
+      const result = user.clearToken();
+
+      // save in storage
+      localUserStore.set(Number(user.id), user);
+
+      if (result) {
+        resolve('token removed');
+      }
+
+      reject(new Error('Unable to end user process'));
+    });
+  }
+
 }
 
 export default UserStorageSystem;

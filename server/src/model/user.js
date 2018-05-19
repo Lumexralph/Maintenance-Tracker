@@ -30,6 +30,12 @@ class User {
   checkPassword(userStringPassword) {
     return bcrypt.compareSync(userStringPassword, this.password);
   }
+
+  clearToken() {
+    this.token = [];
+
+    return !this.token.length;
+  }
 }
 
 export default User;
