@@ -241,3 +241,80 @@ describe('POST /users', function () {
     }).end(done);
   });
 });
+
+describe('POST /users/login', function () {
+  it('should login user', function (done) {
+    var user = {
+      username: 'mexy',
+      password: '2345'
+    };
+
+    (0, _supertest2.default)(_app2.default).post('/api/v1/users/login').send(user).expect(200).expect(function (res) {
+      (0, _expect2.default)(res.header).toHaveProperty('x-auth');
+      (0, _expect2.default)(res.body.id).toBe(2);
+      (0, _expect2.default)(res.body.token.length).toBe(1);
+    }).end(done);
+  });
+
+  it('should add token to header on login', function (done) {
+    var user = {
+      username: 'mexy',
+      password: '2345'
+    };
+
+    (0, _supertest2.default)(_app2.default).post('/api/v1/users/login').send(user).expect(200).expect(function (res) {
+      (0, _expect2.default)(res.header).toHaveProperty('x-auth');
+      (0, _expect2.default)(res.header['x-auth']).toBeDefined();
+    }).end(done);
+  });
+
+  it('should set header on when user gives wrong username', function (done) {
+    var user = {
+      username: 'mex',
+      password: '2345'
+    };
+
+    (0, _supertest2.default)(_app2.default).post('/api/v1/users/login').send(user).expect(401).expect(function (res) {
+      (0, _expect2.default)(res.header).not.toHaveProperty('x-auth');
+      (0, _expect2.default)(res.header['x-auth']).toBeUndefined();
+    }).end(done);
+  });
+
+  it('should set header on when user gives wrong password', function (done) {
+    var user = {
+      username: 'mexy',
+      password: '23457'
+    };
+
+    (0, _supertest2.default)(_app2.default).post('/api/v1/users/login').send(user).expect(401).expect(function (res) {
+      (0, _expect2.default)(res.header).not.toHaveProperty('x-auth');
+      (0, _expect2.default)(res.header['x-auth']).toBeUndefined();
+    }).end(done);
+  });
+
+  it('should not login user wrong password', function (done) {
+    var user = {
+      username: 'mexy',
+      password: '23457'
+    };
+
+    (0, _supertest2.default)(_app2.default).post('/api/v1/users/login').send(user).expect(401).expect(function (res) {
+      (0, _expect2.default)(res.body.id).toBeUndefined();
+      (0, _expect2.default)(res.body).toHaveProperty('message');
+      (0, _expect2.default)(res.body.message).toBe('Username or password incorrect');
+    }).end(done);
+  });
+
+  it('should not login user wrong username', function (done) {
+    var user = {
+      username: 'mexyuu',
+      password: '2345'
+    };
+
+    (0, _supertest2.default)(_app2.default).post('/api/v1/users/login').send(user).expect(401).expect(function (res) {
+      (0, _expect2.default)(res.body.id).toBeUndefined();
+      (0, _expect2.default)(res.body).toHaveProperty('message');
+      (0, _expect2.default)(res.body.message).toBe('Username or password incorrect');
+    }).end(done);
+  });
+});
