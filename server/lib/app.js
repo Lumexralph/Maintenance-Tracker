@@ -15,11 +15,12 @@ var _api2 = _interopRequireDefault(_api);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
+var port = process.env.PORT || 3000;
 
 app.use('/api/v1', _api2.default);
 
 if (!module.parent) {
-  app.listen(3000);
+  app.listen(port);
 }
 
 exports.default = app;
