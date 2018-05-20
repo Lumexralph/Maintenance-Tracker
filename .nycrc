@@ -14,10 +14,13 @@
     "**/tests/**",
     "**/UI/**",
     ".nyc_output",
-    "**/server/lib**"
+    "**/server/src/data-store**",
+    "**/server/src/model/user.js**",
+    "**/server/src/middleware**",
+    "**/server/src/api**"
   ],
   "include": [
-    "**/server/src**"
+    
   ],
   "reporter": ["lcov", "json", "text", "html"],
   "sourceMap": false,
