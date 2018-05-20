@@ -9,7 +9,6 @@ let emailExists = false;
 // import validator library to validate email
 
 class UserStorageSystem {
-
   static validateEmail(email) {
     return validator.isEmail(email);
   }
@@ -28,7 +27,6 @@ class UserStorageSystem {
         if (value.checkPassword(userData.password)) {
           userWithDetails = value;
         }
-
       }
       if (value.email === userData.email) {
         emailExists = true;
@@ -37,7 +35,8 @@ class UserStorageSystem {
     return userWithDetails;
   }
 
-  static createUser(userData) {
+  static createUser(data) {
+    const userData = data;
     return new Promise((resolve, reject) => {
       // check if email is valid
       if (!UserStorageSystem.validateEmail(userData.email)) {
@@ -47,8 +46,6 @@ class UserStorageSystem {
       // check for uniqueness
       UserStorageSystem.verifyDetails(userData);
       if (usernameExists || emailExists) {
-        
-
         throw new Error('username or email already exists');
       }
 
@@ -91,7 +88,8 @@ class UserStorageSystem {
       // check the data store, if found check the token and return the user
       const userWithId = localUserStore.get(Number(decodedUser.id));
 
-      if (userWithId.token[0].token === token && userWithId.token[0].access === decodedUser.access) {
+      if (userWithId.token[0].token === token &&
+          userWithId.token[0].access === decodedUser.access) {
         resolve(userWithId);
       }
 
@@ -101,7 +99,6 @@ class UserStorageSystem {
       }
 
       reject(new Error('No user with the token'));
-
     });
   }
 
@@ -121,7 +118,6 @@ class UserStorageSystem {
       }
 
       reject(new Error('Username or password incorrect'));
-
     });
   }
 
@@ -139,7 +135,6 @@ class UserStorageSystem {
       reject(new Error('Unable to end user process'));
     });
   }
-
 }
 
 export default UserStorageSystem;

@@ -1,24 +1,26 @@
+'use strict';
 
-
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 
-const _userDatastore = require('../data-store/user-datastore');
+var _userDatastore = require('../data-store/user-datastore');
 
-const _userDatastore2 = _interopRequireDefault(_userDatastore);
+var _userDatastore2 = _interopRequireDefault(_userDatastore);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const authenticate = function authenticate(req, res, next) {
-  const token = req.header('x-auth');
+var authenticate = function authenticate(req, res, next) {
+  var token = req.header('x-auth');
 
   // check the token
-  _userDatastore2.default.findByToken(token).then((user) => {
+  _userDatastore2.default.findByToken(token).then(function (user) {
     req.user = user;
     req.token = token;
     next();
-  }, err => res.status(401).send({ message: err.message }));
+  }, function (err) {
+    return res.status(401).send({ message: err.message });
+  });
 };
 
 exports.default = authenticate;

@@ -7,7 +7,7 @@ const app = express();
 app.use('/api/v1', apiVersion1);
 
 if (!module.parent) {
-  app.listen(3000, () => console.log('Started on port 3000'));
+  app.listen(3000);
 }
 
 export default app;
