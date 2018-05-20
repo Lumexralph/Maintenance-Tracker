@@ -13,10 +13,11 @@
     "**/node_modules/**",
     "**/tests/**",
     "**/UI/**",
-    ".nyc_output"
+    ".nyc_output",
+    "**/server/lib**"
   ],
   "include": [
-    "**/server/**"
+    "**/server/src**"
   ],
   "reporter": ["lcov", "json", "text", "html"],
   "sourceMap": false,

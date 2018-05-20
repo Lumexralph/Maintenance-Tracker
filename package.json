@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=dev node server/lib/app.js",
     "lint": "eslint server/lib/**/*.js --fix",
-    "test": "nyc mocha --timeout=3000 server/lib/**/*.test.js",
+    "test": "cross-env NODE_ENV=test nyc mocha --timeout=3000 server/lib/**/*.test.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "test-watch": "nodemon --exec \"npm test\"",
     "build": "babel server/src -d server/lib",
@@ -16,6 +16,7 @@
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-plugin-istanbul": "^4.1.6",
     "babel-preset-env": "^1.7.0",
     "coveralls": "^3.0.1",
     "cross-env": "^5.1.5",
