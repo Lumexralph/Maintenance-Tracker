@@ -16,10 +16,6 @@ var _morgan = require('morgan');
 
 var _morgan2 = _interopRequireDefault(_morgan);
 
-var _requesModel = require('../model/reques-model');
-
-var _requesModel2 = _interopRequireDefault(_requesModel);
-
 var _dataStore = require('../data-store/data-store');
 
 var _dataStore2 = _interopRequireDefault(_dataStore);
@@ -36,6 +32,18 @@ var _authenticate = require('../middleware/authenticate');
 
 var _authenticate2 = _interopRequireDefault(_authenticate);
 
+var _createRequest = require('../controller/create-request');
+
+var _createRequest2 = _interopRequireDefault(_createRequest);
+
+var _getAllRequests = require('../controller/get-all-requests');
+
+var _getAllRequests2 = _interopRequireDefault(_getAllRequests);
+
+var _getRequestId = require('../controller/get-request-id');
+
+var _getRequestId2 = _interopRequireDefault(_getRequestId);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var api = _express2.default.Router();
@@ -45,56 +53,13 @@ api.use(_bodyParser2.default.json());
 api.use((0, _morgan2.default)('combined'));
 
 // create routes version 1
-api.post('/users/requests', _authenticate2.default, function (req, res) {
-  // check and validate the data
-  if (!Object.prototype.hasOwnProperty.call(req.body, 'content') || !Object.prototype.hasOwnProperty.call(req.body, 'title')) {
-    return res.status(400).send({ message: 'One of the field is empty' });
-  }
-  if (!req.body.title || !req.body.content) {
-    return res.status(400).send({ message: 'The field has missing values' });
-  }
-
-  var _req$body = req.body,
-      title = _req$body.title,
-      content = _req$body.content;
-
-  var newRequest = new _requesModel2.default(title, content);
-
-  // Add the new request
-  _dataStore2.default.createData(newRequest).then(function (data) {
-    return res.status(201).send(data);
-  }, function (err) {
-    return res.status(400).send(err.message);
-  });
-
-  return undefined;
-});
+api.post('/users/requests', _authenticate2.default, _createRequest2.default);
 
 // GET all requests
-api.get('/users/requests', _authenticate2.default, function (req, res) {
-  _dataStore2.default.getAllData().then(function (requests) {
-    return res.status(200).send({ requests: requests });
-  }, function (err) {
-    return res.status(500).send({
-      message: err.message
-    });
-  });
-});
+api.get('/users/requests', _authenticate2.default, _getAllRequests2.default);
 
 // GET a request from user by id
-api.get('/users/requests/:requestId', _authenticate2.default, function (req, res) {
-  var requestId = req.params.requestId;
-
-  // if validdates requestId go ahead to look for it in DataStorageSystem
-
-  _dataStore2.default.getById(requestId).then(function (request) {
-    return res.status(200).send(request);
-  }, function (err) {
-    return res.status(404).send({
-      message: err.message
-    });
-  });
-});
+api.get('/users/requests/:requestId', _authenticate2.default, _getRequestId2.default);
 
 // PUT modify a request by id
 api.put('/users/requests/:requestId', _authenticate2.default, function (req, res) {
@@ -127,10 +92,10 @@ api.post('/users', function (req, res) {
 
 
   // make a new instance
-  var _req$body2 = req.body;
-  username = _req$body2.username;
-  email = _req$body2.email;
-  password = _req$body2.password;
+  var _req$body = req.body;
+  username = _req$body.username;
+  email = _req$body.email;
+  password = _req$body.password;
   var userData = new _user2.default(username, email, password);
 
   // create new user
@@ -153,9 +118,9 @@ api.post('/users', function (req, res) {
 
 // POST /users/login {username, password}
 api.post('/users/login', function (req, res) {
-  var _req$body3 = req.body,
-      username = _req$body3.username,
-      password = _req$body3.password;
+  var _req$body2 = req.body,
+      username = _req$body2.username,
+      password = _req$body2.password;
 
 
   _userDatastore2.default.findByCredentials({ username: username, password: password }).then(function (user) {
