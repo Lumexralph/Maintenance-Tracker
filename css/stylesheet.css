@@ -155,7 +155,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 }
 
 .nav-btn {
-  color:#278a8a;
+  color:#3397e6;
   padding: 10px 15px;
   font-size: 1.125em;
 }
@@ -239,7 +239,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 }
 
 .recent-request-text {
-  color: #278a8a;
+  color: #3397e6;
   text-shadow: 1px 1px black;
 }
 
@@ -253,7 +253,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 /* accordion for Recent Module */
 .accordion {
   background-color: #eee;
-  color:#278a8a;
+  color:#3397e6;
   cursor: pointer;
   padding: 18px;
   width: 100%;
@@ -281,7 +281,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 }
 
 .panel {
-  color: #278a8a;
+  color: #3397e6;
   padding: 0 18px;
   background-color: white;
   max-height: 0;
