@@ -14,6 +14,7 @@
     "**/tests/**",
     "**/UI/**",
     ".nyc_output",
+    "**/server/src/controller**",
     "**/server/src/data-store**",
     "**/server/src/model/user.js**",
     "**/server/src/middleware**",

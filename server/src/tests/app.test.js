@@ -2,7 +2,7 @@ import expect from 'expect';
 import request from 'supertest';
 
 import app from '../app';
-import UserRequest from '../model/reques-model';
+import UserRequest from '../model/user-request';
 import User from '../model/user';
 import DataStorageSystem from '../data-store/data-store';
 import UserStorageSystem from '../data-store/user-datastore';
