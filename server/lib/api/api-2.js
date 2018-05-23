@@ -16,9 +16,9 @@ var _morgan = require('morgan');
 
 var _morgan2 = _interopRequireDefault(_morgan);
 
-var _index = require('../db/index');
+var _getHomepage = require('../controler-2/get-homepage');
 
-var _index2 = _interopRequireDefault(_index);
+var _getHomepage2 = _interopRequireDefault(_getHomepage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29,12 +29,6 @@ api.use(_bodyParser2.default.json());
 api.use((0, _morgan2.default)('combined'));
 
 // GET homepage
-api.get('/', function (req, res) {
-  _index2.default.query('SELECT * FROM Student').then(function (result) {
-    return res.send(result);
-  }).catch(function (err) {
-    return res.send(err);
-  });
-});
+api.get('/', _getHomepage2.default);
 
 exports.default = api;

@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
-import db from '../db/index';
+import getHomePage from '../controler-2/get-homepage';
 
 const api = express.Router();
 
@@ -11,11 +11,7 @@ api.use(bodyParser.json());
 api.use(morgan('combined'));
 
 // GET homepage
-api.get('/', (req, res) => {
-  db.query('SELECT * FROM Student')
-    .then(result => res.send(result))
-    .catch(err => res.send(err));  
-});
+api.get('/', getHomePage);
 
 
 export default api;
