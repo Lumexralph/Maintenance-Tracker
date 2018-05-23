@@ -12,12 +12,17 @@ var _api = require('./api/api-1');
 
 var _api2 = _interopRequireDefault(_api);
 
+var _api3 = require('./api/api-2');
+
+var _api4 = _interopRequireDefault(_api3);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
 var port = process.env.PORT || 3000;
 
-app.use('/api/v1', _api2.default);
+// app.use('/api/v1', apiVersion1);
+app.use('/api/v1', _api4.default);
 
 if (!module.parent) {
   app.listen(port);
