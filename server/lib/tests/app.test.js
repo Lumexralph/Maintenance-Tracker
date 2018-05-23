@@ -12,9 +12,9 @@ var _app = require('../app');
 
 var _app2 = _interopRequireDefault(_app);
 
-var _requesModel = require('../model/reques-model');
+var _userRequest = require('../model/user-request');
 
-var _requesModel2 = _interopRequireDefault(_requesModel);
+var _userRequest2 = _interopRequireDefault(_userRequest);
 
 var _user = require('../model/user');
 

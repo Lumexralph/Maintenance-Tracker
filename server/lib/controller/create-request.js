@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _requesModel = require('../model/reques-model');
+var _userRequest = require('../model/user-request');
 
-var _requesModel2 = _interopRequireDefault(_requesModel);
+var _userRequest2 = _interopRequireDefault(_userRequest);
 
 var _dataStore = require('../data-store/data-store');
 
@@ -27,7 +27,7 @@ var createUserRequest = function createUserRequest(req, res) {
       title = _req$body.title,
       content = _req$body.content;
 
-  var newRequest = new _requesModel2.default(title, content);
+  var newRequest = new _userRequest2.default(title, content);
 
   // Add the new request
   _dataStore2.default.createData(newRequest).then(function (data) {

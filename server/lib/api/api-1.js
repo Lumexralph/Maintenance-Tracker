@@ -16,18 +16,6 @@ var _morgan = require('morgan');
 
 var _morgan2 = _interopRequireDefault(_morgan);
 
-var _dataStore = require('../data-store/data-store');
-
-var _dataStore2 = _interopRequireDefault(_dataStore);
-
-var _userDatastore = require('../data-store/user-datastore');
-
-var _userDatastore2 = _interopRequireDefault(_userDatastore);
-
-var _user = require('../model/user');
-
-var _user2 = _interopRequireDefault(_user);
-
 var _authenticate = require('../middleware/authenticate');
 
 var _authenticate2 = _interopRequireDefault(_authenticate);
@@ -43,6 +31,22 @@ var _getAllRequests2 = _interopRequireDefault(_getAllRequests);
 var _getRequestId = require('../controller/get-request-id');
 
 var _getRequestId2 = _interopRequireDefault(_getRequestId);
+
+var _modifyRequest = require('../controller/modify-request');
+
+var _modifyRequest2 = _interopRequireDefault(_modifyRequest);
+
+var _loginUser = require('../controller/login-user');
+
+var _loginUser2 = _interopRequireDefault(_loginUser);
+
+var _signupUser = require('../controller/signup-user');
+
+var _signupUser2 = _interopRequireDefault(_signupUser);
+
+var _logoutUser = require('../controller/logout-user');
+
+var _logoutUser2 = _interopRequireDefault(_logoutUser);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -62,84 +66,15 @@ api.get('/users/requests', _authenticate2.default, _getAllRequests2.default);
 api.get('/users/requests/:requestId', _authenticate2.default, _getRequestId2.default);
 
 // PUT modify a request by id
-api.put('/users/requests/:requestId', _authenticate2.default, function (req, res) {
-  var requestId = req.params.requestId;
-
-  var data = req.body;
-
-  // update the new data
-  _dataStore2.default.getByIdAndUpdate(requestId, data).then(function (newRequest) {
-    if (!newRequest) {
-      return res.status(404).send({
-        message: 'Request to be updated not found'
-      });
-    }
-
-    return res.status(201).send(newRequest);
-  }).catch(function (err) {
-    return res.status(400).send({
-      message: err.message
-    });
-  });
-});
+api.put('/users/requests/:requestId', _authenticate2.default, _modifyRequest2.default);
 
 // POST /api/v1/users/ .... user signup
-api.post('/users', function (req, res) {
-  var id = void 0;
-  var username = void 0;
-  var email = void 0;
-  var password = void 0;
-
-
-  // make a new instance
-  var _req$body = req.body;
-  username = _req$body.username;
-  email = _req$body.email;
-  password = _req$body.password;
-  var userData = new _user2.default(username, email, password);
-
-  // create new user
-  _userDatastore2.default.createUser(userData).then(function (user) {
-    id = user.id;
-    email = user.email;
-    username = user.username;
-    password = user.password;
-
-
-    res.header('x-auth', user.token[0].token).status(201).send({
-      id: id, email: email, username: username, password: password
-    });
-  }, function (err) {
-    res.status(400).send({
-      message: err.message
-    });
-  });
-});
+api.post('/users', _signupUser2.default);
 
 // POST /users/login {username, password}
-api.post('/users/login', function (req, res) {
-  var _req$body2 = req.body,
-      username = _req$body2.username,
-      password = _req$body2.password;
-
-
-  _userDatastore2.default.findByCredentials({ username: username, password: password }).then(function (user) {
-    res.header('x-auth', user.token[0].token).status(200).send(user);
-  }, function (err) {
-    res.status(401).send({ message: err.message });
-  });
-});
+api.post('/users/login', _loginUser2.default);
 
 // log out
-api.delete('/users/logout', _authenticate2.default, function (req, res) {
-  var user = req.user;
-
-
-  _userDatastore2.default.endUserProcess(user).then(function (result) {
-    return res.status(200).send('logged out');
-  }, function (err) {
-    return res.status(400).send('error');
-  });
-});
+api.delete('/users/logout', _authenticate2.default, _logoutUser2.default);
 
 exports.default = api;
