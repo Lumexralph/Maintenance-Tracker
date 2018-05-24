@@ -12,7 +12,7 @@ var _app = require('../app');
 
 var _app2 = _interopRequireDefault(_app);
 
-var _userRequest = require('../model/user-request');
+var _userRequest = require('../model/userRequest');
 
 var _userRequest2 = _interopRequireDefault(_userRequest);
 
@@ -20,11 +20,11 @@ var _user = require('../model/user');
 
 var _user2 = _interopRequireDefault(_user);
 
-var _dataStore = require('../data-store/data-store');
+var _datastore = require('../datastore/datastore');
 
-var _dataStore2 = _interopRequireDefault(_dataStore);
+var _datastore2 = _interopRequireDefault(_datastore);
 
-var _userDatastore = require('../data-store/user-datastore');
+var _userDatastore = require('../datastore/userDatastore');
 
 var _userDatastore2 = _interopRequireDefault(_userDatastore);
 
@@ -52,7 +52,7 @@ describe('POST /users/requests', function () {
         return done(err);
       }
 
-      var dataSize = _dataStore2.default.getDataSize();
+      var dataSize = _datastore2.default.getDataSize();
 
       (0, _expect2.default)(dataSize).toBe(1);
       done();
@@ -73,7 +73,7 @@ describe('POST /users/requests', function () {
         return done(err);
       }
 
-      var dataSize = _dataStore2.default.getDataSize();
+      var dataSize = _datastore2.default.getDataSize();
 
       (0, _expect2.default)(dataSize).toBe(1);
       done();
@@ -93,7 +93,7 @@ describe('POST /users/requests', function () {
         return done(err);
       }
 
-      var dataSize = _dataStore2.default.getDataSize();
+      var dataSize = _datastore2.default.getDataSize();
 
       (0, _expect2.default)(dataSize).toBe(1);
       done();
@@ -107,7 +107,7 @@ describe('GET /users/requests', function (done) {
     (0, _supertest2.default)(_app2.default).get('/api/v1/users/requests').set('x-auth', user1.token[0].token).expect(200).expect(function (res) {
       (0, _expect2.default)(res.body.requests.length).toBe(1);
       (0, _expect2.default)(res.body).toHaveProperty('requests');
-      (0, _expect2.default)(_dataStore2.default.getDataSize()).toBe(1);
+      (0, _expect2.default)(_datastore2.default.getDataSize()).toBe(1);
     }).end(done);
   });
 });
@@ -127,7 +127,7 @@ describe('GET users/requests/requestId', function () {
     (0, _supertest2.default)(_app2.default).get('/api/v1/users/requests/' + requestId).set('x-auth', user1.token[0].token).expect(200).expect(function (res) {
       (0, _expect2.default)(res.body).toMatchObject(returnedObj);
       (0, _expect2.default)(res.body.title).toBe(returnedObj.title);
-      (0, _expect2.default)(_dataStore2.default.validateId(requestId)).toBeTruthy();
+      (0, _expect2.default)(_datastore2.default.validateId(requestId)).toBeTruthy();
     }).end(done);
   });
 
@@ -138,7 +138,7 @@ describe('GET users/requests/requestId', function () {
     (0, _supertest2.default)(_app2.default).get('/api/v1/users/requests/' + requestId).set('x-auth', user1.token[0].token).expect(404).expect(function (res) {
       (0, _expect2.default)(res.body).toMatchObject({});
       (0, _expect2.default)(res.body.title).toBeUndefined();
-      (0, _expect2.default)(_dataStore2.default.validateId(requestId)).toBeFalsy();
+      (0, _expect2.default)(_datastore2.default.validateId(requestId)).toBeFalsy();
     }).end(done);
   });
 });
@@ -167,8 +167,8 @@ describe('PUT users/requests/requestId', function () {
       (0, _expect2.default)(res.body).toHaveProperty('department');
       (0, _expect2.default)(res.body.title).toBe(returnedObj.title);
       (0, _expect2.default)(res.body.department).toBe(returnedObj.department);
-      (0, _expect2.default)(_dataStore2.default.getDataSize()).toBe(1);
-      (0, _expect2.default)(_dataStore2.default.validateId(requestId)).toBeTruthy();
+      (0, _expect2.default)(_datastore2.default.getDataSize()).toBe(1);
+      (0, _expect2.default)(_datastore2.default.validateId(requestId)).toBeTruthy();
     }).end(done);
   });
 
@@ -190,8 +190,8 @@ describe('PUT users/requests/requestId', function () {
 
     (0, _supertest2.default)(_app2.default).put('/api/v1/users/requests/' + requestId).set('x-auth', user1.token[0].token).send(clientRequest).expect(400).expect(function (res) {
       (0, _expect2.default)(res.body).toHaveProperty('message');
-      (0, _expect2.default)(_dataStore2.default.getDataSize()).toBe(1);
-      (0, _expect2.default)(_dataStore2.default.validateId(requestId)).toBeFalsy();
+      (0, _expect2.default)(_datastore2.default.getDataSize()).toBe(1);
+      (0, _expect2.default)(_datastore2.default.validateId(requestId)).toBeFalsy();
     }).end(done);
   });
 });

@@ -1,15 +1,14 @@
 import { Pool } from 'pg';
+import config from '../config/index';
 
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'postgres',
-  password: 'spirit',
-  port: 5432,
+  user: config.user,
+  host: config.host,
+  database: config.db,
+  password: config.password,
+  port: config.port,
 });
 
-const query = (text, params, callback) => {
-  return pool.query(text, params, callback);
-};
+const query = (text, params, callback) => pool.query(text, params, callback);
 
 export default { query };

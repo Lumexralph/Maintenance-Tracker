@@ -1,7 +1,10 @@
 import express from 'express';
 
-import apiVersion1 from './api/api-1';
-import apiVersion2 from './api/api-2';
+/**
+ * Represents the api using non-persistent data
+ */
+import apiVersion1 from './api/api1';
+import apiVersion2 from './api/api2';
 
 const app = express();
 const port = process.env.PORT || 3000;
