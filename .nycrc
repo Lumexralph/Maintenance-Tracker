@@ -12,11 +12,13 @@
   "exclude": [
     "**/node_modules/**",
     "**/tests/**",
+    "**/tests2/**",
     "**/UI/**",
     ".nyc_output",
     "**/server/src/controller**",
-    "**/server/src/data-store**",
-    "**/server/src/model/user.js**",
+    "**/server/src/controller2**",
+    "**/server/src/datastore**",
+    "**/server/src/model**",
     "**/server/src/middleware**",
     "**/server/src/api**"
   ],

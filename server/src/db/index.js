@@ -8,8 +8,6 @@ const pool = new Pool({
   port: 5432,
 });
 
-const query = (text, params, callback) => {
-  return pool.query(text, params, callback);
-};
+const query = (text, params, callback) => pool.query(text, params, callback);
 
 export default { query };

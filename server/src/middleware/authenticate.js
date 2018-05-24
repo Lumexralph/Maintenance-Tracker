@@ -1,4 +1,4 @@
-import UserStorageSystem from '../data-store/user-datastore';
+import UserStorageSystem from '../datastore/userDatastore';
 
 const authenticate = (req, res, next) => {
   const token = req.header('x-auth');
