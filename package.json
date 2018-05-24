@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=dev node server/lib/app.js",
+    "start": "cross-env NODE_ENV=dev nodemon server/lib/app.js",
     "lint": "eslint server/lib/**/*.js --fix",
     "test": "cross-env NODE_ENV=test nyc mocha --timeout=3000 server/src/tests2/*.test.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
