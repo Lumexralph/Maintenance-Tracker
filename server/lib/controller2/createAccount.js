@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _jsonwebtoken = require('jsonwebtoken');
-
-var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
-
 var _validator = require('validator');
 
 var _validator2 = _interopRequireDefault(_validator);
@@ -19,6 +15,10 @@ var _index2 = _interopRequireDefault(_index);
 var _hashPassword = require('./utils/hashPassword');
 
 var _hashPassword2 = _interopRequireDefault(_hashPassword);
+
+var _generateToken = require('./utils/generateToken');
+
+var _generateToken2 = _interopRequireDefault(_generateToken);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66,10 +66,7 @@ var createUserAccount = function createUserAccount(req, res) {
   _index2.default.query(text).then(function (result) {
     return result.rows[0];
   }).then(function (result) {
-    var access = 'auth';
-    var token = _jsonwebtoken2.default.sign({ user_id: String(result.user_id), access: access }, 'abc').toString();
-
-    var jsonToken = JSON.stringify({ access: access, token: token });
+    var jsonToken = (0, _generateToken2.default)(result);
     console.log(jsonToken);
 
     var text2 = 'UPDATE users \n      SET token = \'' + jsonToken + '\' WHERE user_id = \'' + result.user_id + '\' RETURNING *';
@@ -87,15 +84,6 @@ var createUserAccount = function createUserAccount(req, res) {
 };
 
 exports.default = createUserAccount;
-
-//   generateAuthToken() {
-//     const access = 'auth';
-//     const token = jwt.sign({ id: String(this.id), access }, 'abc').toString();
-
-//     this.token[0] = { access, token };
-//   }
-
-//
 
 //   checkPassword(userStringPassword) {
 //     return bcrypt.compareSync(userStringPassword, this.password);

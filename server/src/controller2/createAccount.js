@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken';
 import validator from 'validator';
 
 import db from '../db/index';
 import hashPassword from './utils/hashPassword';
+import generateAuthToken from './utils/generateToken';
 
 const createUserAccount = (req, res) => {
   let hashedPassword = null;
@@ -49,11 +49,7 @@ const createUserAccount = (req, res) => {
   db.query(text)
     .then(result => result.rows[0])
     .then((result) => {
-      const access = 'auth';
-      const token = jwt.sign({ user_id: String(result.user_id), access }, 'abc').toString();
-      
-
-      const jsonToken = JSON.stringify({ access, token });
+      const jsonToken = generateAuthToken(result);
       console.log(jsonToken);
 
       const text2 = `UPDATE users 
@@ -71,14 +67,7 @@ const createUserAccount = (req, res) => {
 export default createUserAccount;
 
 
-//   generateAuthToken() {
-//     const access = 'auth';
-//     const token = jwt.sign({ id: String(this.id), access }, 'abc').toString();
 
-//     this.token[0] = { access, token };
-//   }
-
-//
 
 //   checkPassword(userStringPassword) {
 //     return bcrypt.compareSync(userStringPassword, this.password);
