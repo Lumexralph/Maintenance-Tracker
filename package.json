@@ -12,6 +12,10 @@
     "build": "babel server/src -d server/lib",
     "build-watch": "babel server/src --watch -d server/lib"
   },
+  "engines": {
+    "node": "10.0.0",
+    "npm": "5.7.1"
+  },
   "author": "Olumide Ogundele",
   "license": "ISC",
   "devDependencies": {
