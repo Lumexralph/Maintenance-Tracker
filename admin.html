@@ -20,296 +20,294 @@
       <ul class="nav">
         <li>
           <a href="index.html" class="btn nav-btn nav-link">Home</a>
-        </li>     
-        <li>
-          <a href="user-page.html" class="btn nav-btn nav-link">User</a>
         </li>
         <li>
-          <a href="admin.html" class="btn nav-btn nav-link">Admin</a>
+          <a href="userpage.html" class="btn nav-btn nav-link">User</a>
         </li>
         <li>
-          <a href="signup.html" class="btn nav-btn nav-link">Signup</a>
-        </li>
-        <li>
-          <a href="login.html" class="btn nav-btn nav-link">Login</a>
+          <a href="index.html" class="btn nav-btn nav-link">Logout</a>
         </li>
       </ul>
     </nav>
-  <main>
-    <section class="admin-container">
-      <!-- container for admin panel -->
-      <nav class="admin-panel-1 background-tertiary text-primary admin-panel-1-text">
-        <p>Admin Panel</p>
-        <p>Welcome, Admin User</p>
-        <p>
-          <label for="filter-by">Filter Requests</label>
-          <select id="filter-by" name="filter-by">
-            <option value="none">None</option>
-            <option value="repairs">Repairs</option>
-            <option value="maintenance">Maintenance</option>
-            <option value="resolved">Resolved</option>
-            <option value="unresolved">Unresolved</option>
-          </select>
-        </p>
-        <p>
-          <a class="text-primary" href="">Log Out</a>
-        </p>
+    <main>
+      <section class="admin-container">
+        <!-- container for admin panel -->
+        <nav class="admin-panel-1 background-tertiary text-primary admin-panel-1-text">
+          <p>Admin Panel</p>
+          <p>Welcome, Admin User</p>
+          <p>
+            <label for="filter-by">Filter Requests</label>
+            <select id="filter-by" name="filter-by">
+              <option value="none">None</option>
+              <option value="repairs">Repairs</option>
+              <option value="maintenance">Maintenance</option>
+              <option value="resolved">Resolved</option>
+              <option value="unresolved">Unresolved</option>
+            </select>
+          </p>
+          <p>
+            <a class="text-primary" href="">Log Out</a>
+          </p>
+        </nav>
+        <nav class="admin-panel-2 admin-panel-2-text background-secondary">
+          <p>All Requests(22)</p>
+          <p>Maintenance(12)</p>
+          <p>Repairs(10)</p>
+          <p>Resolved(8)</p>
+          <p>Unresolved(5)</p>
+        </nav>
+      </section>
+      <nav class="admin-panel-3">
+        <div class="table-container">
+          <table>
+            <tr>
+              <th>Time</th>
+              <th>Type</th>
+              <th>Request Title</th>
+              <th>Action</th>
+              <th>Resolved</th>
+            </tr>
+            <tr>
+              <td>May 5</td>
+              <td>Maintenance</td>
+              <td>
+                <a id="request-content" href="#">Update HR Department PCs</a>
+              </td>
+              <td>
+                <button class="admin-table-btn accept-btn">accept</button>
+                <button class="admin-table-btn reject-btn">reject</button>
+              </td>
+              <td>
+                <label class="">
+                  <input type="checkbox" name="resolved" value="no">
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>1:30 pm</td>
+              <td>Repairs</td>
+              <td>Repair Damaged Door</td>
+              <td>
+                <button class="admin-table-btn accept-btn">accept</button>
+                <button class="admin-table-btn reject-btn">reject</button>
+              </td>
+              <td>
+                <label class="">
+                  <input type="checkbox" name="resolved" value="no">
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>May 5</td>
+              <td>Maintenance</td>
+              <td>Replace Damaged cable</td>
+              <td>
+                <button class="admin-table-btn accept-btn">accept</button>
+                <button class="admin-table-btn reject-btn">reject</button>
+              </td>
+              <td>
+                <label class="">
+                  <input type="checkbox" name="resolved" value="no">
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>May 5</td>
+              <td>Maintenance</td>
+              <td>Update HR Department PCs</td>
+              <td>
+                <button class="admin-table-btn accept-btn">accept</button>
+                <button class="admin-table-btn reject-btn">reject</button>
+              </td>
+              <td>
+                <label class="">
+                  <input type="checkbox" name="resolved" value="no">
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>1:30 pm</td>
+              <td>Repairs</td>
+              <td>Repair Damaged Door</td>
+              <td>
+                <button class="admin-table-btn accept-btn">accept</button>
+                <button class="admin-table-btn reject-btn">reject</button>
+              </td>
+              <td>
+                <label class="">
+                  <input type="checkbox" name="resolved" value="no">
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>May 5</td>
+              <td>Maintenance</td>
+              <td>Replace Damaged cable</td>
+              <td>
+                <button class="admin-table-btn accept-btn">accept</button>
+                <button class="admin-table-btn reject-btn">reject</button>
+              </td>
+              <td>
+                <label class="">
+                  <input type="checkbox" name="resolved" value="no">
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>May 5</td>
+              <td>Maintenance</td>
+              <td>Update HR Department PCs</td>
+              <td>
+                <button class="admin-table-btn accept-btn">accept</button>
+                <button class="admin-table-btn reject-btn">reject</button>
+              </td>
+              <td>
+                <label class="">
+                  <input type="checkbox" name="resolved" value="no">
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>1:30 pm</td>
+              <td>Repairs</td>
+              <td>Repair Damaged Door</td>
+              <td>
+                <button class="admin-table-btn accept-btn">accept</button>
+                <button class="admin-table-btn reject-btn">reject</button>
+              </td>
+              <td>
+                <label class="">
+                  <input type="checkbox" name="resolved" value="no">
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>May 5</td>
+              <td>Maintenance</td>
+              <td>Replace Damaged cable</td>
+              <td>
+                <button class="admin-table-btn accept-btn">accept</button>
+                <button class="admin-table-btn reject-btn">reject</button>
+              </td>
+              <td>
+                <label class="">
+                  <input type="checkbox" name="resolved" value="no">
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>May 5</td>
+              <td>Maintenance</td>
+              <td>Update HR Department PCs</td>
+              <td>
+                <button class="admin-table-btn accept-btn">accept</button>
+                <button class="admin-table-btn reject-btn">reject</button>
+              </td>
+              <td>
+                <label class="">
+                  <input type="checkbox" name="resolved" value="no">
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>1:30 pm</td>
+              <td>Repairs</td>
+              <td>Repair Damaged Door</td>
+              <td>
+                <button class="admin-table-btn accept-btn">accept</button>
+                <button class="admin-table-btn reject-btn">reject</button>
+              </td>
+              <td>
+                <label class="">
+                  <input type="checkbox" name="resolved" value="no">
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>May 5</td>
+              <td>Maintenance</td>
+              <td>Replace Damaged cable</td>
+              <td>
+                <button class="admin-table-btn accept-btn">accept</button>
+                <button class="admin-table-btn reject-btn">reject</button>
+              </td>
+              <td>
+                <label class="">
+                  <input type="checkbox" name="resolved" value="no">
+                </label>
+              </td>
+            </tr>
+          </table>
+        </div>
       </nav>
-      <nav class="admin-panel-2 admin-panel-2-text background-secondary">
-        <p>All Requests(22)</p>
-        <p>Maintenance(12)</p>
-        <p>Repairs(10)</p>
-        <p>Resolved(8)</p>
-        <p>Unresolved(5)</p>
-      </nav>
-    </section>
-    <nav class="admin-panel-3">
-      <div class="table-container">
-        <table>
-          <tr>
-            <th>Time</th>
-            <th>Type</th>
-            <th>Request Title</th>
-            <th>Action</th>
-            <th>Resolved</th>
-          </tr>
-          <tr>
-            <td>May 5</td>
-            <td>Maintenance</td>
-            <td><a id="request-content" href="#">Update HR Department PCs</a></td>
-            <td>
-              <button class="admin-table-btn accept-btn">accept</button>
-              <button class="admin-table-btn reject-btn">reject</button>
-            </td>
-            <td>
-              <label class="">
-                <input type="checkbox" name="resolved" value="no">
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td>1:30 pm</td>
-            <td>Repairs</td>
-            <td>Repair Damaged Door</td>
-            <td>
-              <button class="admin-table-btn accept-btn">accept</button>
-              <button class="admin-table-btn reject-btn">reject</button>
-            </td>
-            <td>
-              <label class="">
-                <input type="checkbox" name="resolved" value="no">
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td>May 5</td>
-            <td>Maintenance</td>
-            <td>Replace Damaged cable</td>
-            <td>
-              <button class="admin-table-btn accept-btn">accept</button>
-              <button class="admin-table-btn reject-btn">reject</button>
-            </td>
-            <td>
-              <label class="">
-                <input type="checkbox" name="resolved" value="no">
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td>May 5</td>
-            <td>Maintenance</td>
-            <td>Update HR Department PCs</td>
-            <td>
-              <button class="admin-table-btn accept-btn">accept</button>
-              <button class="admin-table-btn reject-btn">reject</button>
-            </td>
-            <td>
-              <label class="">
-                <input type="checkbox" name="resolved" value="no">
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td>1:30 pm</td>
-            <td>Repairs</td>
-            <td>Repair Damaged Door</td>
-            <td>
-              <button class="admin-table-btn accept-btn">accept</button>
-              <button class="admin-table-btn reject-btn">reject</button>
-            </td>
-            <td>
-              <label class="">
-                <input type="checkbox" name="resolved" value="no">
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td>May 5</td>
-            <td>Maintenance</td>
-            <td>Replace Damaged cable</td>
-            <td>
-              <button class="admin-table-btn accept-btn">accept</button>
-              <button class="admin-table-btn reject-btn">reject</button>
-            </td>
-            <td>
-              <label class="">
-                <input type="checkbox" name="resolved" value="no">
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td>May 5</td>
-            <td>Maintenance</td>
-            <td>Update HR Department PCs</td>
-            <td>
-              <button class="admin-table-btn accept-btn">accept</button>
-              <button class="admin-table-btn reject-btn">reject</button>
-            </td>
-            <td>
-              <label class="">
-                <input type="checkbox" name="resolved" value="no">
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td>1:30 pm</td>
-            <td>Repairs</td>
-            <td>Repair Damaged Door</td>
-            <td>
-              <button class="admin-table-btn accept-btn">accept</button>
-              <button class="admin-table-btn reject-btn">reject</button>
-            </td>
-            <td>
-              <label class="">
-                <input type="checkbox" name="resolved" value="no">
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td>May 5</td>
-            <td>Maintenance</td>
-            <td>Replace Damaged cable</td>
-            <td>
-              <button class="admin-table-btn accept-btn">accept</button>
-              <button class="admin-table-btn reject-btn">reject</button>
-            </td>
-            <td>
-              <label class="">
-                <input type="checkbox" name="resolved" value="no">
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td>May 5</td>
-            <td>Maintenance</td>
-            <td>Update HR Department PCs</td>
-            <td>
-              <button class="admin-table-btn accept-btn">accept</button>
-              <button class="admin-table-btn reject-btn">reject</button>
-            </td>
-            <td>
-              <label class="">
-                <input type="checkbox" name="resolved" value="no">
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td>1:30 pm</td>
-            <td>Repairs</td>
-            <td>Repair Damaged Door</td>
-            <td>
-              <button class="admin-table-btn accept-btn">accept</button>
-              <button class="admin-table-btn reject-btn">reject</button>
-            </td>
-            <td>
-              <label class="">
-                <input type="checkbox" name="resolved" value="no">
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td>May 5</td>
-            <td>Maintenance</td>
-            <td>Replace Damaged cable</td>
-            <td>
-              <button class="admin-table-btn accept-btn">accept</button>
-              <button class="admin-table-btn reject-btn">reject</button>
-            </td>
-            <td>
-              <label class="">
-                <input type="checkbox" name="resolved" value="no">
-              </label>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </nav>
-    <div id="request-modal" class="modal">
+      <div id="request-modal" class="modal">
 
-      <!-- Modal content -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <span class="close">&times;</span>
-          <h2>Fix Generator</h2>
-        </div>
-        <div class="modal-body">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error adipisci accusamus accusantium repudiandae provident eius rem eligendi impedit hic, praesentium dolorum alias quidem distinctio quod recusandae! Doloremque consequuntur culpa quasi!
-        </div>
-        <div class="modal-footer">
-          <p>Request by: Femi</p>
-          <p>Date: May 22 2018</p>
-        </div>
-      </div>
-    
-    </div>
-
-  </main>
-  <footer class="footer background-quarternary">
-    <div>
-      <a href="index.html">
-        <img class="footer-logo" src="img/logo-2.png" alt="">
-      </a>
-    </div>
-    <div>
-      <div class="footer-details text-secondary">
-        <div class="footer-info">
-          <div>FixZit 5555 Address St. #555 City, State 55555</div>
-          <div>01-2245-789</div>
-          <div class="footer-icon">
-            <a href="#">
-              <i class="fab fa-facebook-f text-secondary"></i>
-            </a>
-            <a href="#">
-              <i class="fab fa-linkedin-in text-secondary"></i>
-            </a>
-            <a href="#">
-              <i class="fab fa-twitter text-secondary"></i>
-            </a>
-            <a href="#">
-              <i class="fab fa-instagram text-secondary"></i>
-            </a>
+        <!-- Modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Fix Generator</h2>
+          </div>
+          <div class="modal-body">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error adipisci accusamus accusantium repudiandae provident eius
+            rem eligendi impedit hic, praesentium dolorum alias quidem distinctio quod recusandae! Doloremque consequuntur
+            culpa quasi!
+          </div>
+          <div class="modal-footer">
+            <p>Request by: Femi</p>
+            <p>Date: May 22 2018</p>
           </div>
         </div>
-        <div class="footer-links">
 
-          <div class="footer-links-copyright">Copyright &copy; 2018 ALL RIGHTS RESERVED</div>
-          <div class="footer-nav-links-container">
-            <ul class="footer-nav-links">
-              <li>
-                <a href="">ABOUT US</a>
-              </li>
-              <li>
-                <a href="">PRIVACY</a>
-              </li>
-              <li>
-                <a href="">TERMS OF USE</a>
-              </li>
-            </ul>
+      </div>
+
+    </main>
+    <footer class="footer background-quarternary">
+      <div>
+        <a href="index.html">
+          <img class="footer-logo" src="img/logo-2.png" alt="">
+        </a>
+      </div>
+      <div>
+        <div class="footer-details text-secondary">
+          <div class="footer-info">
+            <div>FixZit 5555 Address St. #555 City, State 55555</div>
+            <div>01-2245-789</div>
+            <div class="footer-icon">
+              <a href="#">
+                <i class="fab fa-facebook-f text-secondary"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin-in text-secondary"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-twitter text-secondary"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-instagram text-secondary"></i>
+              </a>
+            </div>
+          </div>
+          <div class="footer-links">
+
+            <div class="footer-links-copyright">Copyright &copy; 2018 ALL RIGHTS RESERVED</div>
+            <div class="footer-nav-links-container">
+              <ul class="footer-nav-links">
+                <li>
+                  <a href="">ABOUT US</a>
+                </li>
+                <li>
+                  <a href="">PRIVACY</a>
+                </li>
+                <li>
+                  <a href="">TERMS OF USE</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-  </footer>
-  <script src="scripts/admin-request.js"></script>
+    </footer>
+    <script src="scripts/admin-request.js"></script>
 </body>
 
 </html>

@@ -410,8 +410,8 @@ SIGNUP PAGE
 
 .left-part-text {
   font-size: 3em;
-  color: #4e9dc3;
-  text-shadow: 1px 2px black;
+  color: rgb(38, 49, 76);
+  text-shadow: 1px 2px white;
 }
 
 
@@ -431,7 +431,7 @@ SIGNUP PAGE
 
 
 .container > p {
-  color: brown;
+  color: rgb(38, 49, 76);
   text-shadow: 1px 1px azure;
 }
 
@@ -486,12 +486,6 @@ SIGNUP PAGE
     padding: 10px;
 }
 
-/* Extra styles for the cancel button */
-.cancel-btn {
-  width: auto;
-  background-color: orangered;
-}
- 
 
  /* #######################
     USER-PAGE
