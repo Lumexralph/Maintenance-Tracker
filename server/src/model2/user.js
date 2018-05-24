@@ -10,7 +10,4 @@ const createUserTable = `CREATE TABLE users(
   token json
  )`;
 
-db.query(createUserTable)
-  .then(result => result)
-  .catch(err => err);
 
