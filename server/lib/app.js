@@ -18,6 +18,9 @@ var _api4 = _interopRequireDefault(_api3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Represents the api using non-persistent data
+ */
 var app = (0, _express2.default)();
 var port = process.env.PORT || 3000;
 

@@ -4,6 +4,7 @@ import db from '../db/index';
 import hashPassword from './utils/hashPassword';
 import generateAuthToken from './utils/generateToken';
 
+/** @function createUserAccount */
 const createUserAccount = (req, res) => {
   let hashedPassword = null;
 
@@ -11,7 +12,7 @@ const createUserAccount = (req, res) => {
     username, password1, password2, email,
   } = req.body;
 
-  // clean up the data of white spaces
+  /** clean up the data of white spaces */
   validator.trim(username);
   validator.trim(password1);
   validator.trim(password2);
@@ -50,23 +51,40 @@ const createUserAccount = (req, res) => {
     .then(result => result.rows[0])
     .then((result) => {
       const jsonToken = generateAuthToken(result);
-      console.log(jsonToken);
 
       const text2 = `UPDATE users 
       SET token = '${jsonToken}' WHERE user_id = '${result.user_id}' RETURNING *`;
 
+      /**
+       * Token is updated in the database
+       */
       db.query(text2)
-        .then(newUser => res.send(newUser.rows[0]))
-        .catch(err => res.send(err));
+        .then((newUser) => {
+          const data = newUser.rows[0];
+          const {
+            user_id, username, admin_role, token,
+          } = data;
+
+          /**
+           * add token to a custom field in response object header
+           */
+          res.header('x-auth', token.token).status(201).send({
+            message: 'success',
+            body: { user_id, username, admin_role },
+          });
+        })
+        .catch(err => res.status(400).send({
+          message: 'error',
+          body: 'username or email exists, use another one',
+        }));
     })
-    .catch(err => res.send(err));
-  // get it back create token and add token field in db
-  // insert it, get it back and send to user
+    .catch(err => res.status(400).send({
+      message: 'error',
+      body: 'username or email exists, use another one',
+    }));
 };
 
 export default createUserAccount;
-
-
 
 
 //   checkPassword(userStringPassword) {

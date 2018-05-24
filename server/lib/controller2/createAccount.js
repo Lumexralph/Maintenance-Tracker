@@ -22,6 +22,7 @@ var _generateToken2 = _interopRequireDefault(_generateToken);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/** @function createUserAccount */
 var createUserAccount = function createUserAccount(req, res) {
   var hashedPassword = null;
 
@@ -31,7 +32,7 @@ var createUserAccount = function createUserAccount(req, res) {
       password2 = _req$body.password2,
       email = _req$body.email;
 
-  // clean up the data of white spaces
+  /** clean up the data of white spaces */
 
   _validator2.default.trim(username);
   _validator2.default.trim(password1);
@@ -67,20 +68,39 @@ var createUserAccount = function createUserAccount(req, res) {
     return result.rows[0];
   }).then(function (result) {
     var jsonToken = (0, _generateToken2.default)(result);
-    console.log(jsonToken);
 
     var text2 = 'UPDATE users \n      SET token = \'' + jsonToken + '\' WHERE user_id = \'' + result.user_id + '\' RETURNING *';
 
+    /**
+     * Token is updated in the database
+     */
     _index2.default.query(text2).then(function (newUser) {
-      return res.send(newUser.rows[0]);
+      var data = newUser.rows[0];
+      var user_id = data.user_id,
+          username = data.username,
+          admin_role = data.admin_role,
+          token = data.token;
+
+      /**
+       * add token to a custom field in response object header
+       */
+
+      res.header('x-auth', token.token).status(201).send({
+        message: 'success',
+        body: { user_id: user_id, username: username, admin_role: admin_role }
+      });
     }).catch(function (err) {
-      return res.send(err);
+      return res.status(400).send({
+        message: 'error',
+        body: 'username or email exists, use another one'
+      });
     });
   }).catch(function (err) {
-    return res.send(err);
+    return res.status(400).send({
+      message: 'error',
+      body: 'username or email exists, use another one'
+    });
   });
-  // get it back create token and add token field in db
-  // insert it, get it back and send to user
 };
 
 exports.default = createUserAccount;
