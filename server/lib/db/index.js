@@ -12,13 +12,18 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * @description {function}
+ * to hold the database for production
+ */
+var query1 = null;
+
 var db = void 0;
 if (process.env.NODE_ENV === 'test') {
   db = _index2.default.dbtest;
 } else if (process.env.NODE_ENV === 'dev') {
   db = _index2.default.db;
 }
-
 /**
  * @param {object} pool
  * @instance of Pool
@@ -37,16 +42,18 @@ var pool = new _pg.Pool({
 /**
  * @
  */
-var client = new _pg.Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
-});
 
-client.connect();
+if (process.env.NODE_ENV === 'production') {
+  var client = new _pg.Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
 
-var query1 = function query1(text, params, callback) {
-  return client.query(text, params, callback);
-};
+  client.connect();
+  query1 = function query1(text, params, callback) {
+    return client.query(text, params, callback);
+  };
+}
 
 var query2 = function query2(text, params, callback) {
   return pool.query(text, params, callback);

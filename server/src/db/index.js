@@ -1,13 +1,18 @@
 import { Pool, Client } from 'pg';
 import config from '../config/index';
 
+/**
+ * @description {function}
+ * to hold the database for production
+ */
+let query1 = null;
+
 let db;
 if (process.env.NODE_ENV === 'test') {
   db = config.dbtest;
 } else if (process.env.NODE_ENV === 'dev') {
-   db  = config.db;
+  ({ db } = config);
 }
-
 /**
  * @param {object} pool
  * @instance of Pool
@@ -26,14 +31,17 @@ const pool = new Pool({
 /**
  * @
  */
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
 
-client.connect();
+if (process.env.NODE_ENV === 'production') {
+  const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+  });
 
-const query1 = (text, params, callback) => client.query(text, params, callback);
+  client.connect();
+  query1 = (text, params, callback) => client.query(text, params, callback);
+}
+
 
 const query2 = (text, params, callback) => pool.query(text, params, callback);
 
