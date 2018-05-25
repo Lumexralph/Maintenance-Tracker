@@ -15,7 +15,7 @@ var _index2 = _interopRequireDefault(_index);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var secret = void 0;
-if (process.env.NODE_ENV === 'dev') {
+if (process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'test') {
   secret = _index2.default.secret;
 } else {
   secret = process.env.SECRET;

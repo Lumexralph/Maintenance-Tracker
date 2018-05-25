@@ -20,7 +20,9 @@
     "**/server/src/datastore**",
     "**/server/src/model**",
     "**/server/src/middleware**",
-    "**/server/src/api**"
+    "**/server/src/api**",
+    "**/server/src/config**",
+    "**/server/src/model2**"
   ],
   "include": [
     

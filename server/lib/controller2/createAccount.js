@@ -85,19 +85,21 @@ var createUserAccount = function createUserAccount(req, res) {
        * add token to a custom field in response object header
        */
 
-      res.header('x-auth', token.token).status(201).send({
-        message: 'success',
-        body: { user_id: user_id, username: username, admin_role: admin_role }
+      return res.header('x-auth', token.token).status(201).send({
+        status: 'success',
+        message: { user_id: user_id, username: username, admin_role: admin_role }
       });
     }).catch(function (err) {
       return res.status(501).send({
-        message: 'error',
+        status: 'error',
+        message: err,
         body: 'system error'
       });
     });
   }).catch(function (err) {
     return res.status(400).send({
-      message: 'error',
+      status: 'error',
+      message: err,
       body: 'username or email exists, use another one'
     });
   });
