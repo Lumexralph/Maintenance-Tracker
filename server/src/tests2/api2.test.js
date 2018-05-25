@@ -43,8 +43,80 @@ describe('POST /api/v1/auth/signup', () => {
       .post('/api/v1/auth/signup')
       .send(userRequest)
       .expect(400)
-      .expect((res) => {})
+      .expect((res) => {
+        expect(res.body).toHaveProperty('status');
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.status).toBe('Error');
+        expect(res.body.message).toBe('Please, provide valid email');
+      })
       .end(done);
 
   });
+
+  it('should not create user with empty field', (done) => {
+    const userRequest = {
+      username: "",
+      password1: "gatekeeper",
+      password2: "gatekeeper",
+      email: "oldrlpkookh@gmail.com"
+    };
+
+    request(app)
+      .post('/api/v1/auth/signup')
+      .send(userRequest)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('status');
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.status).toBe('Error');
+        expect(res.body.message).toBe('Ensure no field is empty');
+      })
+      .end(done);
+
+  });
+
+  it('should not create user with different passwords', (done) => {
+    const userRequest = {
+      username: "Lumexy",
+      password1: "gatekee",
+      password2: "gatekeeper",
+      email: "oldrlpkookh@gmail.com"
+    };
+
+    request(app)
+      .post('/api/v1/auth/signup')
+      .send(userRequest)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('status');
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.status).toBe('Error');
+        expect(res.body.message).toBe('Passwords do not match');
+      })
+      .end(done);
+
+  });
+
+  it('should create user', (done) => {
+    const userRequest = {
+      username: "Lumexy",
+      password1: "gatekeeper",
+      password2: "gatekeeper",
+      email: "oldrlpkookh@gmail.com"
+    };
+
+    request(app)
+      .post('/api/v1/auth/signup')
+      .send(userRequest)
+      .expect(201)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('status');
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.status).toBe('success');
+        expect(res.body.message).toHaveProperty('user_id');
+      })
+      .end(done);
+
+  });
+
 });

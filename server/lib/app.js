@@ -25,7 +25,7 @@ var app = (0, _express2.default)();
 var port = process.env.PORT || 3000;
 
 // app.use('/api/v1', apiVersion1);
-app.use('/api/v1', _api4.default);
+app.use('/api/v1', _api2.default);
 
 if (!module.parent) {
   app.listen(port);

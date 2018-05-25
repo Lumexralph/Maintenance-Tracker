@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken';
 import config from '../../config/index';
 
 let secret;
-if (process.env.NODE_ENV === 'dev') {
-  secret = config.secret;
+if (process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'test') {
+  ({ secret } = config);
 } else {
   secret = process.env.SECRET;
 }
