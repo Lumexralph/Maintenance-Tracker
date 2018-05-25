@@ -90,9 +90,9 @@ var createUserAccount = function createUserAccount(req, res) {
         body: { user_id: user_id, username: username, admin_role: admin_role }
       });
     }).catch(function (err) {
-      return res.status(400).send({
+      return res.status(501).send({
         message: 'error',
-        body: 'username or email exists, use another one'
+        body: 'system error'
       });
     });
   }).catch(function (err) {

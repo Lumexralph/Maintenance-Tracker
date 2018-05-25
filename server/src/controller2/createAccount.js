@@ -73,9 +73,9 @@ const createUserAccount = (req, res) => {
             body: { user_id, username, admin_role },
           });
         })
-        .catch(err => res.status(400).send({
+        .catch(err => res.status(501).send({
           message: 'error',
-          body: 'username or email exists, use another one',
+          body: 'system error',
         }));
     })
     .catch(err => res.status(400).send({
