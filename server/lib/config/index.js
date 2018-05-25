@@ -18,7 +18,10 @@ var config = {
   password: process.env.DB_PASSWORD,
   user: process.env.DB_USER,
   db: process.env.DB_DATABASE,
+  dbtest: process.env.DB_TEST,
   secret: process.env.JWT_SECRET
 };
+
+// if (process.env.NODE_ENV )
 
 exports.default = config;

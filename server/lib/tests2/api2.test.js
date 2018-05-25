@@ -12,7 +12,21 @@ var _app = require('../app');
 
 var _app2 = _interopRequireDefault(_app);
 
+var _index = require('../db/index');
+
+var _index2 = _interopRequireDefault(_index);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Before every test clear table
+ */
+beforeEach(function (done) {
+  var text = 'DELETE FROM users';
+  _index2.default.query(text).then(function () {
+    return done();
+  });
+});
 
 describe('GET / homepage', function () {
   it('should give the homepage', function (done) {
@@ -24,5 +38,18 @@ describe('GET / homepage', function () {
       (0, _expect2.default)(res.body).toHaveProperty('message');
       (0, _expect2.default)(res.body.message).toBe('Welcome to Maintenance Tracker');
     }).end(done);
+  });
+});
+
+describe('POST /api/v1/auth/signup', function () {
+  it('should not create user with invalid email', function (done) {
+    var userRequest = {
+      username: "Looemuu",
+      password1: "gatekeeper",
+      password2: "gatekeeper",
+      email: "oldrlpkookh@"
+    };
+
+    (0, _supertest2.default)(_app2.default).post('/api/v1/auth/signup').send(userRequest).expect(400).expect(function (res) {}).end(done);
   });
 });
