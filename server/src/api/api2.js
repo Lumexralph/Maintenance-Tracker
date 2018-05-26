@@ -4,6 +4,7 @@ import morgan from 'morgan';
 
 import getHomePage from '../controller2/getHomePage';
 import createUserAccount from '../controller2/createAccount';
+import loginUser from '../controller2/loginUser';
 
 const api = express.Router();
 
@@ -16,5 +17,8 @@ api.get('/', getHomePage);
 
 // POST /auth/signup
 api.post('/auth/signup', createUserAccount);
+
+// POST /auth/signup
+api.post('/auth/login', loginUser);
 
 export default api;

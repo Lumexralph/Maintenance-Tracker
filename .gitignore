@@ -63,5 +63,8 @@ typings/
 # jsdoc directory
 out
 
+# autogenrated directory by babel
+server/lib
+
 server/src/model2/user.text
 

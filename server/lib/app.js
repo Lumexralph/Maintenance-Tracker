@@ -23,8 +23,8 @@ var app = (0, _express2.default)();
 
 var port = process.env.PORT || 3000;
 
-// app.use('/api/v1', apiVersion1);
 app.use('/api/v1', _api2.default);
+// app.use('/api/v1', apiVersion2);
 
 if (!module.parent) {
   app.listen(port);
