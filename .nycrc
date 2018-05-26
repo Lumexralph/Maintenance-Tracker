@@ -22,7 +22,8 @@
     "**/server/src/middleware**",
     "**/server/src/api**",
     "**/server/src/config**",
-    "**/server/src/model2**"
+    "**/server/src/model2**",
+    "**/server/src/db**"
   ],
   "include": [
     

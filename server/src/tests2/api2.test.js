@@ -5,11 +5,26 @@ import app from '../app';
 import db from '../db/index';
 
 /**
- * Before every test clear table
+ * after all tests clear table
  */
-beforeEach((done) => {
-  const text = 'DELETE FROM users';
-  db.query(text).then(() => done());
+before((done) => {
+  const text = 'DROP TABLE users';
+
+  db.query(text).then(() => {
+
+    const text2 = `CREATE TABLE users(
+      user_id serial PRIMARY KEY,
+      username VARCHAR (50) UNIQUE NOT NULL,
+      password VARCHAR (500) NOT NULL,
+      email VARCHAR (355) UNIQUE NOT NULL,
+      last_login TIMESTAMP,
+      admin_role BOOL DEFAULT 'f',
+      token json
+     )`;
+
+      db.query(text2).then(() => done())
+  });
+  
 })
 
 describe('GET / homepage', () => {
@@ -110,6 +125,7 @@ describe('POST /api/v1/auth/signup', () => {
       .send(userRequest)
       .expect(201)
       .expect((res) => {
+        expect(res.header).toHaveProperty('authorization');
         expect(res.body).toHaveProperty('status');
         expect(res.body).toHaveProperty('message');
         expect(res.body.status).toBe('success');
@@ -119,4 +135,62 @@ describe('POST /api/v1/auth/signup', () => {
 
   });
 
+});
+
+
+describe('POST /api/v1/auth/login', () => {
+
+  it('should not login the user with wrong username', (done) => {
+    const userRequest = {
+      username: "Lumex",
+      password: "gatekeeper",
+    };
+
+    request(app)
+      .post('/api/v1/auth/login')
+      .send(userRequest)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Account does not exist');
+      })
+      .end(done);
+  });
+
+  it('should not login the user with wrong password', (done) => {
+    const userRequest = {
+      username: "Lumexy",
+      password: "gatekeepr",
+    };
+
+    request(app)
+      .post('/api/v1/auth/login')
+      .send(userRequest)
+      .expect(400)
+      .expect((res) => {
+        expect(res.header.authorization).toBeUndefined();
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Password not correct');
+      })
+      .end(done);
+  });
+
+  it('should login the user', (done) => {
+    const userRequest = {
+      username: "Lumexy",
+      password: "gatekeeper",
+    };
+
+    request(app)
+      .post('/api/v1/auth/login')
+      .send(userRequest)
+      .expect(200)
+      .expect((res) => {
+        expect(res.header.authorization).toBeDefined();
+        expect(res.header).toHaveProperty('authorization');
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Login Successful');
+      })
+      .end(done);
+  });
 });

@@ -25,7 +25,7 @@ const loginUser = (req, res) => {
         db.query(text2)
           .then(result =>
             /** set the header with token */
-            res.header('Authorization', result.rows[0].token.token)
+            res.header('authorization', result.rows[0].token.token)
               .status(200).send({
                 message: 'Login Successful',
               }))

@@ -68,7 +68,7 @@ const createUserAccount = (req, res) => {
           /**
            * add token to a custom field in response object header
            */
-          return res.header('Authorization', token.token).status(201).send({
+          return res.header('authorization', token.token).status(201).send({
             status: 'success',
             message: { user_id, username, admin_role },
           });
