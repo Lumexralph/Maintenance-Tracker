@@ -85,7 +85,7 @@ var createUserAccount = function createUserAccount(req, res) {
        * add token to a custom field in response object header
        */
 
-      return res.header('x-auth', token.token).status(201).send({
+      return res.header('Authorization', token.token).status(201).send({
         status: 'success',
         message: { user_id: user_id, username: username, admin_role: admin_role }
       });
