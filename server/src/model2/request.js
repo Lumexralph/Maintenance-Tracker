@@ -8,4 +8,6 @@ const requestTable = `CREATE TABLE requests (
   FOREIGN KEY (user_id) REFERENCES users (user_id)
  )`;
 
-db.query(requestTable);
+db.query(requestTable)
+  .then(result => result)
+  .catch(err => err);
