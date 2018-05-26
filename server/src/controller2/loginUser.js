@@ -20,20 +20,12 @@ const loginUser = (req, res) => {
          * genrate another token and save it
          */
         const token = generateAuthToken(user);
-        const text2 = `UPDATE users 
-      SET token = '${token}' WHERE user_id = '${user.user_id}' RETURNING *`;
-        db.query(text2)
-          .then(result =>
-            /** set the header with token */
-            res.header('authorization', result.rows[0].token.token)
-              .status(200).send({
-                message: 'Login Successful',
-              }))
-          .catch(err => res.status(501).send({
-            message: 'Internal Error',
-          }));
-        return undefined;
+        res.header('Authorization', token)
+          .status(200).send({
+            message: 'Login Successful',
+          });
       }
+
       return res.status(400).send({
         message: 'Password not correct',
       });

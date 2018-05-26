@@ -12,7 +12,7 @@ const generateAuthToken = (userData) => {
   const access = 'auth';
   const token = jwt.sign({ user_id: String(userData.user_id), access }, secret).toString();
 
-  return JSON.stringify({ access, token });
+  return token;
 };
 
 export default generateAuthToken;

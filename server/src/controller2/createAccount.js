@@ -50,52 +50,23 @@ const createUserAccount = (req, res) => {
   db.query(text)
     .then(result => result.rows[0])
     .then((result) => {
+      const {
+        user_id, username, admin_role,
+      } = result;
+
       const jsonToken = generateAuthToken(result);
 
-      const text2 = `UPDATE users 
-      SET token = '${jsonToken}' WHERE user_id = '${result.user_id}' RETURNING *`;
-
-      /**
-       * Token is updated in the database
-       */
-      db.query(text2)
-        .then((newUser) => {
-          const data = newUser.rows[0];
-          const {
-            user_id, username, admin_role, token,
-          } = data;
-
-          /**
-           * add token to a custom field in response object header
-           */
-          return res.header('authorization', token.token).status(201).send({
-            status: 'success',
-            message: { user_id, username, admin_role },
-          });
-        })
-        .catch(err => res.status(501).send({
-          status: 'error',
-          message: err,
-          body: 'system error',
-        }));
+      return res.header('Authorization', jsonToken).status(201).send({
+        message: { user_id, username, admin_role },
+      });
     })
     .catch(err => res.status(400).send({
       status: 'error',
       message: err,
       body: 'username or email exists, use another one',
     }));
+
+  return undefined;
 };
 
 export default createUserAccount;
-
-
-//   checkPassword(userStringPassword) {
-//     return bcrypt.compareSync(userStringPassword, this.password);
-//   }
-
-//   clearToken() {
-//     this.token = [];
-
-//     return !this.token.length;
-//   }
-// }

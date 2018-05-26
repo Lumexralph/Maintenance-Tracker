@@ -126,7 +126,6 @@ describe('POST /api/v1/auth/signup', () => {
       .expect(201)
       .expect((res) => {
         expect(res.header).toHaveProperty('authorization');
-        expect(res.body).toHaveProperty('status');
         expect(res.body).toHaveProperty('message');
         expect(res.body.status).toBe('success');
         expect(res.body.message).toHaveProperty('user_id');
