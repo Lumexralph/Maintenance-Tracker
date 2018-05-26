@@ -10,4 +10,4 @@ const createUserTable = `CREATE TABLE users(
   token json
  )`;
 
-
+db.query(createUserTable);
