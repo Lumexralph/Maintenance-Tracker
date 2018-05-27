@@ -6,6 +6,8 @@ import getHomePage from '../controller2/getHomePage';
 import createUserAccount from '../controller2/createAccount';
 import loginUser from '../controller2/loginUser';
 import getAllUserRequests from '../controller2/getAllUserRequest';
+import getUserRequestById from '../controller2/getUserRequestById';
+
 import authenticate from '../middleware2/authenticate';
 
 const api = express.Router();
@@ -25,5 +27,8 @@ api.post('/auth/login', loginUser);
 
 // GET /users/requests
 api.get('/users/requests', authenticate, getAllUserRequests);
+
+// GET a request from user by requestid
+api.get('/users/requests/:requestId', authenticate, getUserRequestById);
 
 export default api;
