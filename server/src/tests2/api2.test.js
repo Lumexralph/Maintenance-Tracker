@@ -232,7 +232,7 @@ describe('GET /users/requests', () => {
   it('should get request if user has any', (done) => {
     const text = `INSERT INTO requests (request_title, request_content, user_id)
     VALUES
-     ('Gamess','PostgreSQL coming Tutorial in school', 1),
+     ('Games','PostgreSQL coming Tutorial in school', 1),
     ('Gaming','MysSQL coming Tutorial in school', 1);`;
 
     db.query(text);
@@ -247,9 +247,39 @@ describe('GET /users/requests', () => {
         expect(res.body.message).toHaveLength(2 );
       })
       .end(done);
+  });  
+});
 
+describe('GET /users/requests/:requestId', () => {
+  let requestId = 1;
+
+  it('should get a request', (done) => {
+    request(app)
+      .get(`/api/v1/users/requests/${requestId}`)
+      .set('Authorization', userToken)
+      .send(user)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body).toHaveLength(1);
+        expect(res.body[0]['request_title']).toBe('Games');
+      })
+      .end(done);
   });
 
-  
+  it('should not get a request', (done) => {
+    requestId = 4;
+    
+    request(app)
+      .get(`/api/v1/users/requests/${requestId}`)
+      .set('Authorization', userToken)
+      .send(user)
+      .expect(404)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Requests not found');
+      })
+      .end(done);
+  });
+
 });
 
