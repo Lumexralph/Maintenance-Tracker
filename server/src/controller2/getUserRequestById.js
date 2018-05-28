@@ -5,7 +5,7 @@ const getUserRequestById = (req, res) => {
   const { user } = req.body;
   const { requestId } = req.params;
 
-  const text = `SELECT requests.request_id, requests.request_title, requests.request_content FROM users INNER JOIN requests USING (user_id) WHERE user_id= '${user.user_id}' AND request_id = '${requestId}';`;
+  const text = `SELECT requests.request_id, requests.request_title, requests.request_content, requests.department FROM users INNER JOIN requests USING (user_id) WHERE user_id= '${user.user_id}' AND request_id = '${requestId}';`;
 
   db.query(text)
     .then((result) => {
