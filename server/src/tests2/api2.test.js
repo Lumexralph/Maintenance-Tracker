@@ -14,14 +14,15 @@ const createTables = `CREATE TABLE users(
   password VARCHAR (500) NOT NULL,
   email VARCHAR (355) UNIQUE NOT NULL,
   last_login TIMESTAMP,
-  admin_role BOOL DEFAULT 'f',
-  token json
+  admin_role BOOL DEFAULT 'f'
  );
  CREATE TABLE requests (
   request_id serial PRIMARY KEY,
   request_title VARCHAR (255) NOT NULL,
   request_content TEXT NOT NULL,
+  department VARCHAR (255) DEFAULT 'Maintenance',
   user_id INT NOT NULL,
+  status VARCHAR (100) DEFAULT 'pending',
   FOREIGN KEY (user_id) REFERENCES users (user_id)
  );`;
 
@@ -277,6 +278,66 @@ describe('GET /users/requests/:requestId', () => {
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
         expect(res.body.message).toBe('Requests not found');
+      })
+      .end(done);
+  });
+
+});
+
+describe('POST /users/requests', () => {
+
+  it('should not create request missing a field', (done) => {
+    const userRequest = {
+      content: "Game of the year",
+      department: "Repairs"
+    };
+
+    request(app)
+      .post('/api/v1/users/requests/')
+      .set('Authorization', userToken)
+      .send(userRequest)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Ensure no field is empty');
+      })
+      .end(done);
+  });
+
+  it('should not create request with empty field', (done) => {
+    const userRequest = {
+      title: "",
+      content: "Game of the year",
+      department: "Repairs"
+    };
+
+    request(app)
+      .post('/api/v1/users/requests/')
+      .set('Authorization', userToken)
+      .send(userRequest)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Ensure no field is empty');
+      })
+      .end(done);
+  });
+
+  it('should create request with valid data', (done) => {
+    const userRequest = {
+      title: "Homecoming",
+      content: "Game of the year 2018",
+      department: "Repairs"
+    };
+
+    request(app)
+      .post('/api/v1/users/requests/')
+      .set('Authorization', userToken)
+      .send(userRequest)
+      .expect(201)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Request created');
       })
       .end(done);
   });
