@@ -6,8 +6,7 @@ const createUserTable = `CREATE TABLE users(
   password VARCHAR (500) NOT NULL,
   email VARCHAR (355) UNIQUE NOT NULL,
   last_login TIMESTAMP,
-  admin_role BOOL DEFAULT 'f',
-  token json
- )`;
+  admin_role BOOL DEFAULT 'f'
+ );`;
 
 db.query(createUserTable);
