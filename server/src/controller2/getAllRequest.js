@@ -7,7 +7,7 @@ const getAllRequest = (req, res) => {
     return res.status(401).send({ message: 'only Admin allowed' });
   }
 
-  const text = 'SELECT * FROM requests;';
+  const text = 'SELECT * FROM requests ORDER BY request_id ASC;';
 
   return db.query(text)
     .then(result => res.status(200).send(result.rows))
