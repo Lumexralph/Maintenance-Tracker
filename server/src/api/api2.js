@@ -9,6 +9,7 @@ import getAllUserRequests from '../controller2/getAllUserRequest';
 import getUserRequestById from '../controller2/getUserRequestById';
 import creatUserRequest from '../controller2/createUserRequest';
 import updateUserRequest from '../controller2/updateUserRequest';
+import getAllRequest from '../controller2/getAllRequest'
 
 import authenticate from '../middleware2/authenticate';
 
@@ -38,5 +39,7 @@ api.post('/users/requests', authenticate, creatUserRequest);
 
 // create user request
 api.put('/users/requests/:requestId', authenticate, updateUserRequest);
+
+api.get('/requests', authenticate, getAllRequest);
 
 export default api;
