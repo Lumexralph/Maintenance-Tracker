@@ -1,6 +1,6 @@
 import db from '../db/index';
 
-const rejectRequest = (req, res) => {
+const resolveRequest = (req, res) => {
   const { requestId } = req.params;
   const { user, status } = req.body;
 
@@ -9,7 +9,7 @@ const rejectRequest = (req, res) => {
   }
 
   const text = `UPDATE requests
-  SET status = 'rejected'
+  SET status = 'resolved'
   WHERE
   request_id = ${requestId};`;
 
@@ -28,4 +28,4 @@ const rejectRequest = (req, res) => {
     .catch(err => res.status.send({ message: err }));
 };
 
-export default rejectRequest;
+export default resolveRequest;

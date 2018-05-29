@@ -12,6 +12,7 @@ import updateUserRequest from '../controller2/updateUserRequest';
 import getAllRequest from '../controller2/getAllRequest';
 import approveRequest from '../controller2/approveRequest';
 import rejectRequest from '../controller2/rejectRequest';
+import resolveRequest from '../controller2/resolveRequest';
 
 import authenticate from '../middleware2/authenticate';
 
@@ -54,5 +55,10 @@ api.put('/requests/:requestId/approve', authenticate, approveRequest);
  * disapprove a request
  */
 api.put('/requests/:requestId/disapprove', authenticate, rejectRequest);
+
+/**
+ * resolve a request
+ */
+api.put('/requests/:requestId/resolve', authenticate, resolveRequest);
 
 export default api;
