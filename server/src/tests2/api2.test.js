@@ -32,15 +32,19 @@ const userToken = generateToken({user_id: 1});
 
 const user = {
   user: {
-    user_id: 1
+    user_id: 1,
+    admin_role: false
   }
 };
 
 before(() => {
   return db.query(text)
     .then(() => {
-      return db.query(createTables);
-    }); 
+      return db.query(createTables)
+        .then(res => res)
+        .catch(err => err);
+    })
+    .catch(err => err); 
 });
 
 
@@ -236,7 +240,9 @@ describe('GET /users/requests', () => {
      ('Games','PostgreSQL coming Tutorial in school', 1),
     ('Gaming','MysSQL coming Tutorial in school', 1);`;
 
-    db.query(text);
+    db.query(text)
+      .then(res => res)
+      .catch(err => err);
 
   request(app)
       .get('/api/v1/users/requests')
@@ -245,7 +251,7 @@ describe('GET /users/requests', () => {
       .expect(200)
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toHaveLength(2 );
+        expect(res.body.message).toHaveLength(2);
       })
       .end(done);
   });  
@@ -289,7 +295,7 @@ describe('POST /users/requests', () => {
   it('should not create request missing a field', (done) => {
     const userRequest = {
       content: "Game of the year",
-      department: "Repairs"
+      department: "Repairs",
     };
 
     request(app)
@@ -327,7 +333,8 @@ describe('POST /users/requests', () => {
     const userRequest = {
       title: "Homecoming",
       content: "Game of the year 2018",
-      department: "Repairs"
+      department: "Repairs",
+      user
     };
 
     request(app)
@@ -342,5 +349,71 @@ describe('POST /users/requests', () => {
       .end(done);
   });
 
+});
+
+describe('PUT /users/requests/:requestId', () => {
+  it('should not update request with wrong requestId', (done) => {
+    const requestId = 4;
+
+    const reqBody = {
+      "title": "The Game of the year",
+      "content": "It is played in the continent",
+      user
+    }
+
+    request(app)
+      .put(`/api/v1/users/requests/${requestId}`)
+      .set('Authorization', userToken)
+      .send(reqBody)
+      .expect(404)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Request not found');
+      })
+      .end(done);
+  });
+
+  it('should update request with valid requestId', (done) => {
+    let requestId = 1;
+
+    const reqBody = {
+      "title": "The Game of the year",
+      "content": "It is played in the continent",
+      user
+    }
+
+    request(app)
+      .put(`/api/v1/users/requests/${requestId}`)
+      .set('Authorization', userToken)
+      .send(reqBody)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('request_id');
+        expect(res.body.message).toBe('Request not found');
+      })
+      .end(done);
+  });
+
+  it('should not update approved request', (done) => {
+    const requestId = 1;
+
+    const reqBody = {
+      "title": "The Game of the year",
+      "content": "It is played in the continent",
+      "status": "approved",
+      user
+    }
+
+    request(app)
+      .put(`/api/v1/users/requests/${requestId}`)
+      .set('Authorization', userToken)
+      .send(reqBody)
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('You cannot modify request');
+      })
+      .end(done);
+  });
 });
 
