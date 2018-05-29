@@ -43,7 +43,11 @@ api.post('/users/requests', authenticate, creatUserRequest);
 // create user request
 api.put('/users/requests/:requestId', authenticate, updateUserRequest);
 
-//get all application requests
+/**
+ * get all application requests
+ * also filter requests if there's query
+ * /request?filter={value}
+ */
 api.get('/requests', authenticate, getAllRequest);
 
 /**
