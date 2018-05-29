@@ -29,6 +29,7 @@ const createTables = `CREATE TABLE users(
  const text = `DROP TABLE IF EXISTS requests; DROP TABLE IF EXISTS users;`;
 
 const userToken = generateToken({user_id: 1});
+const adminToken = generateToken({ user_id: 2, admin_role: true });
 
 const user = {
   user: {
@@ -111,6 +112,7 @@ describe('POST /api/v1/auth/signup', () => {
       .end(done);
 
   });
+  
 
   it('should not create user with different passwords', (done) => {
     const userRequest = {
@@ -417,3 +419,32 @@ describe('PUT /users/requests/:requestId', () => {
   });
 });
 
+describe('GET /requests', () => {
+  it('should not get requests for non-admin', (done) => {
+    request(app)
+      .get(`/api/v1/requests`)
+      .set('Authorization', userToken)
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');    
+        expect(res.body.message).toBe('only Admin allowed');
+      })
+      .end(done);
+  });
+
+  it('should get requests for admin', (done) => {
+    const admin = {
+      admin_role: 'true'
+    }
+    request(app)
+      .get(`/api/v1/requests`)
+      .set('Authorization', adminToken)
+      .send(admin.admin_role)
+      .expect(200)
+      .expect((res) => {
+        // expect(res.body.length).toHaveProperty('message');    
+        // expect(res.body.message).toBe('only Admin allowed');
+      })
+      .end(done);
+  });
+});
