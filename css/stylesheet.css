@@ -24,7 +24,7 @@ body {
 }
 
 header {
-  padding: 30px;
+  padding: 15px;
   text-align: center;
   font-size: 1.4em;
   background-color: #369;
@@ -36,7 +36,7 @@ main {
 }
 
 footer {
-  padding: 30px;
+  padding: 10px;
   text-align: center;
   font-size: 1em;
   color: white;
@@ -59,21 +59,30 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 .background-primary {
   background:rgb(109, 125, 162);
 }
+
+.background-primary-2 {
+  background: rgb(38, 49, 76)
+}
+
 .background-secondary {
   background: rgb(217, 221, 229);
 }
 .background-tertiary {
   background: rgb(46, 65, 114);
 }
+.background-tertiary-2 {
+  background: darkcyan;
+}
+
 .background-quarternary {
   background: rgb(9, 26, 66);
 }
 
 .text-primary {
-  color: rgb(240, 242, 246);
+  color: rgb(255, 255, 255);
 }
 .text-secondary {
-  color: rgb(206, 220, 252);
+  color: rgb(180, 230, 254);
 }
 
 
@@ -101,6 +110,36 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   text-decoration: none;
 }
 
+.signup-login {
+  display: grid;
+  grid-template-rows: auto;
+  grid-row-gap: 1em;
+  justify-content: center;
+  margin: 80px 0px;
+}
+.signup-login-btn {
+  width: 200px;
+  height: 60px;
+  color: white;
+}
+
+
+/* header module */
+.header-logo {
+  max-width: 20%;
+}
+.header-nav {
+  font-size: 0.8em;
+  text-align: right;
+}
+
+.header-nav  a {
+  color: steelblue;
+}
+
+.header-nav p {
+  margin: 0;
+}
 
 /* Navbar modules */
 /* ########################### */
@@ -116,6 +155,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 }
 
 .nav-btn {
+  color:rgb(64, 53, 122);
   padding: 10px 15px;
   font-size: 1.125em;
 }
@@ -164,22 +204,11 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   background-position: center;
   background-size: cover;
 }
-.signup-login {
-  display: grid;
-    grid-template-rows: auto;
-    grid-row-gap: 1em;
-    /* text-align: center; */
-    justify-content: center;
-}
-.signup-login-btn {
-  width: 200px;
-  height: 60px;
-}
 
 /* on desktop change */
 @media (min-width: 760px) {
   .heading-title-text {
-    font-size: 3em;
+    font-size: 2.5em;
   }
   .heading-text {
     font-size: 1.6em;
@@ -196,13 +225,22 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 
 
 /* Recent Requests Module */
+.request-container {
+  margin: 40px 0;
+}
 .recent-request {
   text-align: center;
   padding: 10px;
 }
 
+.recent-request-title {
+  color: azure;
+  font-size: 2em;
+}
+
 .recent-request-text {
-  color: #ffffff;
+  color: #3397e6;
+  text-shadow: 1px 1px black;
 }
 
 .recent-request-img {
@@ -215,7 +253,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 /* accordion for Recent Module */
 .accordion {
   background-color: #eee;
-  color: #444;
+  color:#3397e6;
   cursor: pointer;
   padding: 18px;
   width: 100%;
@@ -243,6 +281,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 }
 
 .panel {
+  color: #3397e6;
   padding: 0 18px;
   background-color: white;
   max-height: 0;
@@ -263,13 +302,41 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 .footer {
   display: grid;
   grid-template-rows: auto;
+  grid-row-gap: 1em;
+}
+
+.footer-logo {
+  max-width: 15%;
 }
 
 .footer-nav-links {
   list-style: none;
+  padding: 0px;
+}
+
+.footer-details div {
+  margin: 15px 0;
+}
+
+.footer-info-margins {
+  margin: 15px 0;
 }
 
 .footer-links a:hover {
+  color: silver;
+}
+
+/* Social Media Icons */
+.footer-icon {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.footer-icon .fab {
+  color: azure;
+}
+
+.footer-icon .fab:hover {
   color: silver;
 }
 
@@ -278,6 +345,10 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   .footer {
     grid-template-columns: 260px auto;
     grid-column-gap: 2em;
+  }
+
+  .footer-logo {
+    max-width: 30%;
   }
 
   .footer-details {
@@ -314,6 +385,12 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   
 }
 
+@media only screen and (min-width: 450px) {
+  .footer-logo {
+    max-width: 10;
+  }
+}
+
 /* ######################### 
 SIGNUP PAGE
 #########################
@@ -327,6 +404,17 @@ SIGNUP PAGE
   grid-row-gap: 2em;
 }
 
+.left-part {
+  text-align: left;
+}
+
+.left-part-text {
+  font-size: 3em;
+  color: rgb(38, 49, 76);
+  text-shadow: 1px 2px white;
+}
+
+
 .signup-container-img {
   background-image: url('./../img/imageC-2.jpeg');
   background-repeat: no-repeat;
@@ -335,19 +423,18 @@ SIGNUP PAGE
 }
 
 .signup-btn {
-  border-color:cadetblue;
+  color: white;
 }
 .signup-btn:hover {
-  background-color: cadetblue;
+  color: black;
 }
 
-.signup-container  h1 {
-  color: rgb(31, 81, 196);
-}
 
 .container > p {
-  font-weight: bold;
+  color: rgb(38, 49, 76);
+  text-shadow: 1px 1px azure;
 }
+
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 560px) {
@@ -399,16 +486,6 @@ SIGNUP PAGE
     padding: 10px;
 }
 
-/* Extra styles for the cancel button */
-.cancel-btn {
-  width: auto;
-  background-color: orangered;
-}
- .cancel-btn:hover {
-   background-color: #f44336;
-   opacity: 0.8;
- }
-
 
  /* #######################
     USER-PAGE
@@ -416,6 +493,7 @@ SIGNUP PAGE
  .user-home-container {
   display: grid;
   grid-auto-columns: auto;
+  padding: 20px;
  }
  .user-home-bg-img {
     background-image: url('./../img/imageB-1.jpg');
@@ -424,11 +502,7 @@ SIGNUP PAGE
     background-size: cover;
  }
 
- .tab-header {
-
-}
-
-
+ 
  /* Style the tab */
  .tab {
   display: grid;
@@ -447,7 +521,9 @@ SIGNUP PAGE
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
-  font-size: 17px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: cadetblue;
 }
 
 /* Change background color of buttons on hover */
@@ -457,7 +533,8 @@ SIGNUP PAGE
 
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: #ccc;
+  background-color: rgb(38, 49, 76);
+  color: azure;
 }
 
 /* override the previously set active class setting */
@@ -474,11 +551,12 @@ SIGNUP PAGE
 }
 
 .btn-send {
-  background-color: #4CAF50;
+  background-color: rgb(38, 49, 76);
+  color: white;
 }
 
 .btn-send:hover {
-  background-color: #4CAF50;
+  background-color: rgb(38, 49, 76);
   opacity: 0.8;
 }
 
@@ -516,6 +594,25 @@ SIGNUP PAGE
 
 .admin-panel-1:nth-child(3) {
   flex: 1;
+}
+
+.admin-table-btn {
+    width: 60px;
+    margin-top: 3px;
+    border-radius: 10%;
+    border: none;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.accept-btn {
+  background: green;
+}
+
+.reject-btn {
+  background: #fe5f24;
 }
 
 /* not very small screens */
@@ -565,4 +662,66 @@ tr:hover {
     display: flex;
 
   }
+}
+
+/* Modal Module for Admin request */
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s
+}
+
+
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background: rgb(38, 49, 76);
+  color: white;
+}
+
+.modal-body {
+padding: 30px 16px;
+}
+
+.modal-footer {
+  padding: 2px 16px;
+  background: rgb(38, 49, 76);
+  color: white;
 }
