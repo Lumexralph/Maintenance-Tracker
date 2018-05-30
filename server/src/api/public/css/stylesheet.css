@@ -155,6 +155,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 }
 
 .nav-btn {
+  color:rgb(64, 53, 122);
   padding: 10px 15px;
   font-size: 1.125em;
 }
@@ -207,7 +208,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 /* on desktop change */
 @media (min-width: 760px) {
   .heading-title-text {
-    font-size: 4em;
+    font-size: 2.5em;
   }
   .heading-text {
     font-size: 1.6em;
@@ -238,7 +239,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 }
 
 .recent-request-text {
-  color: #d8967e;
+  color: #3397e6;
   text-shadow: 1px 1px black;
 }
 
@@ -252,7 +253,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 /* accordion for Recent Module */
 .accordion {
   background-color: #eee;
-  color: #444;
+  color:#3397e6;
   cursor: pointer;
   padding: 18px;
   width: 100%;
@@ -280,6 +281,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 }
 
 .panel {
+  color: #3397e6;
   padding: 0 18px;
   background-color: white;
   max-height: 0;
@@ -408,8 +410,8 @@ SIGNUP PAGE
 
 .left-part-text {
   font-size: 3em;
-  color: #4e9dc3;
-  text-shadow: 1px 2px black;
+  color: rgb(38, 49, 76);
+  text-shadow: 1px 2px white;
 }
 
 
@@ -429,7 +431,7 @@ SIGNUP PAGE
 
 
 .container > p {
-  color: brown;
+  color: rgb(38, 49, 76);
   text-shadow: 1px 1px azure;
 }
 
@@ -484,12 +486,6 @@ SIGNUP PAGE
     padding: 10px;
 }
 
-/* Extra styles for the cancel button */
-.cancel-btn {
-  width: auto;
-  background-color: orangered;
-}
- 
 
  /* #######################
     USER-PAGE
@@ -537,7 +533,7 @@ SIGNUP PAGE
 
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: #608661;
+  background-color: rgb(38, 49, 76);
   color: azure;
 }
 
@@ -555,12 +551,12 @@ SIGNUP PAGE
 }
 
 .btn-send {
-  background-color: #4CAF50;
+  background-color: rgb(38, 49, 76);
   color: white;
 }
 
 .btn-send:hover {
-  background-color: #4CAF50;
+  background-color: rgb(38, 49, 76);
   opacity: 0.8;
 }
 
@@ -666,4 +662,66 @@ tr:hover {
     display: flex;
 
   }
+}
+
+/* Modal Module for Admin request */
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s
+}
+
+
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background: rgb(38, 49, 76);
+  color: white;
+}
+
+.modal-body {
+padding: 30px 16px;
+}
+
+.modal-footer {
+  padding: 2px 16px;
+  background: rgb(38, 49, 76);
+  color: white;
 }
