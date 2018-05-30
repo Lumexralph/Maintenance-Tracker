@@ -21,6 +21,8 @@ const api = express.Router();
 // configure third party middleware
 api.use(bodyParser.json());
 api.use(morgan('combined'));
+api.use(express.static(__dirname + '/public'));
+
 
 // GET / homepage
 api.get('/', getHomePage);
