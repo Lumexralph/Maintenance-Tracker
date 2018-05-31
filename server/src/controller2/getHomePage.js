@@ -1,10 +1,7 @@
 import path from 'path';
 
-// const root = '../Maintenance-Tracker/UI/';
-
 const getHomePage = (req, res) => {
-  
-  res.sendFile(path.resolve(__dirname, '../../../UI/index.html'));
+  return res.status(200).send({ message: 'Welcome to FixZit, a Maintenance Tracker' });  
 };
 
 export default getHomePage;

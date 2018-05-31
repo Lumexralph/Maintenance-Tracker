@@ -4,10 +4,6 @@ const getAllRequest = (req, res) => {
   const { user } = req.body;
   const { filter } = req.query;
 
-  // if (!user.admin_role) {
-  //   return res.status(401).send({ message: 'only Admin allowed' });
-  // }
-
   if (filter) {
     const text = `SELECT * 
     FROM requests
