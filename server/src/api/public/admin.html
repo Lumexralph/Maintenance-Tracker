@@ -38,11 +38,11 @@
           <p>
             <label for="filter-by">Filter Requests</label>
             <select id="filter-by" name="filter-by">
-              <option value="none">None</option>
+              <option value="none">Rejected</option>
               <option value="repairs">Repairs</option>
               <option value="maintenance">Maintenance</option>
               <option value="resolved">Resolved</option>
-              <option value="unresolved">Unresolved</option>
+              <option value="unresolved">Approved</option>
             </select>
           </p>
           <p>
@@ -60,183 +60,33 @@
       <nav class="admin-panel-3">
         <div class="table-container">
           <table>
-            <tr>
-              <th>Time</th>
-              <th>Type</th>
-              <th>Request Title</th>
-              <th>Action</th>
-              <th>Resolved</th>
-            </tr>
-            <tr>
-              <td>May 5</td>
-              <td>Maintenance</td>
-              <td>
-                <a id="request-content" href="#">Update HR Department PCs</a>
-              </td>
-              <td>
-                <button class="admin-table-btn accept-btn">accept</button>
-                <button class="admin-table-btn reject-btn">reject</button>
-              </td>
-              <td>
-                <label class="">
-                  <input type="checkbox" name="resolved" value="no">
-                </label>
-              </td>
-            </tr>
-            <tr>
-              <td>1:30 pm</td>
-              <td>Repairs</td>
-              <td>Repair Damaged Door</td>
-              <td>
-                <button class="admin-table-btn accept-btn">accept</button>
-                <button class="admin-table-btn reject-btn">reject</button>
-              </td>
-              <td>
-                <label class="">
-                  <input type="checkbox" name="resolved" value="no">
-                </label>
-              </td>
-            </tr>
-            <tr>
-              <td>May 5</td>
-              <td>Maintenance</td>
-              <td>Replace Damaged cable</td>
-              <td>
-                <button class="admin-table-btn accept-btn">accept</button>
-                <button class="admin-table-btn reject-btn">reject</button>
-              </td>
-              <td>
-                <label class="">
-                  <input type="checkbox" name="resolved" value="no">
-                </label>
-              </td>
-            </tr>
-            <tr>
-              <td>May 5</td>
-              <td>Maintenance</td>
-              <td>Update HR Department PCs</td>
-              <td>
-                <button class="admin-table-btn accept-btn">accept</button>
-                <button class="admin-table-btn reject-btn">reject</button>
-              </td>
-              <td>
-                <label class="">
-                  <input type="checkbox" name="resolved" value="no">
-                </label>
-              </td>
-            </tr>
-            <tr>
-              <td>1:30 pm</td>
-              <td>Repairs</td>
-              <td>Repair Damaged Door</td>
-              <td>
-                <button class="admin-table-btn accept-btn">accept</button>
-                <button class="admin-table-btn reject-btn">reject</button>
-              </td>
-              <td>
-                <label class="">
-                  <input type="checkbox" name="resolved" value="no">
-                </label>
-              </td>
-            </tr>
-            <tr>
-              <td>May 5</td>
-              <td>Maintenance</td>
-              <td>Replace Damaged cable</td>
-              <td>
-                <button class="admin-table-btn accept-btn">accept</button>
-                <button class="admin-table-btn reject-btn">reject</button>
-              </td>
-              <td>
-                <label class="">
-                  <input type="checkbox" name="resolved" value="no">
-                </label>
-              </td>
-            </tr>
-            <tr>
-              <td>May 5</td>
-              <td>Maintenance</td>
-              <td>Update HR Department PCs</td>
-              <td>
-                <button class="admin-table-btn accept-btn">accept</button>
-                <button class="admin-table-btn reject-btn">reject</button>
-              </td>
-              <td>
-                <label class="">
-                  <input type="checkbox" name="resolved" value="no">
-                </label>
-              </td>
-            </tr>
-            <tr>
-              <td>1:30 pm</td>
-              <td>Repairs</td>
-              <td>Repair Damaged Door</td>
-              <td>
-                <button class="admin-table-btn accept-btn">accept</button>
-                <button class="admin-table-btn reject-btn">reject</button>
-              </td>
-              <td>
-                <label class="">
-                  <input type="checkbox" name="resolved" value="no">
-                </label>
-              </td>
-            </tr>
-            <tr>
-              <td>May 5</td>
-              <td>Maintenance</td>
-              <td>Replace Damaged cable</td>
-              <td>
-                <button class="admin-table-btn accept-btn">accept</button>
-                <button class="admin-table-btn reject-btn">reject</button>
-              </td>
-              <td>
-                <label class="">
-                  <input type="checkbox" name="resolved" value="no">
-                </label>
-              </td>
-            </tr>
-            <tr>
-              <td>May 5</td>
-              <td>Maintenance</td>
-              <td>Update HR Department PCs</td>
-              <td>
-                <button class="admin-table-btn accept-btn">accept</button>
-                <button class="admin-table-btn reject-btn">reject</button>
-              </td>
-              <td>
-                <label class="">
-                  <input type="checkbox" name="resolved" value="no">
-                </label>
-              </td>
-            </tr>
-            <tr>
-              <td>1:30 pm</td>
-              <td>Repairs</td>
-              <td>Repair Damaged Door</td>
-              <td>
-                <button class="admin-table-btn accept-btn">accept</button>
-                <button class="admin-table-btn reject-btn">reject</button>
-              </td>
-              <td>
-                <label class="">
-                  <input type="checkbox" name="resolved" value="no">
-                </label>
-              </td>
-            </tr>
-            <tr>
-              <td>May 5</td>
-              <td>Maintenance</td>
-              <td>Replace Damaged cable</td>
-              <td>
-                <button class="admin-table-btn accept-btn">accept</button>
-                <button class="admin-table-btn reject-btn">reject</button>
-              </td>
-              <td>
-                <label class="">
-                  <input type="checkbox" name="resolved" value="no">
-                </label>
-              </td>
-            </tr>
+            <thead>
+              <tr>
+                <th>Request Id</th>
+                <th>Type</th>
+                <th>Request Title</th>
+                <th>Action</th>
+                <th>Resolved</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>May 5</td>
+                <td>Maintenance</td>
+                <td>
+                  <a id="request-content" href="#">Update HR Department PCs</a>
+                </td>
+                <td>
+                  <button class="admin-table-btn accept-btn">accept</button>
+                  <button class="admin-table-btn reject-btn">reject</button>
+                </td>
+                <td>
+                  <label class="">
+                    <input type="checkbox" name="resolved" value="no">
+                  </label>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </nav>

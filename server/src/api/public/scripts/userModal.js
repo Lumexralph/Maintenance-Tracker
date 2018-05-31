@@ -2,15 +2,16 @@
  * Inspiration from https://www.w3schools.com/howto/howto_css_modals.asp
  */
 
+ 
 const requestModal = document.getElementById('request-modal');
 
-// Get the link to open request modal
-const requestContent = document.getElementById('request-content');
+// Get the button to open request modal
+const requestButton = document.getElementById('makeRequest');
 
 // Get the <span> element that closes the modal
 const span = document.getElementsByClassName('close')[0];
 
-requestContent.onclick = () => requestModal.style.display = 'block';
+requestButton.onclick = () => requestModal.style.display = 'block';
 
 
 // When the user clicks on <span> (x), close the modal
