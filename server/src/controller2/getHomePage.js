@@ -1,11 +1,10 @@
 import path from 'path';
 
+// const root = '../Maintenance-Tracker/UI/';
+
 const getHomePage = (req, res) => {
-  // res.status(200).send({
-  //   status: 'success',
-  //   message: 'Welcome to Maintenance Tracker',
-  // });
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  
+  res.sendFile(path.resolve(__dirname, '../../../UI/index.html'));
 };
 
 export default getHomePage;
