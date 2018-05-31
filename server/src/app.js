@@ -14,7 +14,7 @@ const app = express();
 // configure third party middleware
 app.use(bodyParser.json());
 app.use(morgan('combined'));
-// app.use('/', express.static(path.resolve(__dirname, '../../UI/')));
+app.use('/', express.static(path.resolve(__dirname, '../../UI/')));
 
 
 const port = process.env.PORT || 3000;

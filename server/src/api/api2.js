@@ -19,7 +19,7 @@ const api = express.Router();
 
 
 // GET / homepage
-// api.get('/', getHomePage);
+api.get('/', getHomePage);
 
 // POST /auth/signup
 api.post('/auth/signup', createUserAccount);
