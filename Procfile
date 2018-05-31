@@ -1,0 +1,1 @@
+web: babel-node server/src/app.js
