@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "babel-node server/src/app.js",
-    "start:dev": "cross-env NODE_ENV=dev babel-node server/lib/app.js",
+    "start:dev": "cross-env NODE_ENV=dev babel-node server/src/app.js",
     "start-watch": "nodemon --exec \"npm run start:dev\"",
     "lint": "eslint server/src/**/*.js --fix",
     "test": "cross-env NODE_ENV=test nyc mocha --timeout=3000 server/src/tests2/*.test.js",
