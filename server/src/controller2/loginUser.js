@@ -23,6 +23,7 @@ const loginUser = (req, res) => {
         res.header('Authorization', token)
           .status(200).send({
             message: 'Login Successful',
+            token,
           });
       }
 

@@ -57,7 +57,9 @@ const createUserAccount = (req, res) => {
       const jsonToken = generateAuthToken(result);
 
       return res.header('Authorization', jsonToken).status(201).send({
-        message: { user_id, username, admin_role },
+        message: {
+          user_id, username, admin_role, token: jsonToken,
+        },
       });
     })
     .catch(err => res.status(400).send({

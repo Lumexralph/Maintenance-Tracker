@@ -252,8 +252,8 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 
 /* accordion for Recent Module */
 .accordion {
-  background-color: #eee;
-  color:#3397e6;
+  background-color: rgba(46, 65, 114);;
+  color:white;
   cursor: pointer;
   padding: 18px;
   width: 100%;
@@ -265,7 +265,8 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 }
 
 .active, .accordion:hover {
-  background-color: #ccc;
+  background-color:rgba(46, 65, 114, 0.38);
+  color: white;
 }
 
 .accordion:after {
@@ -561,7 +562,7 @@ pop up
  /* Style the tab */
  .tab {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 60% 40%;
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
@@ -578,18 +579,18 @@ pop up
   transition: 0.3s;
   font-size: 1.2em;
   font-weight: bold;
-  color: cadetblue;
+  color: white;
 }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
-}
 
 /* Create an active/current tablink class */
-.tab button.active {
+#defaultOpen {
   background-color: rgb(38, 49, 76);
   color: azure;
+}
+
+#makeRequest {
+  color: rgb(38, 49, 76);
 }
 
 /* override the previously set active class setting */
@@ -599,9 +600,9 @@ pop up
 
 /* Style the tab content */
 .tabcontent {
-  display: none;
+  /* display: none; */
   padding: 6px 12px;
-  border: 1px solid #ccc;
+  border: 1px solid rgb(38, 49, 76);
   border-top: none;
 }
 
@@ -725,7 +726,7 @@ tr:hover {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 30px; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */

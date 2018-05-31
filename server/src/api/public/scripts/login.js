@@ -42,12 +42,13 @@ const userLogin = (event) => {
       console.log(result);
       if (result.message === 'Login Successful') {
         popupMessage(false);
+        // set the token in local storage
+        window.localStorage.setItem('token', result.token);
         window.location.href = 'http://localhost:3000/api/v1/userpage.html';
       } else {
         popupMessage(true);
       }
       // Handle response we get from the API
-      
     })
     .catch((err) => {
       popupMessage(true);

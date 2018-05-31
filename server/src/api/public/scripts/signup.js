@@ -44,13 +44,15 @@ const createAccount = (event) => {
   });
 
   fetch(request)
-    .then(res => res.json())
+    .then((res) => res.json())
     .then((result) => {
     // Handle response we get from the API
+    // set the token in local storage
+      window.localStorage.setItem('token', result.message.token);
+      console.log(result);
       window.location.href = 'http://localhost:3000/api/v1/userpage.html';
     })
     .catch(err => console.log(err));
-
 };
 
 signupButton.addEventListener('click', createAccount);
