@@ -49,7 +49,6 @@ const createAccount = (event) => {
     // Handle response we get from the API
     // set the token in local storage
       window.localStorage.setItem('token', result.message.token);
-      console.log(result);
       window.location.href = 'http://localhost:3000/api/v1/userpage.html';
     })
     .catch(err => console.log(err));
