@@ -3,8 +3,7 @@
 
 # *FixZit*
 
-*Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
-Short description of your project, in one or two sentences.* 
+*Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.* 
 
 ## Setup 
 *Database - Postgres*
@@ -30,6 +29,9 @@ Short description of your project, in one or two sentences.*
 *git clone https://github.com/Lumexralph/Maintenance-Tracker.git*
 
 *cd Maintenance-Tracker*
+
+*npm install*
+
 
 
 ## Contributors
