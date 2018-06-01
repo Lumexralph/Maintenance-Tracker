@@ -4,6 +4,10 @@ const getAllRequest = (req, res) => {
   const { user } = req.body;
   const { filter } = req.query;
 
+  if (!user.admin_role) {
+    return res.status(401).send({ message: 'Action cannot be performed' });
+  }
+
   if (filter) {
     const text = `SELECT * 
     FROM requests

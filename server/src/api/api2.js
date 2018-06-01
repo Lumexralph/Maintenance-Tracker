@@ -36,7 +36,7 @@ api.get('/users/requests/:requestId', authenticate, getUserRequestById);
 // create user request
 api.post('/users/requests', authenticate, creatUserRequest);
 
-// create user request
+// updatee user request
 api.put('/users/requests/:requestId', authenticate, updateUserRequest);
 
 /**

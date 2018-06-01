@@ -2,7 +2,7 @@ import db from '../db/index';
 
 const resolveRequest = (req, res) => {
   const { requestId } = req.params;
-  const { user, status } = req.body;
+  const { user } = req.body;
 
   if (!user.admin_role) {
     return res.status(401).send({ message: 'You cannot modify request' });
@@ -13,7 +13,7 @@ const resolveRequest = (req, res) => {
   WHERE
   request_id = ${requestId};`;
 
-  const text2 = `SELECT * FROM requests WHERE request_id = '${requestId}'`;
+  const text2 = `SELECT * FROM requests WHERE request_id = '${requestId}';`;
 
   return db.query(text)
     .then((result) => {
