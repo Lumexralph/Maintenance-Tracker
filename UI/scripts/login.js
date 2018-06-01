@@ -1,4 +1,5 @@
 const loginButton = document.getElementById('loginButton');
+console.log('I am working');
 
 const form = document.forms;
 const formValue = form[0];

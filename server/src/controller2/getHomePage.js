@@ -1,11 +1,7 @@
 import path from 'path';
 
 const getHomePage = (req, res) => {
-  // res.status(200).send({
-  //   status: 'success',
-  //   message: 'Welcome to Maintenance Tracker',
-  // });
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  return res.status(200).send({ message: 'Welcome to FixZit, a Maintenance Tracker' });  
 };
 
 export default getHomePage;

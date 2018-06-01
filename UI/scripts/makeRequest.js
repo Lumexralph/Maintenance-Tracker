@@ -1,11 +1,14 @@
 const token = window.localStorage.getItem('token');
 
-if (!token) {
+
+if (token === undefined) {
   /**
    * if there's no token available
    * redirect to home page
    */
-  window.location.href = 'http://localhost:3000/api/v1/index.html';
+  console.log(token);
+
+  window.location.href = '/http://localhost:3000/api/v1/index.html';
 }
 
 const sendRequestButton = document.getElementById('sendRequest');
@@ -72,20 +75,6 @@ const createRequest = () => {
       panel.appendChild(panelContent);
 
 
-      // add event
-      // console.log(button);
-      // button.addEventListener('click', function displayContent() {
-
-      //   this.classList.toggle('active');
-      //   panel = this.nextElementSibling;
-      //   console.log(panel);
-      //   if (panel.style.display === 'block') {
-      //     panel.style.display = 'none';
-      //   } else {
-      //     panel.style.display = 'block';
-      //   }
-      // });
-
       requestContainer.append(button);
       button.after(panel);
 
@@ -128,20 +117,6 @@ const displayAllRequest = () => {
 
         panel.appendChild(panelContent);
 
-
-        // add event
-        // console.log(button);
-        // button.addEventListener('click', function displayContent() {
-
-        //   this.classList.toggle('active');
-        //   panel = this.nextElementSibling;
-        //   console.log(panel);
-        //   if (panel.style.display === 'block') {
-        //     panel.style.display = 'none';
-        //   } else {
-        //     panel.style.display = 'block';
-        //   }
-        // });
 
         requestContainer.append(button);
         button.after(panel);

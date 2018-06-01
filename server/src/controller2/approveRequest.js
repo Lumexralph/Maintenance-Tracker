@@ -8,10 +8,6 @@ const approveRequest = (req, res) => {
     return res.status(401).send({ message: 'You cannot modify request' });
   }
 
-  if (status !== 'pending') {
-    return res.status(400).send({ message: 'Request can not be modified' });
-  }
-
   const text = `UPDATE requests
   SET status = 'approved'
   WHERE
@@ -29,7 +25,7 @@ const approveRequest = (req, res) => {
         .then(request => res.send(request.rows[0]))
         .catch(err => res.status(404).send({ message: 'Request not found' }));
     })
-    .catch(err => res.status.send({ message: err }));
+    .catch(err => res.status(501).send({ message: 'Error from system' }));
 };
 
 export default approveRequest;

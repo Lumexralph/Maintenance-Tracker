@@ -10,9 +10,6 @@
   <link rel="stylesheet" href="fontawesome/web-fonts-with-css/css/fontawesome-all.css" />
 
 </head>
-
-<body>
-
   <body class="container">
     <header class="background-primary-2">
       <img class="header-logo" src="img/logo-1.png" alt="header logo">
@@ -45,11 +42,13 @@
             <div class="container">
               <label for="uname"></label>
               <input type="text" placeholder="enter your username" name="uname" required>
-
+              <div class="popup" >
+                <span class="popuptext" id="myPopup">Ensure the information are correct..</span>
+              </div>
               <label for="psw"></label>
               <input type="password" placeholder="enter your password" name="psw" required>
               <p>Welcome back, ready to serve you when you're in</p>
-              <button class="btn signup-btn background-tertiary" type="submit">Login to FixZit</button>
+              <button id="loginButton" class="btn signup-btn background-tertiary" type="button">Login to FixZit</button>
               <label class="remember-box">
                 <input type="checkbox" checked="checked" name="remember"> Remember me
               </label>
@@ -68,7 +67,7 @@
     <footer class="footer background-quarternary">
       <div>
         <a href="index.html">
-          <img class="footer-logo" src="img/logo-2.png" alt="">
+          <img class="footer-logo" src="/img/logo-2.png" alt="">
         </a>
       </div>
       <div>
@@ -110,9 +109,7 @@
           </div>
         </div>
     </footer>
-
+    <script src="scripts/login.js"></script>
   </body>
-
-</body>
 
 </html>

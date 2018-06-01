@@ -442,8 +442,8 @@ describe('GET /requests', () => {
       .send(admin.admin_role)
       .expect(200)
       .expect((res) => {
-        // expect(res.body.length).toHaveProperty('message');    
-        // expect(res.body.message).toBe('only Admin allowed');
+        expect(res.body.length).toHaveProperty('message');    
+        expect(res.body.message).toBe('only Admin allowed');
       })
       .end(done);
   });

@@ -6,13 +6,8 @@ import db from '../db/index';
 const updateUserRequest = (req, res) => {
   const { requestId } = req.params;
   const {
-    title, content, user, department = 'Maintenance', status,
+    title, content, user, department = 'Maintenance',
   } = req.body;
-
-
-  if (!user.admin_role && status === 'approved') {
-    return res.status(401).send({ message: 'You cannot modify request' });
-  }
 
   if (!title || !content) {
     return res.status(400).send({
@@ -26,26 +21,42 @@ const updateUserRequest = (req, res) => {
     });
   }
 
-  const text = `UPDATE requests
+  /**
+   * Fecth for the request and check the status
+   */
+
+  if (!user.admin_role) {
+    const text3 = `SELECT * FROM requests WHERE request_id = '${requestId}'`;
+
+    return db.query(text3)
+      .then((request) => {
+        if (request.rows[0].status === 'approved') {
+          return res.status(401).send({ message: 'You cannot modify request' });
+        }
+
+        const text = `UPDATE requests
   SET request_title='${title}', request_content='${content}', department='${department}'
   FROM
   users
   WHERE
   requests.user_id = users.user_id AND request_id = '${requestId}' AND requests.user_id = '${user.user_id}';`;
 
-  db.query(text)
-    .then((result) => {
-      if (result.rowCount === 0) {
-        return res.status(404).send({ message: 'Request not found' });
-      }
+        return db.query(text)
+          .then((result) => {
+            if (result.rowCount === 0) {
+              return res.status(200).send({ message: 'Request not changed' });
+            }
 
-      const text2 = `SELECT * FROM requests WHERE request_id = '${requestId}'`;
+            const text2 = `SELECT * FROM requests WHERE request_id = '${requestId}';`;
 
-      return db.query(text2)
-        .then(request => res.send(request.rows[0]))
-        .catch(err => res.status(404).send({ message: 'Request not found' }));
-    })
-    .catch(err => res.status.send({ message: err }));
+            return db.query(text2)
+              .then(result2 => res.status(201).send(result2.rows[0]))
+              .catch(err => res.status(404).send({ message: 'Request not found' }));
+          })
+          .catch(err => res.status(501).send({ message: 'Internal Error' }));
+      })
+      .catch(err => res.status(404).send({ message: 'Request not found' }));
+  }
 };
 
 export default updateUserRequest;
