@@ -23,23 +23,20 @@ const createUserAccount = (req, res) => {
      validator.isEmpty(password2) ||
      validator.isEmpty(email)) {
     return res.status(400).send({
-      status: 'Error',
-      message: 'Ensure no field is empty',
+      message: 'It seems one of the field is empty, Ensure no field is empty',
     });
   }
 
 
   if (password1 !== password2) {
     return res.status(400).send({
-      status: 'Error',
-      message: 'Passwords do not match',
+      message: 'Passwords provided do not match, please verify',
     });
   }
 
   if (!validator.isEmail(email)) {
     return res.status(400).send({
-      status: 'Error',
-      message: 'Please, provide valid email',
+      message: 'Please, provide a valid email',
     });
   }
   // hash the password just one
@@ -57,15 +54,11 @@ const createUserAccount = (req, res) => {
       const jsonToken = generateAuthToken(result);
 
       return res.header('Authorization', jsonToken).status(201).send({
-        message: {
-          user_id, username, admin_role, token: jsonToken,
-        },
+        userId: user_id, username, adminRrole: admin_role, token: jsonToken,
       });
     })
     .catch(err => res.status(400).send({
-      status: 'error',
-      message: err,
-      body: 'username or email exists, use another one',
+      message: 'username or email already exists, use another one or login',
     }));
 
   return undefined;
