@@ -7,8 +7,6 @@ import bcrypt from 'bcryptjs';
  * if the password exists in the database
  */
 
-const checkPassword = (userStringPassword, storedHashedPassword) => {
-  return bcrypt.compareSync(userStringPassword, storedHashedPassword);
-};
+const checkPassword = (password, hashedPassword) => bcrypt.compareSync(password, hashedPassword);
 
 export default checkPassword;

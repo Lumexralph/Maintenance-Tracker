@@ -6,7 +6,7 @@ import path from 'path';
 /**
  * Represents the api using non-persistent data
  */
-import apiVersion1 from './api/api2';
+import apiVersion1 from './routes/api';
 
 const app = express();
 

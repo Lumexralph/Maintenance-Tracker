@@ -1,5 +1,5 @@
 import db from '../db/index';
-import checkPassword from '../controller2/utils/checkPassword';
+import checkPassword from '../controller/utils/checkPassword';
 import generateAuthToken from './utils/generateToken';
 
 const loginUser = (req, res) => {

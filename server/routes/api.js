@@ -1,21 +1,20 @@
 import express from 'express';
 
-import getHomePage from '../controller2/getHomePage';
-import createUserAccount from '../controller2/createAccount';
-import loginUser from '../controller2/loginUser';
-import getAllUserRequests from '../controller2/getAllUserRequest';
-import getUserRequestById from '../controller2/getUserRequestById';
-import creatUserRequest from '../controller2/createUserRequest';
-import updateUserRequest from '../controller2/updateUserRequest';
-import getAllRequest from '../controller2/getAllRequest';
-import approveRequest from '../controller2/approveRequest';
-import rejectRequest from '../controller2/rejectRequest';
-import resolveRequest from '../controller2/resolveRequest';
+import getHomePage from '../controller/getHomePage';
+import createUserAccount from '../controller/createAccount';
+import loginUser from '../controller/loginUser';
+import getAllUserRequests from '../controller/getAllUserRequest';
+import getUserRequestById from '../controller/getUserRequestById';
+import creatUserRequest from '../controller/createUserRequest';
+import updateUserRequest from '../controller/updateUserRequest';
+import getAllRequest from '../controller/getAllRequest';
+import approveRequest from '../controller/approveRequest';
+import rejectRequest from '../controller/rejectRequest';
+import resolveRequest from '../controller/resolveRequest';
 
-import authenticate from '../middleware2/authenticate';
+import authenticate from '../middleware/authenticate';
 
 const api = express.Router();
-
 
 
 // GET / homepage

@@ -1,6 +1,5 @@
 import db from '../db/index';
 
-
 const getUserRequestById = (req, res) => {
   const { user } = req.body;
   const { requestId } = req.params;

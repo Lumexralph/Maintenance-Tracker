@@ -1,6 +1,6 @@
 import expect from 'expect';
 import request from 'supertest';
-import generateToken from '../controller2/utils/generateToken';
+import generateToken from '../controller/utils/generateToken';
 
 import app from '../app';
 import db from '../db/index';
@@ -26,55 +26,49 @@ const createTables = `CREATE TABLE users(
   FOREIGN KEY (user_id) REFERENCES users (user_id)
  );`;
 
- const text = `DROP TABLE IF EXISTS requests; DROP TABLE IF EXISTS users;`;
+const text = 'DROP TABLE IF EXISTS requests; DROP TABLE IF EXISTS users;';
 
-const userToken = generateToken({user_id: 1});
+const userToken = generateToken({ user_id: 1 });
 const adminToken = generateToken({ user_id: 2, admin_role: true });
 
 const user = {
   user: {
     user_id: 1,
-    admin_role: false
-  }
+    admin_role: false,
+  },
 };
 
-before(() => {
-  return db.query(text)
-    .then(() => {
-      return db.query(createTables)
-        .then(res => res)
-        .catch(err => err);
-    })
-    .catch(err => err); 
-});
+before(() => db.query(text)
+  .then(() => db.query(createTables)
+    .then(res => res)
+    .catch(err => err))
+  .catch(err => err));
 
 
 describe('GET / homepage', () => {
   it('should give the homepage', (done) => {
-
     request(app)
-          .get('/api/v1/')
-          .expect(200)
-          .expect((res) => {
-            expect(res.body).toBeDefined();
-            expect(res.body).toHaveProperty('status');
-            expect(res.body.status).toBe('success');
-            expect(res.body).toHaveProperty('message');
-            expect(res.body.message).toBe('Welcome to Maintenance Tracker');
-          })
-          .end(done);
+      .get('/api/v1/')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body).toBeDefined();
+        expect(res.body).toHaveProperty('status');
+        expect(res.body.status).toBe('success');
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Welcome to Maintenance Tracker');
+      })
+      .end(done);
   });
 });
 
 
 describe('POST /api/v1/auth/signup', () => {
-
   it('should not create user with invalid email', (done) => {
     const userRequest = {
-      username: "Looemuu",
-      password1: "gatekeeper",
-      password2: "gatekeeper",
-      email: "oldrlpkookh@"
+      username: 'Looemuu',
+      password1: 'gatekeeper',
+      password2: 'gatekeeper',
+      email: 'oldrlpkookh@',
     };
 
     request(app)
@@ -88,15 +82,14 @@ describe('POST /api/v1/auth/signup', () => {
         expect(res.body.message).toBe('Please, provide valid email');
       })
       .end(done);
-
   });
 
   it('should not create user with empty field', (done) => {
     const userRequest = {
-      username: "",
-      password1: "gatekeeper",
-      password2: "gatekeeper",
-      email: "oldrlpkookh@gmail.com"
+      username: '',
+      password1: 'gatekeeper',
+      password2: 'gatekeeper',
+      email: 'oldrlpkookh@gmail.com',
     };
 
     request(app)
@@ -110,16 +103,15 @@ describe('POST /api/v1/auth/signup', () => {
         expect(res.body.message).toBe('Ensure no field is empty');
       })
       .end(done);
-
   });
-  
+
 
   it('should not create user with different passwords', (done) => {
     const userRequest = {
-      username: "Lumexy",
-      password1: "gatekee",
-      password2: "gatekeeper",
-      email: "oldrlpkookh@gmail.com"
+      username: 'Lumexy',
+      password1: 'gatekee',
+      password2: 'gatekeeper',
+      email: 'oldrlpkookh@gmail.com',
     };
 
     request(app)
@@ -133,17 +125,14 @@ describe('POST /api/v1/auth/signup', () => {
         expect(res.body.message).toBe('Passwords do not match');
       })
       .end(done);
-
   });
 
   it('should create user', (done) => {
-    
-
     const userRequest = {
-      username: "Lumexy",
-      password1: "gatekeeper",
-      password2: "gatekeeper",
-      email: "oldrlpkookh@gmail.com"
+      username: 'Lumexy',
+      password1: 'gatekeeper',
+      password2: 'gatekeeper',
+      email: 'oldrlpkookh@gmail.com',
     };
 
     request(app)
@@ -156,18 +145,15 @@ describe('POST /api/v1/auth/signup', () => {
         expect(res.body.message).toHaveProperty('user_id');
       })
       .end(done);
-
   });
-
 });
 
 
 describe('POST /api/v1/auth/login', () => {
-
   it('should not login the user with wrong username', (done) => {
     const userRequest = {
-      username: "Lumex",
-      password: "gatekeeper",
+      username: 'Lumex',
+      password: 'gatekeeper',
     };
 
     request(app)
@@ -183,8 +169,8 @@ describe('POST /api/v1/auth/login', () => {
 
   it('should not login the user with wrong password', (done) => {
     const userRequest = {
-      username: "Lumexy",
-      password: "gatekeepr",
+      username: 'Lumexy',
+      password: 'gatekeepr',
     };
 
     request(app)
@@ -201,8 +187,8 @@ describe('POST /api/v1/auth/login', () => {
 
   it('should login the user', (done) => {
     const userRequest = {
-      username: "Lumexy",
-      password: "gatekeeper",
+      username: 'Lumexy',
+      password: 'gatekeeper',
     };
 
     request(app)
@@ -221,9 +207,7 @@ describe('POST /api/v1/auth/login', () => {
 
 
 describe('GET /users/requests', () => {
-  
-  it('should get empty request if user has none', (done) => {   
-
+  it('should get empty request if user has none', (done) => {
     request(app)
       .get('/api/v1/users/requests')
       .set('Authorization', userToken)
@@ -231,7 +215,7 @@ describe('GET /users/requests', () => {
       .expect(404)
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toBe('No requests yet' );
+        expect(res.body.message).toBe('No requests yet');
       })
       .end(done);
   });
@@ -246,7 +230,7 @@ describe('GET /users/requests', () => {
       .then(res => res)
       .catch(err => err);
 
-  request(app)
+    request(app)
       .get('/api/v1/users/requests')
       .set('Authorization', userToken)
       .send(user)
@@ -256,7 +240,7 @@ describe('GET /users/requests', () => {
         expect(res.body.message).toHaveLength(2);
       })
       .end(done);
-  });  
+  });
 });
 
 describe('GET /users/requests/:requestId', () => {
@@ -270,14 +254,14 @@ describe('GET /users/requests/:requestId', () => {
       .expect(200)
       .expect((res) => {
         expect(res.body).toHaveLength(1);
-        expect(res.body[0]['request_title']).toBe('Games');
+        expect(res.body[0].request_title).toBe('Games');
       })
       .end(done);
   });
 
   it('should not get a request', (done) => {
     requestId = 4;
-    
+
     request(app)
       .get(`/api/v1/users/requests/${requestId}`)
       .set('Authorization', userToken)
@@ -289,15 +273,13 @@ describe('GET /users/requests/:requestId', () => {
       })
       .end(done);
   });
-
 });
 
 describe('POST /users/requests', () => {
-
   it('should not create request missing a field', (done) => {
     const userRequest = {
-      content: "Game of the year",
-      department: "Repairs",
+      content: 'Game of the year',
+      department: 'Repairs',
     };
 
     request(app)
@@ -314,9 +296,9 @@ describe('POST /users/requests', () => {
 
   it('should not create request with empty field', (done) => {
     const userRequest = {
-      title: "",
-      content: "Game of the year",
-      department: "Repairs"
+      title: '',
+      content: 'Game of the year',
+      department: 'Repairs',
     };
 
     request(app)
@@ -333,10 +315,10 @@ describe('POST /users/requests', () => {
 
   it('should create request with valid data', (done) => {
     const userRequest = {
-      title: "Homecoming",
-      content: "Game of the year 2018",
-      department: "Repairs",
-      user
+      title: 'Homecoming',
+      content: 'Game of the year 2018',
+      department: 'Repairs',
+      user,
     };
 
     request(app)
@@ -350,7 +332,6 @@ describe('POST /users/requests', () => {
       })
       .end(done);
   });
-
 });
 
 describe('PUT /users/requests/:requestId', () => {
@@ -358,10 +339,10 @@ describe('PUT /users/requests/:requestId', () => {
     const requestId = 4;
 
     const reqBody = {
-      "title": "The Game of the year",
-      "content": "It is played in the continent",
-      user
-    }
+      title: 'The Game of the year',
+      content: 'It is played in the continent',
+      user,
+    };
 
     request(app)
       .put(`/api/v1/users/requests/${requestId}`)
@@ -376,13 +357,13 @@ describe('PUT /users/requests/:requestId', () => {
   });
 
   it('should update request with valid requestId', (done) => {
-    let requestId = 1;
+    const requestId = 1;
 
     const reqBody = {
-      "title": "The Game of the year",
-      "content": "It is played in the continent",
-      user
-    }
+      title: 'The Game of the year',
+      content: 'It is played in the continent',
+      user,
+    };
 
     request(app)
       .put(`/api/v1/users/requests/${requestId}`)
@@ -400,11 +381,11 @@ describe('PUT /users/requests/:requestId', () => {
     const requestId = 1;
 
     const reqBody = {
-      "title": "The Game of the year",
-      "content": "It is played in the continent",
-      "status": "approved",
-      user
-    }
+      title: 'The Game of the year',
+      content: 'It is played in the continent',
+      status: 'approved',
+      user,
+    };
 
     request(app)
       .put(`/api/v1/users/requests/${requestId}`)
@@ -422,11 +403,11 @@ describe('PUT /users/requests/:requestId', () => {
 describe('GET /requests', () => {
   it('should not get requests for non-admin', (done) => {
     request(app)
-      .get(`/api/v1/requests`)
+      .get('/api/v1/requests')
       .set('Authorization', userToken)
       .expect(401)
       .expect((res) => {
-        expect(res.body).toHaveProperty('message');    
+        expect(res.body).toHaveProperty('message');
         expect(res.body.message).toBe('only Admin allowed');
       })
       .end(done);
@@ -434,15 +415,15 @@ describe('GET /requests', () => {
 
   it('should get requests for admin', (done) => {
     const admin = {
-      admin_role: 'true'
-    }
+      admin_role: 'true',
+    };
     request(app)
-      .get(`/api/v1/requests`)
+      .get('/api/v1/requests')
       .set('Authorization', adminToken)
       .send(admin.admin_role)
       .expect(200)
       .expect((res) => {
-        expect(res.body.length).toHaveProperty('message');    
+        expect(res.body.length).toHaveProperty('message');
         expect(res.body.message).toBe('only Admin allowed');
       })
       .end(done);
