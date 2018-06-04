@@ -1,63 +1,52 @@
 import express from 'express';
 
-import getHomePage from '../controller/getHomePage';
-import createUserAccount from '../controller/createAccount';
-import loginUser from '../controller/loginUser';
-import getAllUserRequests from '../controller/getAllUserRequest';
-import getUserRequestById from '../controller/getUserRequestById';
-import creatUserRequest from '../controller/createUserRequest';
-import updateUserRequest from '../controller/updateUserRequest';
-import getAllRequest from '../controller/getAllRequest';
-import approveRequest from '../controller/approveRequest';
-import rejectRequest from '../controller/rejectRequest';
-import resolveRequest from '../controller/resolveRequest';
-
+import routeController from '../controller/index';
 import authenticate from '../middleware/authenticate';
 
 const api = express.Router();
 
 
 // GET / homepage
-api.get('/', getHomePage);
+api.get('/', routeController.getHomePage);
 
 // POST /auth/signup
-api.post('/auth/signup', createUserAccount);
+api.post('/auth/signup', routeController.createUserAccount);
 
 // POST /auth/signup
-api.post('/auth/login', loginUser);
+api.post('/auth/login', routeController.loginUser);
 
 // GET /users/requests
-api.get('/users/requests', authenticate, getAllUserRequests);
+api.get('/users/requests', authenticate, routeController.getAllUserRequests);
 
 // GET a request from user by requestid
-api.get('/users/requests/:requestId', authenticate, getUserRequestById);
+api.get('/users/requests/:requestId', authenticate, routeController.getUserRequest);
 
 // create user request
-api.post('/users/requests', authenticate, creatUserRequest);
+api.post('/users/requests', authenticate, routeController.createUserRequest);
 
 // updatee user request
-api.put('/users/requests/:requestId', authenticate, updateUserRequest);
+api.put('/users/requests/:requestId', authenticate, routeController.updateUserRequest);
 
 /**
  * get all application requests
  * also filter requests if there's query
  * /request?filter={value}
  */
-api.get('/requests', authenticate, getAllRequest);
+api.get('/requests', authenticate, routeController.getAllRequest);
 
 /**
  * approve a request
  */
-api.put('/requests/:requestId/approve', authenticate, approveRequest);
+api.put('/requests/:requestId/approve', authenticate, routeController.approveRequest);
 
 /**
  * disapprove a request
  */
-api.put('/requests/:requestId/disapprove', authenticate, rejectRequest);
+api.put('/requests/:requestId/disapprove', authenticate, routeController.rejectRequest);
 
 /**
  * resolve a request
  */
-api.put('/requests/:requestId/resolve', authenticate, resolveRequest);
+api.put('/requests/:requestId/resolve', authenticate, routeController.resolveRequest);
 
 export default api;

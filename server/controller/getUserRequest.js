@@ -1,6 +1,6 @@
 import db from '../db/index';
 
-const getUserRequestById = (req, res) => {
+const getUserRequest = (req, res) => {
   const { user } = req.body;
   const { requestId } = req.params;
 
@@ -16,4 +16,4 @@ const getUserRequestById = (req, res) => {
     .catch(err => res.status(404).send({ message: 'Request cannot be found' }));
 };
 
-export default getUserRequestById;
+export default getUserRequest;
