@@ -12,7 +12,10 @@ const app = express();
 
 // configure third party middleware
 app.use(bodyParser.json());
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(morgan('combined'));
+
 app.use('/', express.static(path.resolve(__dirname, '../../UI/')));
 
 
