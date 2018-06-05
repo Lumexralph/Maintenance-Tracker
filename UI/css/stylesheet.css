@@ -179,7 +179,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 .heading {
   text-align: center;
   padding: 10px;
-  background-color: rgba(46, 65, 114, 0.38);
+  background-color: rgba(46, 65, 114, 0.6);
 }
 /* .heading-text {
   font-size: 1.2em;
@@ -352,7 +352,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   }
 
   .footer-details div {
-    font-size: 1.0em;
+    font-size: 0.9em;
   }
   
 
@@ -410,18 +410,13 @@ SIGNUP PAGE
   justify-content: center;
   padding: 25px;
   grid-row-gap: 2em;
+  background-color: rgba(46, 65, 114, 0.6);
+  color: white;
 }
 
 .left-part {
   text-align: left;
 }
-
-.left-part-text {
-  font-size: 3em;
-  color: rgb(38, 49, 76);
-  text-shadow: 1px 2px white;
-}
-
 
 .signup-container-img {
   background-image: url('./../img/imageC-2.jpeg');
@@ -432,15 +427,6 @@ SIGNUP PAGE
 
 .signup-btn {
   color: white;
-}
-.signup-btn:hover {
-  color: black;
-}
-
-
-.container > p {
-  color: rgb(38, 49, 76);
-  text-shadow: 1px 1px azure;
 }
 
 /*#################
@@ -512,7 +498,7 @@ pop up
 @media only screen and (min-width: 768px) {
   .signup-container {
     grid-template-columns: auto auto;
-    padding: 100px;
+    padding: 50px;
     grid-column-gap: 5em;
   }
 } 
@@ -521,7 +507,7 @@ pop up
 @media only screen and (min-width: 992px) {
   .signup-container {
     grid-template-columns: auto auto;
-    padding: 100px;
+    padding: 50px;
     grid-column-gap: 5em;
   }
 } 
@@ -530,7 +516,7 @@ pop up
 @media only screen and (min-width: 1200px) {
   .signup-container {
     grid-template-columns: auto auto;
-    padding: 200px;
+    padding: 50px;
     grid-column-gap: 5em;
   }
 }
