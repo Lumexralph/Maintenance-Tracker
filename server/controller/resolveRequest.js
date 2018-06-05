@@ -5,7 +5,7 @@ const resolveRequest = (req, res) => {
   const { user } = req.body;
 
   if (!user.admin_role) {
-    return res.status(401).send({ message: 'You cannot modify request' });
+    return res.status(401).send({ message: 'Only Admin is allowed to carry out the action.' });
   }
 
   const text = `UPDATE requests
@@ -25,7 +25,7 @@ const resolveRequest = (req, res) => {
         .then(request => res.send(request.rows[0]))
         .catch(err => res.status(404).send({ message: 'Request not found' }));
     })
-    .catch(err => res.status.send({ message: err }));
+    .catch(err => res.status.send({ message: 'Request cannot be found, please ensure it is in the system' }));
 };
 
 export default resolveRequest;
