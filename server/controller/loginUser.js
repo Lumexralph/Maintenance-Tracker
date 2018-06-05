@@ -19,7 +19,7 @@ const loginUser = (req, res) => {
         /**
          * genrate another token and save it
          */
-        const token = utils.generateAuthToken(user);
+        const token = utils.generateToken(user);
         res.header('Authorization', token)
           .status(200).send({
             message: 'Login successful',

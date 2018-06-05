@@ -15,7 +15,12 @@ const getAllRequest = (req, res) => {
     ORDER BY request_id ASC;`;
 
     return db.query(text)
-      .then(result => res.status(200).send(result.rows))
+      .then((result) => {
+        if (result.rows.length === 0) {
+          return res.status(200).send({ message: 'There is no request that matches the condition' });
+        }
+        return res.status(200).send(result.rows);
+      })
       .catch(err => res.status(400).send({ message: 'Requests cannot be filtered' }));
   }
 
