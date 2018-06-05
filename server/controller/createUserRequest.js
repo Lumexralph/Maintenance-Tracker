@@ -24,7 +24,7 @@ const createUserRequest = (req, res) => {
 
   db.query(text)
     .then(result => res.status(201).send({ message: result.rows[0] }))
-    .catch(err => res.status(400).send({ message: 'Request not created' }));
+    .catch(err => res.status(400).send({ message: 'Error occurred, Request not created' }));
 
   return undefined;
 };

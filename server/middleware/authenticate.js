@@ -19,9 +19,9 @@ const authenticate = (req, res, next) => {
         next();
         return req;
       })
-      .catch(err => res.status(401).send({ message: err }));
+      .catch(err => res.status(401).send({ message: 'The system could not verify the user with the token' }));
   }
-  return res.status(401).send({ message: 'You are not authorized' });
+  return res.status(401).send({ message: 'You are not allowed to perform action if not registered user' });
 };
 
 export default authenticate;

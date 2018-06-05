@@ -5,7 +5,7 @@ const approveRequest = (req, res) => {
   const { user } = req.body;
 
   if (!user.admin_role) {
-    return res.status(401).send({ message: 'You cannot modify request' });
+    return res.status(401).send({ message: 'Only Admin is allowed to modify request' });
   }
 
   const text = `UPDATE requests
