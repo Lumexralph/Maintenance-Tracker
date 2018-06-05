@@ -24,9 +24,8 @@ body {
 }
 
 header {
-  padding: 15px;
+  padding: 10px;
   text-align: center;
-  font-size: 1.4em;
   background-color: #369;
   color: white;
 }
@@ -115,7 +114,6 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   grid-template-rows: auto;
   grid-row-gap: 1em;
   justify-content: center;
-  margin: 80px 0px;
 }
 .signup-login-btn {
   width: 200px;
@@ -162,6 +160,10 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 
 /* on desktop change to grid view */
 @media (min-width: 760px) {
+  .signup-login {
+    margin: 80px 0px;
+  }
+
   .container {
     display: grid;
     grid-template-rows: auto;
@@ -179,21 +181,21 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   padding: 10px;
   background-color: rgba(46, 65, 114, 0.38);
 }
-.heading-text {
+/* .heading-text {
   font-size: 1.2em;
-}
+} */
 .site-name {
   color: #3397e6;
 }
-.heading-body-text {
+/* .heading-body-text {
   font-size: 1.5em;
-}
-.heading-title-text {
+} */
+/* .heading-title-text {
   font-size: 2.3em;
-}
-.heading > h1 {
+} */
+/* .heading > h1 {
   font-size: 2.6em;
-}
+} */
 .heading > p, h4 {
   color: white;
 }
@@ -317,6 +319,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 
 .footer-details div {
   margin: 15px 0;
+  font-size: 0.9em;
 }
 
 .footer-info-margins {
@@ -345,8 +348,13 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 @media (min-width: 760px) {
   .footer {
     grid-template-columns: 260px auto;
-    grid-column-gap: 2em;
+    grid-column-gap: 1em;
   }
+
+  .footer-details div {
+    font-size: 1.0em;
+  }
+  
 
   .footer-logo {
     max-width: 30%;
@@ -355,7 +363,6 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   .footer-details {
     display: grid;
     grid-template-rows: auto;
-    grid-row-gap: 2em;
   }
 
   .footer-links {
