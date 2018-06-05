@@ -1,8 +1,7 @@
 import validator from 'validator';
 
 import db from '../db/index';
-import hashPassword from './utils/hashPassword';
-import generateAuthToken from './utils/generateToken';
+import utils from './utils/index';
 
 /** @function createUserAccount */
 const createUserAccount = (req, res) => {
@@ -40,7 +39,7 @@ const createUserAccount = (req, res) => {
     });
   }
   // hash the password just one
-  hashedPassword = hashPassword(password1);
+  hashedPassword = utils.hashPassword(password1);
   // insert data in db
   const text = `INSERT INTO users(username, password, email) VALUES('${username}', '${hashedPassword}', '${email}') RETURNING *`;
 
@@ -51,7 +50,7 @@ const createUserAccount = (req, res) => {
         user_id, username, admin_role,
       } = result;
 
-      const jsonToken = generateAuthToken(result);
+      const jsonToken = utils.generateAuthToken(result);
 
       return res.header('Authorization', jsonToken).status(201).send({
         userId: user_id, username, adminRrole: admin_role, token: jsonToken,

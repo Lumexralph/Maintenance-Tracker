@@ -1,6 +1,6 @@
 import db from '../db/index';
-import checkPassword from '../controller/utils/checkPassword';
-import generateAuthToken from './utils/generateToken';
+import utils from './utils/index';
+
 
 const loginUser = (req, res) => {
   const { username, password } = req.body;
@@ -15,14 +15,14 @@ const loginUser = (req, res) => {
   db.query(text)
     .then(result => result.rows[0])
     .then((user) => {
-      if (checkPassword(password, user.password)) {
+      if (utils.checkPassword(password, user.password)) {
         /**
          * genrate another token and save it
          */
-        const token = generateAuthToken(user);
+        const token = utils.generateAuthToken(user);
         res.header('Authorization', token)
           .status(200).send({
-            message: 'Login Successful',
+            message: 'Login successful',
             token,
           });
       }
@@ -32,7 +32,7 @@ const loginUser = (req, res) => {
       });
     })
     .catch(err => res.status(400).send({
-      message: 'Account does not exist',
+      message: 'Account with the credentials does not exist',
     }));
 };
 
