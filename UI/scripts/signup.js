@@ -3,8 +3,9 @@ const signupButton = document.getElementById('signupButton');
 const form = document.forms;
 const formValue = form[0];
 
-const popupMessage = (passwordCheck) => {
+const popupMessage = (passwordCheck, text = '') => {
   const popup = document.getElementById('myPopup');
+  popup.innerText = text;
 
   return passwordCheck ? popup.classList.add('show') : popup.classList.remove('show');
 };
@@ -18,16 +19,13 @@ const createAccount = (event) => {
   const password2 = formValue[3].value;
 
   if (password1 !== password2) {
-    return popupMessage(true);
+    return popupMessage(true, 'Passwords do not match, please check');
   }
-
-  popupMessage(false);
-
 
   /**
    * create json with data
    */
-  const url = 'http://localhost:3000/api/v1/auth/signup';
+  const url = '/api/v1/auth/signup';
 
   const data = {
     username, email, password1, password2,
@@ -44,14 +42,29 @@ const createAccount = (event) => {
   });
 
   fetch(request)
-    .then((res) => res.json())
+    .then(res => res.json())
     .then((result) => {
-    // Handle response we get from the API
-    // set the token in local storage
-      window.localStorage.setItem('token', result.message.token);
-      window.location.href = 'http://localhost:3000/api/v1/userpage.html';
+      // Handle response we get from the API
+      if (!result.userId) {
+        return popupMessage(true, result.message);
+      }
+
+      /**
+       * Remove popup if any
+       */
+
+      popupMessage(false);
+      /**
+       * set the token in local storage
+       */
+
+      window.localStorage.setItem('token', result.token);
+
+      /** direct the user to userpage */
+      window.location.href = 'userpage.html';
+
     })
-    .catch(err => console.log(err));
+    .catch(err => err);
 };
 
 signupButton.addEventListener('click', createAccount);

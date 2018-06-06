@@ -50,7 +50,7 @@ const createUserAccount = (req, res) => {
         user_id, username, admin_role,
       } = result;
 
-      const jsonToken = utils.generateAuthToken(result);
+      const jsonToken = utils.generateToken(result);
 
       return res.header('Authorization', jsonToken).status(201).send({
         userId: user_id, username, adminRrole: admin_role, token: jsonToken,
