@@ -23,6 +23,9 @@ const loginUser = (req, res) => {
         res.header('Authorization', token)
           .status(200).send({
             message: 'Login successful',
+            userId: user.user_id,
+            username: user.username,
+            adminRole: user.admin_role,
             token,
           });
       }
