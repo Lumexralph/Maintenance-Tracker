@@ -24,9 +24,8 @@ body {
 }
 
 header {
-  padding: 15px;
+  padding: 10px;
   text-align: center;
-  font-size: 1.4em;
   background-color: #369;
   color: white;
 }
@@ -115,7 +114,6 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   grid-template-rows: auto;
   grid-row-gap: 1em;
   justify-content: center;
-  margin: 80px 0px;
 }
 .signup-login-btn {
   width: 200px;
@@ -162,6 +160,10 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 
 /* on desktop change to grid view */
 @media (min-width: 760px) {
+  .signup-login {
+    margin: 80px 0px;
+  }
+
   .container {
     display: grid;
     grid-template-rows: auto;
@@ -177,23 +179,23 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 .heading {
   text-align: center;
   padding: 10px;
-  background-color: rgba(46, 65, 114, 0.38);
+  background-color: rgba(46, 65, 114, 0.6);
 }
-.heading-text {
+/* .heading-text {
   font-size: 1.2em;
-}
+} */
 .site-name {
   color: #3397e6;
 }
-.heading-body-text {
+/* .heading-body-text {
   font-size: 1.5em;
-}
-.heading-title-text {
+} */
+/* .heading-title-text {
   font-size: 2.3em;
-}
-.heading > h1 {
+} */
+/* .heading > h1 {
   font-size: 2.6em;
-}
+} */
 .heading > p, h4 {
   color: white;
 }
@@ -317,6 +319,7 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 
 .footer-details div {
   margin: 15px 0;
+  font-size: 0.9em;
 }
 
 .footer-info-margins {
@@ -345,8 +348,13 @@ input[type=text], input[type=password], input[type=email], select, textarea {
 @media (min-width: 760px) {
   .footer {
     grid-template-columns: 260px auto;
-    grid-column-gap: 2em;
+    grid-column-gap: 1em;
   }
+
+  .footer-details div {
+    font-size: 0.9em;
+  }
+  
 
   .footer-logo {
     max-width: 30%;
@@ -355,7 +363,6 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   .footer-details {
     display: grid;
     grid-template-rows: auto;
-    grid-row-gap: 2em;
   }
 
   .footer-links {
@@ -403,18 +410,13 @@ SIGNUP PAGE
   justify-content: center;
   padding: 25px;
   grid-row-gap: 2em;
+  background-color: rgba(46, 65, 114, 0.6);
+  color: white;
 }
 
 .left-part {
   text-align: left;
 }
-
-.left-part-text {
-  font-size: 3em;
-  color: rgb(38, 49, 76);
-  text-shadow: 1px 2px white;
-}
-
 
 .signup-container-img {
   background-image: url('./../img/imageC-2.jpeg');
@@ -425,15 +427,6 @@ SIGNUP PAGE
 
 .signup-btn {
   color: white;
-}
-.signup-btn:hover {
-  color: black;
-}
-
-
-.container > p {
-  color: rgb(38, 49, 76);
-  text-shadow: 1px 1px azure;
 }
 
 /*#################
@@ -505,7 +498,7 @@ pop up
 @media only screen and (min-width: 768px) {
   .signup-container {
     grid-template-columns: auto auto;
-    padding: 100px;
+    padding: 50px;
     grid-column-gap: 5em;
   }
 } 
@@ -514,7 +507,7 @@ pop up
 @media only screen and (min-width: 992px) {
   .signup-container {
     grid-template-columns: auto auto;
-    padding: 100px;
+    padding: 50px;
     grid-column-gap: 5em;
   }
 } 
@@ -523,7 +516,7 @@ pop up
 @media only screen and (min-width: 1200px) {
   .signup-container {
     grid-template-columns: auto auto;
-    padding: 200px;
+    padding: 50px;
     grid-column-gap: 5em;
   }
 }
