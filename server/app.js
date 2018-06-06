@@ -15,10 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(morgan('combined'));
-
 app.use(express.static(path.resolve(__dirname, '../UI')));
-console.log(path.resolve(__dirname, '../UI'));
-
 
 const port = process.env.PORT || 3000;
 
