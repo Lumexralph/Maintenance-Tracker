@@ -1,13 +1,14 @@
 const loginButton = document.getElementById('loginButton');
-console.log('I am working');
 
 const form = document.forms;
 const formValue = form[0];
 
-const popupMessage = (informationExists) => {
+const popupMessage = (validCredentials, text = '') => {
   const popup = document.getElementById('myPopup');
 
-  return informationExists ? popup.classList.add('show') : popup.classList.remove('show');
+  popup.innerText = text;
+
+  return validCredentials ? popup.classList.add('show') : popup.classList.remove('show');
 };
 
 const userLogin = (event) => {
@@ -16,12 +17,10 @@ const userLogin = (event) => {
   const username = formValue[0].value;
   const password = formValue[1].value;
 
-  // popupMessage(false);
-
   /**
    * create json with data
    */
-  const url = 'http://localhost:3000/api/v1/auth/login';
+  const url = '/api/v1/auth/login';
 
   const data = {
     username, password,
@@ -40,21 +39,23 @@ const userLogin = (event) => {
   fetch(request)
     .then(res => res.json())
     .then((result) => {
-      console.log(result);
-      if (result.message === 'Login Successful') {
+      if (result.message === 'Login successful') {
         popupMessage(false);
         // set the token in local storage
         window.localStorage.setItem('token', result.token);
-        window.location.href = 'http://localhost:3000/api/v1/userpage.html';
+
+        /** Check if the user is an admin or regular user */
+        if (result.adminRole) {
+          window.location.href = 'admin.html';
+          return undefined;
+        }
+        window.location.href = 'userpage.html';
       } else {
-        popupMessage(true);
+        popupMessage(true, result.message);
       }
-      // Handle response we get from the API
+      return undefined;
     })
-    .catch((err) => {
-      popupMessage(true);
-      console.log(err);
-    });
+    .catch(err => popupMessage(true, err));
 };
 
 loginButton.addEventListener('click', userLogin);
