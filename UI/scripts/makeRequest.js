@@ -42,9 +42,17 @@ const accordion = (el) => {
   });
 };
 
-const user = parseJwt(token);
+/** To make the text editable */
+const editRequest = (index) => {
+  let requests = window.localStorage.getItem('userRequests');
+  requests = JSON.parse(requests);
+  window.localStorage.setItem('currentRequest', JSON.stringify(requests[index]));
 
-console.log(user);
+  /** move to the edit rquest page */
+  window.location.href = 'editrequest.html';
+};
+
+const user = parseJwt(token);
 
 const createRequest = () => {
   const modal = document.getElementById('request-modal');
@@ -75,10 +83,16 @@ const createRequest = () => {
   fetch(request)
     .then(res => res.json())
     .then((result) => {
-      console.log(result);
+      /** update the stored requests */
+      let requests = window.localStorage.getItem('userRequests');
+      requests = JSON.parse(requests);
+      requests.push(result);
+      const index = requests.length - 1;
+      window.localStorage.setItem('userRequests', JSON.stringify(requests));
+
       const button = document.createElement('BUTTON');
       button.className = 'accordion';
-      const buttonContent = document.createTextNode(`${result.message.request_title}`);
+      const buttonContent = document.createTextNode(`${result.request_title}`);
 
       button.appendChild(buttonContent);
 
@@ -86,8 +100,8 @@ const createRequest = () => {
       const panel = document.createElement('DIV');
       panel.className = 'panel';
       const panelContent = document.createElement('p');
-      panelContent.innerHTML = `<p>${result.message.request_content}</p> <p>${result.message.department}</p>
-        <p>${result.message.status}</p>`;
+      panelContent.innerHTML = `<p>${result.request_content}</p> <p>${result.department}</p>
+        <p>${result.status}</p><button onClick=${editRequest(index)} class="edit-btn">Edit</button>`;
 
       panel.appendChild(panelContent);
 
@@ -96,6 +110,7 @@ const createRequest = () => {
 
       requestContainer.append(button);
       button.after(panel);
+
 
       /** remove modal form */
       modal.style.display = 'none';
@@ -125,6 +140,9 @@ const displayAllRequest = () => {
   fetch(request)
     .then(res => res.json())
     .then((result) => {
+      /** store the user requests */
+      window.localStorage.setItem('userRequests', JSON.stringify(result));
+
       result.forEach((el) => {
         const button = document.createElement('BUTTON');
         button.className = 'accordion';
@@ -137,7 +155,7 @@ const displayAllRequest = () => {
         panel.className = 'panel';
         const panelContent = document.createElement('p');
         panelContent.innerHTML = `<p>${el.request_content}</p> <p>${el.department}</p>
-        <p>${el.status}</p>`;
+        <p>${el.status}</p><button class="edit-btn">Edit</button>`;
 
         panel.appendChild(panelContent);
         requestContainer.append(button);
@@ -146,10 +164,14 @@ const displayAllRequest = () => {
     })
     .then(() => {
       const acc = document.getElementsByClassName('accordion');
-      
+      const editButtons = document.getElementsByClassName('edit-btn');
+
       /** Create accordion to display requests */
       for (let i = 0; i < acc.length; i += 1) {
         accordion(acc[i]);
+        editButtons[i].addEventListener('click', () => {
+          editRequest(i);
+        });
       }
     })
     .catch(err => err);
