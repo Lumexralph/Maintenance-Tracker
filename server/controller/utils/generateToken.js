@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'test') {
 
 const generateAuthToken = (userData) => {
   const access = 'auth';
-  const token = jwt.sign({ user_id: String(userData.user_id), access }, secret).toString();
+  const token = jwt.sign({ userId: String(userData.user_id), access }, secret).toString();
 
   return token;
 };

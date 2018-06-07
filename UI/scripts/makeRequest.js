@@ -6,39 +6,55 @@ if (token === undefined) {
    * if there's no token available
    * redirect to home page
    */
-  console.log(token);
 
-  window.location.href = '/http://localhost:3000/api/v1/index.html';
+  window.location.href = 'index.html';
 }
 
 const sendRequestButton = document.getElementById('sendRequest');
 
 const requestContainer = document.getElementById('myRequests');
 
-console.log(requestContainer);
-
-
 /**
  *
  * @param {string} token
  * @function source https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript/38552302#38552302
  */
-function parseJwt(token) {
-  const base64Url = token.split('.')[1];
+const parseJwt = (storedToken) => {
+  const base64Url = storedToken.split('.')[1];
   const base64 = base64Url.replace('-', '+').replace('_', '/');
   return JSON.parse(window.atob(base64));
-}
+};
+
+
+/**
+ * Inspiration from https://www.w3schools.com/howto/howto_js_accordion.asp
+ */
+
+const accordion = (el) => {
+  el.addEventListener('click', function createAccordion() {
+    this.classList.toggle('active');
+    const panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = `${panel.scrollHeight}px`;
+    }
+  });
+};
 
 const user = parseJwt(token);
 
+console.log(user);
+
 const createRequest = () => {
+  const modal = document.getElementById('request-modal');
   const form = document.forms[0];
   const department = form[1].value;
   const title = form[0].value;
   const content = form[2].value;
 
 
-  const url = 'http://localhost:3000/api/v1/users/requests/';
+  const url = '/api/v1/users/requests/';
 
   const data = {
     title, department, content, user,
@@ -59,6 +75,7 @@ const createRequest = () => {
   fetch(request)
     .then(res => res.json())
     .then((result) => {
+      console.log(result);
       const button = document.createElement('BUTTON');
       button.className = 'accordion';
       const buttonContent = document.createTextNode(`${result.message.request_title}`);
@@ -74,18 +91,25 @@ const createRequest = () => {
 
       panel.appendChild(panelContent);
 
+      /** Create an accordion */
+      accordion(button);
 
       requestContainer.append(button);
       button.after(panel);
 
-      console.log(result);
-      window.location.href = 'http://localhost:3000/api/v1/userpage.html';
+      /** remove modal form */
+      modal.style.display = 'none';
+
+      /** Clean the form */
+      form[0].value = '';
+      form[2].value = '';
     })
-    .catch(err => console.log(err));
+    .catch(err => err);
 };
 
+
 const displayAllRequest = () => {
-  const url = 'http://localhost:3000/api/v1/users/requests/';
+  const url = '/api/v1/users/requests/';
 
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
@@ -101,7 +125,7 @@ const displayAllRequest = () => {
   fetch(request)
     .then(res => res.json())
     .then((result) => {
-      result.message.forEach((el) => {
+      result.forEach((el) => {
         const button = document.createElement('BUTTON');
         button.className = 'accordion';
         const buttonContent = document.createTextNode(`${el.request_title}`);
@@ -116,31 +140,17 @@ const displayAllRequest = () => {
         <p>${el.status}</p>`;
 
         panel.appendChild(panelContent);
-
-
         requestContainer.append(button);
         button.after(panel);
       });
-      console.log(result.message);
     })
     .then(() => {
       const acc = document.getElementsByClassName('accordion');
-
-/**
- * Inspiration from https://www.w3schools.com/howto/howto_js_accordion.asp
- */
-
-for (let i = 0; i < acc.length; i++) {
-  acc[i].addEventListener('click', function () {
-    this.classList.toggle('active');
-    const panel = this.nextElementSibling;
-    if (panel.style.maxHeight) {
-      panel.style.maxHeight = null;
-    } else {
-      panel.style.maxHeight = `${panel.scrollHeight  }px`;
-    }
-  });
-}
+      
+      /** Create accordion to display requests */
+      for (let i = 0; i < acc.length; i += 1) {
+        accordion(acc[i]);
+      }
     })
     .catch(err => err);
 };
