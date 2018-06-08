@@ -52,6 +52,10 @@ input[type=text], input[type=password], input[type=email], select, textarea {
   border-radius: 5px;
 }
 
+button:disabled {
+  cursor: not-allowed;
+}
+
 /* ################################ */
 
 /* Theme Styles*/
@@ -654,6 +658,12 @@ pop up
     color: white;
     font-weight: bold;
     cursor: pointer;
+}
+/* the request title */
+.request-title {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .accept-btn {

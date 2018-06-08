@@ -4,7 +4,7 @@ const rejectRequest = (req, res) => {
   const { requestId } = req.params;
   const { user } = req.body;
 
-  if (!user.admin_role) {
+  if (!user.adminRole) {
     return res.status(401).send({ message: 'Only Admin is allowed to carry out the action.' });
   }
 
