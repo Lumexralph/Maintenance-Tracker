@@ -15,8 +15,14 @@ const authenticate = (req, res, next) => {
     return db.query(text)
       .then((result) => {
         const user = result.rows[0];
-        req.body.user = user;
+        req.body.user = {
+          userId: user.user_id,
+          username: user.username,
+          adminRole: user.admin_role,  
+        };
+
         next();
+        
         return req;
       })
       .catch(err => res.status(401).send({ message: 'The system could not verify the user with the token' }));
