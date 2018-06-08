@@ -32,21 +32,37 @@
     </nav>
     <main class="user-home-bg-img">
       <section class="user-home-container">
-        <div class="tab-header">
-          <div class="tab">            
-            <button id="defaultOpen" class="tablinks">My Requests</button>
-            <button class="tablinks" id="makeRequest">Make A Request</button>
+          <div class="container">
+              <h3>Update  Request</h3>
+
+              <form action="">
+      
+                <label for="title"></label>
+                <input type="text" id="request-title" name="request-title" placeholder="Your request title.." required>
+      
+                <label for="department">Department</label>
+                <select id="department" name="department">
+                  <option value="maintenance">Maintenance</option>
+                  <option value="Repairs">Repairs</option>
+                </select>
+      
+                <label for="requestSubject"></label>
+                <textarea id="subject" name="requestSubject" placeholder="Compose your requests.." style="height:200px" required></textarea>
+      
+                <button id="updateRequest" class="btn btn-send" type="button">Update Request</button>
+                <button id="cancelRequest" class="btn cancel-request-btn" type="button">Cancel</button>
+      
+              </form>
+            </div>
+        
           </div>
-          <div id="myRequests" class="tabcontent active">
-            <h3>Request List</h3>
-           
-          </div>
+
+
             
-          </div>
-        </div>
+          </div> 
+        </div> 
         
       </section>
-      
       
     </main>
     <footer class="footer background-quarternary">
@@ -95,42 +111,8 @@
         </div>
     </footer>
 
-
-    <div id="request-modal" class="modal">
-
-      <!-- Modal content -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <span class="close">&times;</span>
-          <h2>FixZit</h2>
-        </div>
-        <div class="modal-body">
-          <h3>Create a request</h3>
-      <!-- <div class="container"> -->
-        <form action="">
-
-          <label for="title"></label>
-          <input type="text" id="request-title" name="request-title" placeholder="Your request title.." required>
-
-          <label for="department">Department</label>
-          <select id="department" name="department">
-            <option value="maintenance">Maintenance</option>
-            <option value="Repairs">Repairs</option>
-          </select>
-
-          <label for="requestSubject"></label>
-          <textarea id="subject" name="requestSubject" placeholder="Compose your requests.." style="height:200px" required></textarea>
-
-          <input id="sendRequest" class="btn btn-send" type="button" value="Send Request">
-
-        </form>
-      <!-- </div> -->
-        </div>
-      </div>
-
-    </div>
-    <script src="scripts/makeRequest.js"></script>
-    <script src="scripts/userModal.js"></script>
+    <script src="scripts/editRequest.js"></script>
+    <script src="scripts/cancelRequestEdit.js"></script>
   </body>
 
 </html>

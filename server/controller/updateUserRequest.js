@@ -25,7 +25,7 @@ const updateUserRequest = (req, res) => {
    * Fecth for the request and check the status
    */
 
-  if (!user.admin_role) {
+  if (!user.adminRole) {
     const text3 = `SELECT * FROM requests WHERE request_id = '${requestId}'`;
 
     return db.query(text3)
@@ -39,7 +39,7 @@ const updateUserRequest = (req, res) => {
   FROM
   users
   WHERE
-  requests.user_id = users.user_id AND request_id = '${requestId}' AND requests.user_id = '${user.user_id}';`;
+  requests.user_id = users.user_id AND request_id = '${requestId}' AND requests.user_id = '${user.userId}';`;
 
         return db.query(text)
           .then((result) => {

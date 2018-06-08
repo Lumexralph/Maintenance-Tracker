@@ -10,13 +10,19 @@ const authenticate = (req, res, next) => {
   if (token) {
     const decodedUser = decodedToken(token);
 
-    const text = `SELECT user_id, username, admin_role FROM users WHERE user_id = '${decodedUser.user_id}'`;
+    const text = `SELECT user_id, username, admin_role FROM users WHERE user_id = '${decodedUser.userId}'`;
 
     return db.query(text)
       .then((result) => {
         const user = result.rows[0];
-        req.body.user = user;
+        req.body.user = {
+          userId: user.user_id,
+          username: user.username,
+          adminRole: user.admin_role,  
+        };
+
         next();
+        
         return req;
       })
       .catch(err => res.status(401).send({ message: 'The system could not verify the user with the token' }));
