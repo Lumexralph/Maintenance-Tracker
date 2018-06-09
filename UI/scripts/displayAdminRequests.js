@@ -1,6 +1,12 @@
 const token = window.localStorage.getItem('token');
 
 const tableBody = document.querySelector('tbody');
+const filterOptions = document.getElementById('filter-by');
+
+/** get the url to be queried if filtered or not
+ */
+let mainUrl = '/api/v1/requests';
+
 
 let disApproveRequestCopy;
 
@@ -38,8 +44,11 @@ const modalDisplay = () => {
       const requestBody = document.querySelector('.modal-body');
       const requestFooter = document.querySelector('.modal-footer p');
       let requestList = window.localStorage.getItem('allRequests');
+
       requestList = JSON.parse(requestList);
-      const requestIndex = Number(requestIds[i].innerText) - 1;
+
+      const requestIndex = Number(requestIds[i].id);
+
       const presentRequest = requestList[requestIndex];
       /** populate the modal per request */
       requestHeading.innerText = presentRequest.request_title;
@@ -77,11 +86,8 @@ const parseJwt = (storedToken) => {
   return JSON.parse(window.atob(base64));
 };
 
-const user = parseJwt(token);
-
-const approveRequest = (requestId, index) => {
-  const url = `/api/v1/requests/${requestId}/approve`;
-
+const resolveRequest = (requestId, index) => {
+  const url = `/api/v1/requests/${requestId}/resolve`;
 
   const headers = new Headers();
   headers.append('Authorization', token);
@@ -104,7 +110,52 @@ const approveRequest = (requestId, index) => {
     .then(res => res.json())
     .then((result) => {
       const tableRow = document.createElement('TR');
-      const text = `<td class="request-id">${result.request_id}</td>
+      const text = `<td id=${Number(result.request_id - 1)} class="request-id">${result.request_id}</td>
+      <td>${result.status}</td>
+      <td>
+        <p class="request-title">${result.request_title}</p>
+      </td>
+      <td>
+        <button data-id="${result.request_id}" class="admin-table-btn accept-btn" disabled>accept</button>
+        <button data-id="${result.request_id}" class="admin-table-btn reject-btn" disabled>reject</button>
+      </td>
+      <td>
+        <label class="">
+          <button data-id="${result.request_id}" class="resolve-btn" disabled>resolve</button>
+        </label>
+      </td>`;
+      tableRow.innerHTML = text;
+      tableBody.replaceChild(tableRow, tableBody.childNodes[index]);
+    })
+    .then(() => modalDisplay())
+    .catch(err => err);
+};
+
+const approveRequest = (requestId, index) => {
+  const url = `/api/v1/requests/${requestId}/approve`;
+
+  const headers = new Headers();
+  headers.append('Authorization', token);
+
+  /** reate our request constructor with all the parameters we need */
+  const request = new Request(url, {
+    method: 'PUT',
+    headers,
+  });
+
+  fetch(request)
+    .then((res) => {
+      if (res.status === 401) {
+        /** means not an admin */
+        window.location.href = 'userpage.html';
+      }
+
+      return res;
+    })
+    .then(res => res.json())
+    .then((result) => {
+      const tableRow = document.createElement('TR');
+      const text = `<td id=${Number(result.request_id - 1)} class="request-id">${result.request_id}</td>
       <td>${result.status}</td>
       <td>
         <p class="request-title">${result.request_title}</p>
@@ -123,10 +174,17 @@ const approveRequest = (requestId, index) => {
     })
     .then(() => {
       const rejectButtons = document.getElementsByClassName('reject-btn');
+      const resolveButtons = document.getElementsByClassName('resolve-btn');
+
 
       rejectButtons[index].addEventListener('click', () => {
         disApproveRequestCopy(requestId, index);
       });
+
+      resolveButtons[index].addEventListener('click', () => {
+        resolveRequest(requestId, index);
+      });
+      
     })
     .then(() => modalDisplay())
     .catch(err => err);
@@ -156,7 +214,7 @@ const disApproveRequest = (requestId, index) => {
     .then(res => res.json())
     .then((result) => {
       const tableRow = document.createElement('TR');
-      const text = `<td class="request-id">${result.request_id}</td>
+      const text = `<td id=${Number(result.request_id - 1)} class="request-id">${result.request_id}</td>
       <td>${result.status}</td>
       <td>
         <p class="request-title">${result.request_title}</p>
@@ -175,10 +233,16 @@ const disApproveRequest = (requestId, index) => {
     })
     .then(() => {
       const acceptButtons = document.getElementsByClassName('accept-btn');
+      const resolveButtons = document.getElementsByClassName('resolve-btn');
 
       acceptButtons[index].addEventListener('click', () => {
         approveRequest(requestId, index);
       });
+
+      resolveButtons[index].addEventListener('click', () => {
+        resolveRequest(requestId, index);
+      });
+
     })
     .then(() => modalDisplay())
     .catch(err => err);
@@ -186,53 +250,10 @@ const disApproveRequest = (requestId, index) => {
 /** hold a copy of the function to be used above because of temporary dead zone */
 disApproveRequestCopy = disApproveRequest;
 
-const resolveRequest = (requestId, index) => {
-  const url = `/api/v1/requests/${requestId}/resolve`;
 
-  const headers = new Headers();
-  headers.append('Authorization', token);
-
-  /** reate our request constructor with all the parameters we need */
-  const request = new Request(url, {
-    method: 'PUT',
-    headers,
-  });
-
-  fetch(request)
-    .then((res) => {
-      if (res.status === 401) {
-        /** means not an admin */
-        window.location.href = 'userpage.html';
-      }
-
-      return res;
-    })
-    .then(res => res.json())
-    .then((result) => {
-      const tableRow = document.createElement('TR');
-      const text = `<td class="request-id">${result.request_id}</td>
-      <td>${result.status}</td>
-      <td>
-        <p class="request-title">${result.request_title}</p>
-      </td>
-      <td>
-        <button data-id="${result.request_id}" class="admin-table-btn accept-btn" disabled>accept</button>
-        <button data-id="${result.request_id}" class="admin-table-btn reject-btn" disabled>reject</button>
-      </td>
-      <td>
-        <label class="">
-          <button data-id="${result.request_id}" class="resolve-btn" disabled>resolve</button>
-        </label>
-      </td>`;
-      tableRow.innerHTML = text;
-      tableBody.replaceChild(tableRow, tableBody.childNodes[index]);
-    })
-    .then(() => modalDisplay())
-    .catch(err => err);
-};
 
 const displayAllRequests = () => {
-  const url = '/api/v1/requests';
+  const url = mainUrl;
 
   const headers = new Headers();
   headers.append('Authorization', token);
@@ -259,7 +280,7 @@ const displayAllRequests = () => {
 
       result.forEach((el, index) => {
         const tableRow = document.createElement('TR');
-        const text = `<td class="request-id">${el.request_id}</td>
+        const text = `<td id=${index} class="request-id">${el.request_id}</td>
       <td>${el.status}</td>
       <td>
         <p class="request-title">${el.request_title}</p>
@@ -274,6 +295,8 @@ const displayAllRequests = () => {
         </label>
       </td>`;
         tableRow.innerHTML = text;
+
+        /** add the new rows */
         tableBody.appendChild(tableRow);
       });
     })
@@ -302,3 +325,11 @@ const displayAllRequests = () => {
 
 /** when the page loads */
 window.addEventListener('load', displayAllRequests);
+
+/** when the request is being filtered */
+filterOptions.addEventListener('input', function filter() {
+  mainUrl = filterOptions.value === 'none' ? '/api/v1/requests' : `/api/v1/requests?filter=${this.value}`;
+  /** in case we filter the page and not on loading it clear the table body */
+  tableBody.innerHTML = '';
+  displayAllRequests();
+});
