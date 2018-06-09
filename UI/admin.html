@@ -34,11 +34,11 @@
           <p>
             <label for="filter-by">Filter Requests</label>
             <select id="filter-by" name="filter-by">
-              <option value="none">Rejected</option>
-              <option value="repairs">Repairs</option>
-              <option value="maintenance">Maintenance</option>
-              <option value="resolved">Resolved</option>
-              <option value="unresolved">Approved</option>
+              <option value="none">none</option>
+              <option value="approved">approved</option>
+              <option value="pending">pending</option>
+              <option value="rejected">rejected</option>
+              <option value="resolved">resolved</option>
             </select>
           </p>
           <p>
@@ -47,57 +47,40 @@
         </nav>
         <nav class="admin-panel-2 admin-panel-2-text background-secondary">
           <p>All Requests(22)</p>
-          <p>Maintenance(12)</p>
-          <p>Repairs(10)</p>
+          <p>Accepted(12)</p>
+          <p>Rejected(10)</p>
           <p>Resolved(8)</p>
-          <p>Unresolved(5)</p>
         </nav>
       </section>
-      <nav class="admin-panel-3">
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Request Id</th>
-                <th>Type</th>
-                <th>Request Title</th>
-                <th>Action</th>
-                <th>Resolved</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>May 5</td>
-                <td>Maintenance</td>
-                <td>
-                  <a id="request-content" href="#">Update HR Department PCs</a>
-                </td>
-                <td>
-                  <button class="admin-table-btn accept-btn">accept</button>
-                  <button class="admin-table-btn reject-btn">reject</button>
-                </td>
-                <td>
-                  <label class="">
-                    <input type="checkbox" name="resolved" value="no">
-                  </label>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </nav>
+      <section>
+          <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Request Id</th>
+                    <th>Status</th>
+                    <th>Request Title</th>
+                    <th>Action</th>
+                    <th>Resolved</th>
+                  </tr>
+                </thead>
+                <!-- hold all the returned requests -->
+                <tbody><tbody>
+              </table>
+            </div>
+      </section>
+        
+      
       <div id="request-modal" class="modal">
 
         <!-- Modal content -->
         <div class="modal-content">
           <div class="modal-header">
             <span class="close">&times;</span>
-            <h2>Fix Generator</h2>
+            <h2></h2>
           </div>
           <div class="modal-body">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error adipisci accusamus accusantium repudiandae provident eius
-            rem eligendi impedit hic, praesentium dolorum alias quidem distinctio quod recusandae! Doloremque consequuntur
-            culpa quasi!
+            
           </div>
           <div class="modal-footer">
             <p>Request by: Femi</p>
@@ -153,7 +136,8 @@
           </div>
         </div>
     </footer>
-    <script src="scripts/admin-request.js"></script>
+    <script src="scripts/displayAdminRequests.js"></script>
+    <!-- <script src="scripts/approveRequest.js"></script> -->
 </body>
 
 </html>
