@@ -20,7 +20,7 @@ const createUserRequest = (req, res) => {
     });
   }
 
-  const text = `INSERT INTO requests(request_title, request_content, department, user_id) VALUES('${title}', '${content}', '${department}', '${user.user_id}') RETURNING *;`;
+  const text = `INSERT INTO requests(request_title, request_content, department, user_id) VALUES('${title}', '${content}', '${department}', '${user.userId}') RETURNING *;`;
 
   db.query(text)
     .then(result => res.status(201).send(result.rows[0]))

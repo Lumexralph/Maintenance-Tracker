@@ -100,8 +100,14 @@ const createRequest = () => {
       const panel = document.createElement('DIV');
       panel.className = 'panel';
       const panelContent = document.createElement('p');
+      const editButton = document.createElement('BUTTON');
+      const editButtonContent = document.createTextNode('edit');
+      editButton.appendChild(editButtonContent);
+      editButton.addEventListener('click', () => editRequest(index));
+
       panelContent.innerHTML = `<p>${result.request_content}</p> <p>${result.department}</p>
-        <p>${result.status}</p><button onClick=${editRequest(index)} class="edit-btn">Edit</button>`;
+        <p>${result.status}`;
+      panelContent.appendChild(editButton);
 
       panel.appendChild(panelContent);
 
