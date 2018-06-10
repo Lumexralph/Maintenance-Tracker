@@ -6,7 +6,7 @@ node_js:
 env:
   global:
     - CC_TEST_REPORTER_ID=168261c12eb4c92b83c01b6e979e1156b711cfbae5fabeb22b5f965264eff5e4
-    - NODE_ENV=production
+    - NODE_ENV=test
     
 before_install:
   - npm install -g node-gyp node-pre-gyp
@@ -21,7 +21,6 @@ install:
   - npm install
 
 script:
-  - npm run lint
   - npm run test
   
 after_success:

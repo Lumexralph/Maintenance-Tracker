@@ -12,21 +12,16 @@
   "exclude": [
     "**/node_modules/**",
     "**/tests/**",
-    "**/tests2/**",
     "**/UI/**",
     ".nyc_output",
-    "**/server/src/controller**",
-    "**/server/src/controller2**",
-    "**/server/src/datastore**",
-    "**/server/src/model**",
-    "**/server/src/middleware**",
-    "**/server/src/api**",
-    "**/server/src/config**",
-    "**/server/src/model2**",
-    "**/server/src/db**"
+    "**/server/controller**",
+    "**/server/middleware**",
+    "**/server/db**"
   ],
   "include": [
-    
+  "**server/routes**",
+  "**server/controller/utils**",
+  "**server/config**"
   ],
   "reporter": ["lcov", "json", "text", "html"],
   "sourceMap": false,
