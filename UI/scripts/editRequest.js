@@ -1,12 +1,15 @@
 const token = window.localStorage.getItem('token');
+const body = document.querySelector('body');
 
-if (token === undefined) {
+if (!token) {
   /**
    * if there's no token available
    * redirect to home page
    */
-
+  window.location.replace('editrequest.html');
+  body.style.display = 'none';
   window.location.href = 'index.html';
+  alert('Not recognised user, please register or login');
 }
 
 const updateRequestButton = document.getElementById('updateRequest');
@@ -67,11 +70,6 @@ const updateRequest = () => {
   fetch(request)
     .then(res => res.json())
     .then((result) => {
-      /** if error message is sent back */
-      if (result.message) {
-        console.log(result.message);
-      }
-
       window.location.href = 'userpage.html';
     })
     .catch(err => err);

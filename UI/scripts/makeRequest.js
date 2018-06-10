@@ -1,13 +1,15 @@
 const token = window.localStorage.getItem('token');
+const body = document.querySelector('body');
 
-
-if (token === undefined) {
+if (!token) {
   /**
    * if there's no token available
    * redirect to home page
    */
-
+  window.location.replace('userpage.html');
+  body.style.display = 'none';
   window.location.href = 'index.html';
+  alert('Not recognised user, please register or login');
 }
 
 const sendRequestButton = document.getElementById('sendRequest');
@@ -85,6 +87,7 @@ const createRequest = () => {
     .then((result) => {
       /** update the stored requests */
       let requests = window.localStorage.getItem('userRequests');
+
       requests = JSON.parse(requests);
       requests.push(result);
       const index = requests.length - 1;
@@ -146,8 +149,12 @@ const displayAllRequest = () => {
   fetch(request)
     .then(res => res.json())
     .then((result) => {
-      /** store the user requests */
-      window.localStorage.setItem('userRequests', JSON.stringify(result));
+      if (!Array.isArray(result)) {
+        window.localStorage.setItem('userRequests', JSON.stringify([]));
+      } else {
+        /** store the user requests */
+        window.localStorage.setItem('userRequests', JSON.stringify(result));
+      }
 
       result.forEach((el) => {
         const button = document.createElement('BUTTON');
