@@ -15,7 +15,6 @@ before_install:
   - npm install -g node-gyp node-pre-gyp
 
 before_script:
-  - psql -c 'CREATE DATABASE tests;' -U postgres
   - chmod 0755 ./node_modules/.bin/mocha
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
