@@ -6,10 +6,12 @@ import utils from './utils/index';
 /** @function createUserAccount */
 const createUserAccount = (req, res) => {
   let hashedPassword = null;
+  let username = null;
 
   const {
-    username, password1, password2, email,
+    password1, password2, email,
   } = req.body;
+  ({ username } = req.body);
 
   /** clean up the data of white spaces */
   validator.trim(username);
@@ -47,8 +49,10 @@ const createUserAccount = (req, res) => {
     .then(result => result.rows[0])
     .then((result) => {
       const {
-        user_id, username, admin_role,
+        user_id, admin_role,
       } = result;
+
+      ({ username } = result);
 
       const jsonToken = utils.generateToken(result);
 

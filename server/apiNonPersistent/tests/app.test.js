@@ -15,10 +15,7 @@ UserStorageSystem.createUser(user1)
   .then(user => user1 = user);
 
 
-
-
 describe('POST /users/requests', () => {
-
   it('should create a new request', (done) => {
     const clientRequest = {
       title: 'Soccer',
@@ -97,13 +94,10 @@ describe('POST /users/requests', () => {
         done();
       });
   });
-
-
 });
 
 
 describe('GET /users/requests', (done) => {
-
   it('should return all requests', (done) => {
     request(app)
       .get('/api/v1/users/requests')
@@ -116,7 +110,6 @@ describe('GET /users/requests', (done) => {
       })
       .end(done);
   });
-
 });
 
 describe('GET users/requests/requestId', () => {
@@ -144,7 +137,6 @@ describe('GET users/requests/requestId', () => {
   });
 
   it('should not return a  request', (done) => {
-
     const requestId = 2;
 
     request(app)
@@ -158,11 +150,9 @@ describe('GET users/requests/requestId', () => {
       })
       .end(done);
   });
-
 });
 
 describe('PUT users/requests/requestId', () => {
-
   it('should modify and return the new data', (done) => {
     const clientRequest = {
       title: 'Soccer',
@@ -224,7 +214,6 @@ describe('PUT users/requests/requestId', () => {
       })
       .end(done);
   });
-
 });
 
 
@@ -242,7 +231,6 @@ describe('POST /users', () => {
         expect(user2.token.length).toBe(0);
       })
       .end(done);
-
   });
 
   it('should create user with valid username and email', (done) => {
@@ -260,7 +248,6 @@ describe('POST /users', () => {
         expect(res.body.password).not.toBe(user2.password);
       })
       .end(done);
-
   });
 
   it('should not create user if email exists', (done) => {
@@ -277,7 +264,6 @@ describe('POST /users', () => {
         expect(res.body.id).toBeFalsy();
       })
       .end(done);
-
   });
 
   it('should not create user if username exists', (done) => {
@@ -337,7 +323,7 @@ describe('POST /users/login', () => {
   it('should set header on when user gives wrong username', (done) => {
     const user = {
       username: 'mex',
-      password: '2345'
+      password: '2345',
     };
 
     request(app)
@@ -345,62 +331,62 @@ describe('POST /users/login', () => {
       .send(user)
       .expect(401)
       .expect((res) => {
-          expect(res.header).not.toHaveProperty('x-auth');
-          expect(res.header['x-auth']).toBeUndefined();
-      })
-      .end(done);
-});
-
-it('should set header on when user gives wrong password', (done) => {
-  const user = {
-    username: 'mexy',
-    password: '23457'
-  };
-
-  request(app)
-    .post('/api/v1/users/login')
-    .send(user)
-    .expect(401)
-    .expect((res) => {
         expect(res.header).not.toHaveProperty('x-auth');
         expect(res.header['x-auth']).toBeUndefined();
-    })
-    .end(done);
-});
+      })
+      .end(done);
+  });
 
-it('should not login user wrong password', (done) => {
-  const user = {
-    username: 'mexy',
-    password: '23457'
-  };
+  it('should set header on when user gives wrong password', (done) => {
+    const user = {
+      username: 'mexy',
+      password: '23457',
+    };
 
-  request(app)
-    .post('/api/v1/users/login')
-    .send(user)
-    .expect(401)
-    .expect((res) => {
+    request(app)
+      .post('/api/v1/users/login')
+      .send(user)
+      .expect(401)
+      .expect((res) => {
+        expect(res.header).not.toHaveProperty('x-auth');
+        expect(res.header['x-auth']).toBeUndefined();
+      })
+      .end(done);
+  });
+
+  it('should not login user wrong password', (done) => {
+    const user = {
+      username: 'mexy',
+      password: '23457',
+    };
+
+    request(app)
+      .post('/api/v1/users/login')
+      .send(user)
+      .expect(401)
+      .expect((res) => {
         expect(res.body.id).toBeUndefined();
         expect(res.body).toHaveProperty('message');
         expect(res.body.message).toBe('Username or password incorrect');
-    })
-    .end(done);
-});
+      })
+      .end(done);
+  });
 
-it('should not login user wrong username', (done) => {
-  const user = {
-    username: 'mexyuu',
-    password: '2345'
-  };
+  it('should not login user wrong username', (done) => {
+    const user = {
+      username: 'mexyuu',
+      password: '2345',
+    };
 
-  request(app)
-    .post('/api/v1/users/login')
-    .send(user)
-    .expect(401)
-    .expect((res) => {
+    request(app)
+      .post('/api/v1/users/login')
+      .send(user)
+      .expect(401)
+      .expect((res) => {
         expect(res.body.id).toBeUndefined();
         expect(res.body).toHaveProperty('message');
         expect(res.body.message).toBe('Username or password incorrect');
-    })
-    .end(done);
-});
+      })
+      .end(done);
+  });
 });

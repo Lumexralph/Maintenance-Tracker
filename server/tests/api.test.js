@@ -1,32 +1,15 @@
 import expect from 'expect';
 import request from 'supertest';
-import generateToken from '../controller/utils/generateToken';
 
 import app from '../app';
-import db from '../db/index';
-
-/**
- * after all tests clear table
- */
-const createTables = `CREATE TABLE users(
-  user_id serial PRIMARY KEY,
-  username VARCHAR (50) UNIQUE NOT NULL,
-  password VARCHAR (500) NOT NULL,
-  email VARCHAR (355) UNIQUE NOT NULL,
-  last_login TIMESTAMP,
-  admin_role BOOL DEFAULT 'f'
- );
- CREATE TABLE requests (
-  request_id serial PRIMARY KEY,
-  request_title VARCHAR (255) NOT NULL,
-  request_content TEXT NOT NULL,
-  department VARCHAR (255) DEFAULT 'Maintenance',
-  user_id INT NOT NULL,
-  status VARCHAR (100) DEFAULT 'pending',
-  FOREIGN KEY (user_id) REFERENCES users (user_id)
- );`;
-
-const text = 'DROP TABLE IF EXISTS requests; DROP TABLE IF EXISTS users;';
+import { 
+  createTables,
+  userDataWithInvalidEmail,
+  userDataWithEmptyField,
+  userDataWithDifferentPasswords,
+  validUserData,
+  userDataThatUsernameExists
+   }  from './seed/seed';
 
 // const userToken = generateToken({ userId: 1 });
 // const adminToken = generateToken({ userId: 2, adminRole: true });
@@ -38,11 +21,7 @@ const text = 'DROP TABLE IF EXISTS requests; DROP TABLE IF EXISTS users;';
 //   },
 // };
 
-// // before(() => db.query(text)
-// //   .then(() => db.query(createTables)
-// //     .then(res => res)
-// //     .catch(err => err))
-// //   .catch(err => err));
+beforeEach(createTables);
 
 
 describe('GET / homepage', () => {
@@ -60,91 +39,84 @@ describe('GET / homepage', () => {
 });
 
 
-// describe('POST /api/v1/auth/signup', () => {
-//   it('should not create user with invalid email', (done) => {
-//     const userRequest = {
-//       username: 'Looemuu',
-//       password1: 'gatekeeper',
-//       password2: 'gatekeeper',
-//       email: 'oldrlpkookh@',
-//     };
+describe('POST /api/v1/auth/signup', () => {
+  it('should not create user with invalid email', (done) => {
 
-//     request(app)
-//       .post('/api/v1/auth/signup')
-//       .send(userRequest)
-//       .expect(400)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('status');
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.status).toBe('Error');
-//         expect(res.body.message).toBe('Please, provide valid email');
-//       })
-//       .end(done);
-//   });
+    request(app)
+      .post('/api/v1/auth/signup')
+      .send(userDataWithInvalidEmail)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Please, provide a valid email');
+        expect(res.body).toMatchObject({
+          message: 'Please, provide a valid email'
+        });
+      })
+      .end(done);
+  });
 
-//   it('should not create user with empty field', (done) => {
-//     const userRequest = {
-//       username: '',
-//       password1: 'gatekeeper',
-//       password2: 'gatekeeper',
-//       email: 'oldrlpkookh@gmail.com',
-//     };
-
-//     request(app)
-//       .post('/api/v1/auth/signup')
-//       .send(userRequest)
-//       .expect(400)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('status');
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.status).toBe('Error');
-//         expect(res.body.message).toBe('Ensure no field is empty');
-//       })
-//       .end(done);
-//   });
+  it('should not create user with empty field', (done) => {
+    
+    request(app)
+      .post('/api/v1/auth/signup')
+      .send(userDataWithEmptyField)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('It seems one of the field is empty, Ensure no field is empty');
+      })
+      .end(done);
+  });
 
 
-//   it('should not create user with different passwords', (done) => {
-//     const userRequest = {
-//       username: 'Lumexy',
-//       password1: 'gatekee',
-//       password2: 'gatekeeper',
-//       email: 'oldrlpkookh@gmail.com',
-//     };
+  it('should not create user with different passwords', (done) => {
+    
+    request(app)
+      .post('/api/v1/auth/signup')
+      .send(userDataWithDifferentPasswords)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Passwords provided do not match, please verify');
+      })
+      .end(done);
+  });
 
-//     request(app)
-//       .post('/api/v1/auth/signup')
-//       .send(userRequest)
-//       .expect(400)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('status');
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.status).toBe('Error');
-//         expect(res.body.message).toBe('Passwords do not match');
-//       })
-//       .end(done);
-//   });
+  it('should create user with valid data', (done) => {     
 
-//   it('should create user', (done) => {
-//     const userRequest = {
-//       username: 'Lumexy',
-//       password1: 'gatekeeper',
-//       password2: 'gatekeeper',
-//       email: 'oldrlpkookh@gmail.com',
-//     };
+    request(app)
+      .post('/api/v1/auth/signup')
+      .send(validUserData)
+      .expect(201)
+      .expect((res) => {
+        expect(res.header).toHaveProperty('authorization');
+        expect(res.body).toHaveProperty('userId');
+        expect(res.body).toHaveProperty('username');
+        expect(res.body).toHaveProperty('adminRole');
+        expect(res.body).toHaveProperty('token');
+        expect(res.body.userId).toBe(3);
+        expect(res.body.adminRole).toBe(false);
+      })
+      .end(done);
+  });
 
-//     request(app)
-//       .post('/api/v1/auth/signup')
-//       .send(userRequest)
-//       .expect(201)
-//       .expect((res) => {
-//         expect(res.header).toHaveProperty('authorization');
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.message).toHaveProperty('user_id');
-//       })
-//       .end(done);
-//   });
-// });
+  it('should not create user with same username in database', (done) => {     
+
+    request(app)
+      .post('/api/v1/auth/signup')
+      .send(userDataThatUsernameExists)
+      .expect(400)
+      .expect((res) => {
+        expect(res.header).not.toHaveProperty('authorization');
+        expect(res.body).not.toHaveProperty('userId');
+        expect(res.body).not.toHaveProperty('username');
+        expect(res.body).not.toHaveProperty('adminRole');
+        expect(res.body).not.toHaveProperty('token');
+      })
+      .end(done);
+  });
+});
 
 
 // describe('POST /api/v1/auth/login', () => {

@@ -57,6 +57,8 @@ const updateUserRequest = (req, res) => {
       })
       .catch(err => res.status(404).send({ message: 'Request cannot be found, please ensure it is in the system' }));
   }
+
+  return undefined;
 };
 
 export default updateUserRequest;

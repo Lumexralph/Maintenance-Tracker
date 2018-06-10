@@ -1,4 +1,2 @@
 server/tests
-server/tests2
-server/lib/
-coverage/
+server/apiNonPersistent
