@@ -85,6 +85,7 @@ const createRequest = () => {
     .then((result) => {
       /** update the stored requests */
       let requests = window.localStorage.getItem('userRequests');
+
       requests = JSON.parse(requests);
       requests.push(result);
       const index = requests.length - 1;
@@ -146,8 +147,12 @@ const displayAllRequest = () => {
   fetch(request)
     .then(res => res.json())
     .then((result) => {
-      /** store the user requests */
-      window.localStorage.setItem('userRequests', JSON.stringify(result));
+      if (!Array.isArray(result)) {
+        window.localStorage.setItem('userRequests', JSON.stringify([]));
+      } else {
+        /** store the user requests */
+        window.localStorage.setItem('userRequests', JSON.stringify(result));
+      }
 
       result.forEach((el) => {
         const button = document.createElement('BUTTON');
