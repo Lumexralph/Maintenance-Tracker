@@ -1,5 +1,6 @@
 const token = window.localStorage.getItem('token');
 
+const body = document.querySelector('body');
 const tableBody = document.querySelector('tbody');
 const filterOptions = document.getElementById('filter-by');
 
@@ -11,13 +12,44 @@ let mainUrl = '/api/v1/requests';
 let disApproveRequestCopy;
 
 
-if (token === undefined) {
+if (!token) {
   /**
    * if there's no token available
    * redirect to home page
    */
 
+  window.location.replace('admin.html');
+  body.style.display = 'none';
   window.location.href = 'index.html';
+  alert('Not recognised user, please register or login');
+}
+
+
+// #####################################################
+/**
+ *
+ * @param {string} token
+ * @function source https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript/38552302#38552302
+ */
+const parseJwt = (storedToken) => {
+  const base64Url = storedToken.split('.')[1];
+  const base64 = base64Url.replace('-', '+').replace('_', '/');
+  return JSON.parse(window.atob(base64));
+};
+
+/** get identity of user */
+const user = parseJwt(token);
+
+/** check if the user is not an admin
+ * redirect to user page with an alert message
+*/
+if (!user.adminRole) {
+  window.location.replace('admin.html');
+  body.style.display = 'none';
+  window.location.href = 'userpage.html';
+
+  alert('Only an admin can access this page');
+
 }
 
 // ################################################
@@ -74,18 +106,6 @@ const modalDisplay = () => {
 };
 
 
-// #####################################################
-/**
- *
- * @param {string} token
- * @function source https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript/38552302#38552302
- */
-const parseJwt = (storedToken) => {
-  const base64Url = storedToken.split('.')[1];
-  const base64 = base64Url.replace('-', '+').replace('_', '/');
-  return JSON.parse(window.atob(base64));
-};
-
 const resolveRequest = (requestId, index) => {
   const url = `/api/v1/requests/${requestId}/resolve`;
 
@@ -102,7 +122,11 @@ const resolveRequest = (requestId, index) => {
     .then((res) => {
       if (res.status === 401) {
         /** means not an admin */
-        window.location.href = 'userpage.html';
+        window.location.replace('admin.html');
+        body.style.display = 'none';
+        window.location.href = 'index.html';
+
+        alert('Only an admin can access this page');
       }
 
       return res;
@@ -184,7 +208,7 @@ const approveRequest = (requestId, index) => {
       resolveButtons[index].addEventListener('click', () => {
         resolveRequest(requestId, index);
       });
-      
+
     })
     .then(() => modalDisplay())
     .catch(err => err);
@@ -251,7 +275,6 @@ const disApproveRequest = (requestId, index) => {
 disApproveRequestCopy = disApproveRequest;
 
 
-
 const displayAllRequests = () => {
   const url = mainUrl;
 
@@ -268,6 +291,8 @@ const displayAllRequests = () => {
     .then((res) => {
       if (res.status === 401) {
         /** means not an admin */
+        window.location.replace('admin.html');
+        body.style.display = 'none';
         window.location.href = 'userpage.html';
       }
 

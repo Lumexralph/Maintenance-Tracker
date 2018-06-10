@@ -1,13 +1,15 @@
 const token = window.localStorage.getItem('token');
+const body = document.querySelector('body');
 
-
-if (token === undefined) {
+if (!token) {
   /**
    * if there's no token available
    * redirect to home page
    */
-
+  window.location.replace('userpage.html');
+  body.style.display = 'none';
   window.location.href = 'index.html';
+  alert('Not recognised user, please register or login');
 }
 
 const sendRequestButton = document.getElementById('sendRequest');
