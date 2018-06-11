@@ -19,9 +19,7 @@
     "**/server/db**"
   ],
   "include": [
-  "**server/routes**",
-  "**server/controller/utils**",
-  "**server/config**"
+  "**/server/**"
   ],
   "reporter": ["lcov", "json", "text", "html"],
   "sourceMap": false,

@@ -8,7 +8,8 @@ import {
   userDataWithEmptyField,
   userDataWithDifferentPasswords,
   validUserData,
-  userDataThatUsernameExists
+  userDataThatUsernameExists,
+  userWithPresentEmail
    }  from './seed/seed';
 
 // const userToken = generateToken({ userId: 1 });
@@ -106,6 +107,22 @@ describe('POST /api/v1/auth/signup', () => {
     request(app)
       .post('/api/v1/auth/signup')
       .send(userDataThatUsernameExists)
+      .expect(400)
+      .expect((res) => {
+        expect(res.header).not.toHaveProperty('authorization');
+        expect(res.body).not.toHaveProperty('userId');
+        expect(res.body).not.toHaveProperty('username');
+        expect(res.body).not.toHaveProperty('adminRole');
+        expect(res.body).not.toHaveProperty('token');
+      })
+      .end(done);
+  });
+
+  it('should not create user with same email in database', (done) => {     
+
+    request(app)
+      .post('/api/v1/auth/signup')
+      .send(userWithPresentEmail)
       .expect(400)
       .expect((res) => {
         expect(res.header).not.toHaveProperty('authorization');
