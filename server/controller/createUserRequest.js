@@ -3,7 +3,6 @@ import validator from 'validator';
 import db from '../db/index';
 
 const createUserRequest = (req, res) => {
-  
   const {
     title, content, user, department = 'Maintenance',
   } = req.body;

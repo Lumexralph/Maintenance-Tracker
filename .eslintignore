@@ -1,4 +1,3 @@
 server/tests
-server/tests2
-server/lib/
-coverage/
+server/apiNonPersistent
+server/controller/createAccount.js

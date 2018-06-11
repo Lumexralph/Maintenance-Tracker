@@ -2,6 +2,9 @@ language: node_js
 
 node_js:
     - stable
+
+services:
+  - postgresql
     
 env:
   global:
@@ -12,6 +15,7 @@ before_install:
   - npm install -g node-gyp node-pre-gyp
 
 before_script:
+  - psql -c 'create database tests;' -U postgres
   - chmod 0755 ./node_modules/.bin/mocha
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
@@ -21,6 +25,7 @@ install:
   - npm install
 
 script:
+  - npm run lint
   - npm run test
   
 after_success:
