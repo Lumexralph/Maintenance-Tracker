@@ -113,11 +113,13 @@ const userDataWithEmptyField =  {
   };
 
 export {
+  user,
   createTables,
   userDataWithInvalidEmail,
   userDataWithEmptyField,
   userDataWithDifferentPasswords,
   validUserData,
   userDataThatUsernameExists,
-  userWithPresentEmail
+  userWithPresentEmail,
+  userToken
 };
