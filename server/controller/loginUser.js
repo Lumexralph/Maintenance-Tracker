@@ -25,7 +25,7 @@ const loginUser = (req, res) => {
   const text = `SELECT * FROM users WHERE username='${username}'`;
 
   /** Check by username then confirm the passowrd */
-  db.query(text)
+  return db.query(text)
     .then(result => result.rows[0])
     .then((user) => {
       if (utils.checkPassword(password, user.password)) {
