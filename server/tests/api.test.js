@@ -3,13 +3,15 @@ import request from 'supertest';
 
 import app from '../app';
 import { 
-  createTables,
-  userDataWithInvalidEmail,
-  userDataWithEmptyField,
-  userDataWithDifferentPasswords,
-  validUserData,
-  userDataThatUsernameExists,
-  userWithPresentEmail
+        user,
+        createTables,
+        userDataWithInvalidEmail,
+        userDataWithEmptyField,
+        userDataWithDifferentPasswords,
+        validUserData,
+        userDataThatUsernameExists,
+        userWithPresentEmail,
+        userToken
    }  from './seed/seed';
 
 // const userToken = generateToken({ userId: 1 });
@@ -136,61 +138,102 @@ describe('POST /api/v1/auth/signup', () => {
 });
 
 
-// describe('POST /api/v1/auth/login', () => {
-//   it('should not login the user with wrong username', (done) => {
-//     const userRequest = {
-//       username: 'Lumex',
-//       password: 'gatekeeper',
-//     };
+describe('POST /api/v1/auth/login', () => {
 
-//     request(app)
-//       .post('/api/v1/auth/login')
-//       .send(userRequest)
-//       .expect(400)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.message).toBe('Account does not exist');
-//       })
-//       .end(done);
-//   });
+  it('should login the user with valid credentials', (done) => {
+    const userCredentials = {
+      username: user.username,
+      password: user.password
+    };
 
-//   it('should not login the user with wrong password', (done) => {
-//     const userRequest = {
-//       username: 'Lumexy',
-//       password: 'gatekeepr',
-//     };
+    request(app)
+      .post('/api/v1/auth/login')
+      .send(userCredentials)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Login successful');
+        expect(res.header).toHaveProperty('authorization');
+        expect(res.body).toHaveProperty('userId');
+        expect(res.body).toHaveProperty('username');
+        expect(res.body).toHaveProperty('adminRole');
+        expect(res.body).toHaveProperty('token');
+        expect(res.body.userId).toBe(1);
+        expect(res.body.username).toBe(user.username);
+        expect(res.body.adminRole).toBe(false);
+        expect(res.body.token).toEqual(res.header.authorization);
+      })
+      .end(done);
+  });
 
-//     request(app)
-//       .post('/api/v1/auth/login')
-//       .send(userRequest)
-//       .expect(400)
-//       .expect((res) => {
-//         expect(res.header.authorization).toBeUndefined();
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.message).toBe('Password not correct');
-//       })
-//       .end(done);
-//   });
+  it('should not login the user with empty fields', (done) => {
+    const userCredentials = {
+      username: '',
+      password: user.password
+    };
 
-//   it('should login the user', (done) => {
-//     const userRequest = {
-//       username: 'Lumexy',
-//       password: 'gatekeeper',
-//     };
+    request(app)
+      .post('/api/v1/auth/login')
+      .send(userCredentials)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('It seems one of the field is empty, Ensure no field is empty');
+        expect(res.header).not.toHaveProperty('authorization');
+        expect(res.body).not.toHaveProperty('userId');
+        expect(res.body).not.toHaveProperty('username');
+        expect(res.body).not.toHaveProperty('adminRole');
+        expect(res.body).not.toHaveProperty('token');
+      })
+      .end(done);
+  });
 
-//     request(app)
-//       .post('/api/v1/auth/login')
-//       .send(userRequest)
-//       .expect(200)
-//       .expect((res) => {
-//         expect(res.header.authorization).toBeDefined();
-//         expect(res.header).toHaveProperty('authorization');
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.message).toBe('Login Successful');
-//       })
-//       .end(done);
-//   });
-// });
+  it('should not login the user with wrong password', (done) => {
+      
+      const userCredentials = {
+        username: user.username,
+        password: 'awesome'
+      };
+
+    request(app)
+      .post('/api/v1/auth/login')
+      .send(userCredentials)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Password not correct');
+        expect(res.header).not.toHaveProperty('authorization');
+        expect(res.body).not.toHaveProperty('userId');
+        expect(res.body).not.toHaveProperty('username');
+        expect(res.body).not.toHaveProperty('adminRole');
+        expect(res.body).not.toHaveProperty('token');
+      })
+      .end(done);
+  });
+
+  it('should not login the user with wrong username', (done) => {
+      
+    const userCredentials = {
+      username: `${user.username}s`,
+      password: user.password
+    };
+
+  request(app)
+    .post('/api/v1/auth/login')
+    .send(userCredentials)
+    .expect(400)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('Account with the credentials does not exist');
+      expect(res.header).not.toHaveProperty('authorization');
+      expect(res.body).not.toHaveProperty('userId');
+      expect(res.body).not.toHaveProperty('username');
+      expect(res.body).not.toHaveProperty('adminRole');
+      expect(res.body).not.toHaveProperty('token');
+    })
+    .end(done);
+  });
+});
 
 
 // describe('GET /users/requests', () => {
