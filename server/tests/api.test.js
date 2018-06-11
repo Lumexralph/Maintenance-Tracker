@@ -381,7 +381,35 @@ describe('GET /users/requests/:requestId', () => {
       })
       .end(done);
   });
-  
+
+  it('should not allow user that fails authentication with invalid token', (done) => {
+
+    let requestId = 1;
+
+    request(app)
+    .get(`/api/v1/users/requests/${requestId}`)
+    .set('Authorization', 'ahahadhdjsskskfkjffk')
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('The system could not verify the user with the token');
+    })
+    .end(done);
+  });
+
+  it('should not allow unregistered user without a token', (done) => {
+    let requestId = 1;
+
+    request(app)
+    .get(`/api/v1/users/requests/${requestId}`)
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('You are not allowed to perform action if not registered user');
+    })
+    .end(done);
+  });
+
 });
 
 // describe('POST /users/requests', () => {
