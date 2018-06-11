@@ -4,6 +4,7 @@ import request from 'supertest';
 import app from '../app';
 import { 
         user,
+        adminUser,
         createTables,
         userDataWithInvalidEmail,
         userDataWithEmptyField,
@@ -11,7 +12,8 @@ import {
         validUserData,
         userDataThatUsernameExists,
         userWithPresentEmail,
-        userToken
+        userToken,
+        adminToken
    }  from './seed/seed';
 
 // const userToken = generateToken({ userId: 1 });
@@ -236,74 +238,179 @@ describe('POST /api/v1/auth/login', () => {
 });
 
 
-// describe('GET /users/requests', () => {
-//   it('should get empty request if user has none', (done) => {
-//     request(app)
-//       .get('/api/v1/users/requests')
-//       .set('Authorization', userToken)
-//       .send(user)
-//       .expect(404)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.message).toBe('No requests yet');
-//       })
-//       .end(done);
-//   });
+describe('GET /users/requests', () => {
 
-//   it('should get request if user has any', (done) => {
-//     const text = `INSERT INTO requests (request_title, request_content, user_id)
-//     VALUES
-//      ('Games','PostgreSQL coming Tutorial in school', 1),
-//     ('Gaming','MysSQL coming Tutorial in school', 1);`;
+  it('should get the requests a user created', (done) => {
 
-//     db.query(text)
-//       .then(res => res)
-//       .catch(err => err);
+    const requestBody = {
+      user: {
+            userId: user.user_id,
+            username: user.username,
+            adminRole: user.admin_role,
+            }
+    };
 
-//     request(app)
-//       .get('/api/v1/users/requests')
-//       .set('Authorization', userToken)
-//       .send(user)
-//       .expect(200)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.message).toHaveLength(2);
-//       })
-//       .end(done);
-//   });
-// });
+    request(app)
+      .get('/api/v1/users/requests')
+      .set('Authorization', userToken)
+      .send(requestBody)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.length).toBe(2);
+        expect(res.body[0]).toHaveProperty('request_id');
+        expect(res.body[0]).toHaveProperty('request_title');
+        expect(res.body[0]).toHaveProperty('request_content');
+        expect(res.body[0]).toHaveProperty('department');
+        expect(res.body[0]).toHaveProperty('status');
+        expect(res.body[1].request_id).toBe(2);
+        expect(res.body[1].request_title).toBe('Fix Generator');
+        expect(res.body[1].request_content).toBe('The plug needs replacement');
+        expect(res.body[1].department).toBe('Repairs');
+        expect(res.body[1].status).toBe('pending');
+      })
+      .end(done);
+  });
 
-// describe('GET /users/requests/:requestId', () => {
-//   let requestId = 1;
+  it('should not return array of requests for valid user with no requests created', (done) => {
+      const requestBody = {
+        user: {
+              userId: adminUser.user_id,
+              username: adminUser.username,
+              adminRole: adminUser.admin_role,
+              }
+        };
 
-//   it('should get a request', (done) => {
-//     request(app)
-//       .get(`/api/v1/users/requests/${requestId}`)
-//       .set('Authorization', userToken)
-//       .send(user)
-//       .expect(200)
-//       .expect((res) => {
-//         expect(res.body).toHaveLength(1);
-//         expect(res.body[0].request_title).toBe('Games');
-//       })
-//       .end(done);
-//   });
+        request(app)
+        .get('/api/v1/users/requests')
+        .set('Authorization', adminToken)
+        .send(requestBody)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.length).toBeUndefined();
+          expect(res.body[0]).toBeUndefined();
+          expect(res.body[1]).toBeUndefined();
+          expect(res.body).toHaveProperty('message');
+          expect(res.body.message).toBe('You have not created any request yet');
+        })
+        .end(done);
+  });
 
-//   it('should not get a request', (done) => {
-//     requestId = 4;
+  it('should not allow user that fails authentication with invalid token', (done) => {
 
-//     request(app)
-//       .get(`/api/v1/users/requests/${requestId}`)
-//       .set('Authorization', userToken)
-//       .send(user)
-//       .expect(404)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.message).toBe('Requests not found');
-//       })
-//       .end(done);
-//   });
-// });
+    request(app)
+    .get('/api/v1/users/requests')
+    .set('Authorization', 'ahahadhdjsskskfkjffk')
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('The system could not verify the user with the token');
+    })
+    .end(done);
+  });
+
+  it('should not allow unregistered user without a token', (done) => {
+
+    request(app)
+    .get('/api/v1/users/requests')
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('You are not allowed to perform action if not registered user');
+    })
+    .end(done);
+  });
+
+});
+
+describe('GET /users/requests/:requestId', () => {
+  
+
+  it('should get a request created by the user', (done) => {
+
+    let requestId = 1;
+
+  const requestBody = {
+    user: {
+          userId: user.user_id,
+          username: user.username,
+          adminRole: user.admin_role,
+          }
+    };
+
+    request(app)
+      .get(`/api/v1/users/requests/${requestId}`)
+      .set('Authorization', userToken)
+      .send(requestBody)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.length).toBe(1);
+        expect(res.body[0]).toHaveProperty('request_id');
+        expect(res.body[0]).toHaveProperty('request_title');
+        expect(res.body[0]).toHaveProperty('request_content');
+        expect(res.body[0]).toHaveProperty('department');
+        expect(res.body[0]).toHaveProperty('status');
+        expect(res.body[0].request_id).toBe(1);
+        expect(res.body[0].request_title).toBe('Fix Car');
+        expect(res.body[0].request_content).toBe('The brake pad needs replacement');
+        expect(res.body[0].department).toBe('Repairs');
+        expect(res.body[0].status).toBe('pending');
+      })
+      .end(done);
+  });
+
+  it('should not get a request if not created by the user', (done) => {
+
+    let requestId = 8;
+
+  const requestBody = {
+    user: {
+          userId: user.user_id,
+          username: user.username,
+          adminRole: user.admin_role,
+          }
+    };
+
+    request(app)
+      .get(`/api/v1/users/requests/${requestId}`)
+      .set('Authorization', userToken)
+      .send(requestBody)
+      .expect(404)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Particular request not found');        
+      })
+      .end(done);
+  });
+
+  it('should not allow user that fails authentication with invalid token', (done) => {
+
+    let requestId = 1;
+
+    request(app)
+    .get(`/api/v1/users/requests/${requestId}`)
+    .set('Authorization', 'ahahadhdjsskskfkjffk')
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('The system could not verify the user with the token');
+    })
+    .end(done);
+  });
+
+  it('should not allow unregistered user without a token', (done) => {
+    let requestId = 1;
+
+    request(app)
+    .get(`/api/v1/users/requests/${requestId}`)
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('You are not allowed to perform action if not registered user');
+    })
+    .end(done);
+  });
+
+});
 
 // describe('POST /users/requests', () => {
 //   it('should not create request missing a field', (done) => {

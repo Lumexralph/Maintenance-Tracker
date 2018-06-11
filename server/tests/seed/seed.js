@@ -40,6 +40,9 @@ VALUES
 INSERT INTO users (username, password, email, admin_role) VALUES
  ('${username1}', '${adminHashedPassword}', '${email1}', 't');`;
 
+ const requests = `INSERT INTO requests(request_title, request_content, department, user_id) VALUES('Fix Car', 'The brake pad needs replacement', 'Repairs', '${user.user_id}'),
+ ('Fix Generator', 'The plug needs replacement', 'Repairs', '${user.user_id}');`;
+
 /**
  * after all tests clear table
  */
@@ -68,6 +71,7 @@ const createTables = async () => {
   await db.query(text)  
   await db.query(tables)
   await db.query(userData)
+  await db.query(requests)
 };
 
 const userDataWithInvalidEmail = {
@@ -114,6 +118,7 @@ const userDataWithEmptyField =  {
 
 export {
   user,
+  adminUser,
   createTables,
   userDataWithInvalidEmail,
   userDataWithEmptyField,
@@ -121,5 +126,6 @@ export {
   validUserData,
   userDataThatUsernameExists,
   userWithPresentEmail,
-  userToken
+  userToken,
+  adminToken
 };
