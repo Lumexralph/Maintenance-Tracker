@@ -105,11 +105,19 @@ const userDataWithEmptyField =  {
     email: "ralph@gmail.com",
   };
 
+  const userWithPresentEmail = {
+    username: "Ralphy",
+    password1: "gatekeeper",
+    password2: "gatekeeper",
+    email: "ralph@gmail.com",
+  };
+
 export {
   createTables,
   userDataWithInvalidEmail,
   userDataWithEmptyField,
   userDataWithDifferentPasswords,
   validUserData,
-  userDataThatUsernameExists
+  userDataThatUsernameExists,
+  userWithPresentEmail
 };
