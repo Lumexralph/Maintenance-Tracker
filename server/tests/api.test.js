@@ -13,23 +13,17 @@ import {
         userDataThatUsernameExists,
         userWithPresentEmail,
         userToken,
-        adminToken
-   }  from './seed/seed';
-
-// const userToken = generateToken({ userId: 1 });
-// const adminToken = generateToken({ userId: 2, adminRole: true });
-
-// const user = {
-//   user: {
-//     user_id: 1,
-//     admin_role: false,
-//   },
-// };
+        adminToken,
+        requestWithMissingFields,
+        requestWithEmptyFields,
+        requestWithValidData        
+   } 
+    from './seed/seed';
 
 beforeEach(createTables);
 
 
-describe('GET / homepage', () => {
+describe('GET / homepage API endpoint', () => {
   it('should give the status code and JSON', (done) => {
     request(app)
       .get('/api/v1/')
@@ -44,7 +38,7 @@ describe('GET / homepage', () => {
 });
 
 
-describe('POST /api/v1/auth/signup', () => {
+describe('POST /api/v1/auth/signup API endpoint', () => {
   it('should not create user with invalid email', (done) => {
 
     request(app)
@@ -140,7 +134,7 @@ describe('POST /api/v1/auth/signup', () => {
 });
 
 
-describe('POST /api/v1/auth/login', () => {
+describe('POST /api/v1/auth/login API endpoint', () => {
 
   it('should login the user with valid credentials', (done) => {
     const userCredentials = {
@@ -238,7 +232,7 @@ describe('POST /api/v1/auth/login', () => {
 });
 
 
-describe('GET /users/requests', () => {
+describe('GET /users/requests API endpoint', () => {
 
   it('should get the requests a user created', (done) => {
 
@@ -266,7 +260,7 @@ describe('GET /users/requests', () => {
         expect(res.body[1].request_title).toBe('Fix Generator');
         expect(res.body[1].request_content).toBe('The plug needs replacement');
         expect(res.body[1].department).toBe('Repairs');
-        expect(res.body[1].status).toBe('pending');
+        expect(res.body[1].status).toBe('resolved');
       })
       .end(done);
   });
@@ -322,7 +316,7 @@ describe('GET /users/requests', () => {
 
 });
 
-describe('GET /users/requests/:requestId', () => {
+describe('GET /users/requests/:requestId API endpoint', () => {
   
 
   it('should get a request created by the user', (done) => {
@@ -412,66 +406,91 @@ describe('GET /users/requests/:requestId', () => {
 
 });
 
-// describe('POST /users/requests', () => {
-//   it('should not create request missing a field', (done) => {
-//     const userRequest = {
-//       content: 'Game of the year',
-//       department: 'Repairs',
-//     };
+describe('POST /users/requests API endpoint', () => {
 
-//     request(app)
-//       .post('/api/v1/users/requests/')
-//       .set('Authorization', userToken)
-//       .send(userRequest)
-//       .expect(400)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.message).toBe('Ensure no field is empty');
-//       })
-//       .end(done);
-//   });
+  it('should not allow user that fails authentication with invalid token', (done) => {
 
-//   it('should not create request with empty field', (done) => {
-//     const userRequest = {
-//       title: '',
-//       content: 'Game of the year',
-//       department: 'Repairs',
-//     };
+    request(app)
+    .post(`/api/v1/users/requests/`)
+    .set('Authorization', 'ahahadhdjsskskfkjffk')
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('The system could not verify the user with the token');
+    })
+    .end(done);
+  });
 
-//     request(app)
-//       .post('/api/v1/users/requests/')
-//       .set('Authorization', userToken)
-//       .send(userRequest)
-//       .expect(400)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.message).toBe('Ensure no field is empty');
-//       })
-//       .end(done);
-//   });
+  it('should not allow unregistered user without a token', (done) => {
 
-//   it('should create request with valid data', (done) => {
-//     const userRequest = {
-//       title: 'Homecoming',
-//       content: 'Game of the year 2018',
-//       department: 'Repairs',
-//       user,
-//     };
+    request(app)
+    .post(`/api/v1/users/requests/`)
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('You are not allowed to perform action if not registered user');
+    })
+    .end(done);
+  });
 
-//     request(app)
-//       .post('/api/v1/users/requests/')
-//       .set('Authorization', userToken)
-//       .send(userRequest)
-//       .expect(201)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.message).toBe('Request created');
-//       })
-//       .end(done);
-//   });
-// });
+  it('should not create request with missing fields', (done) => {   
 
-// describe('PUT /users/requests/:requestId', () => {
+    request(app)
+      .post('/api/v1/users/requests/')
+      .set('Authorization', userToken)
+      .send(requestWithMissingFields)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Ensure no field is empty');
+      })
+      .end(done);
+  });
+
+  it('should not create request with empty fields', (done) => {
+
+    request(app)
+      .post('/api/v1/users/requests/')
+      .set('Authorization', userToken)
+      .send(requestWithEmptyFields)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Ensure no field is empty');
+      })
+      .end(done);
+  });
+
+  it('should create request with valid data', (done) => {
+
+      requestWithValidData.user = {
+            userId: user.user_id,
+            username: user.username,
+            adminRole: user.admin_role,
+        };
+    
+      request(app)
+        .post('/api/v1/users/requests/')
+        .set('Authorization', userToken)
+        .send(requestWithValidData)
+        .expect(201)
+        .expect((res) => {
+          expect(res.body).toHaveProperty('request_id');
+          expect(res.body).toHaveProperty('request_title');
+          expect(res.body).toHaveProperty('request_content');
+          expect(res.body).toHaveProperty('department');
+          expect(res.body).toHaveProperty('status');
+          expect(res.body.request_id).toBe(3);
+          expect(res.body.request_title).toBe('Clean Engine');
+          expect(res.body.request_content).toBe('Engine of the airplane');
+          expect(res.body.department).toBe('Repairs');
+          expect(res.body.status).toBe('pending');
+        })
+        .end(done);
+    });
+});
+
+// describe('PUT /users/requests/:requestId API endpoint', () => {
 //   it('should not update request with wrong requestId', (done) => {
 //     const requestId = 4;
 
@@ -537,7 +556,7 @@ describe('GET /users/requests/:requestId', () => {
 //   });
 // });
 
-// describe('GET /requests', () => {
+// describe('GET /requests API endpoint', () => {
 //   it('should not get requests for non-admin', (done) => {
 //     request(app)
 //       .get('/api/v1/requests')

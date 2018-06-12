@@ -40,8 +40,8 @@ VALUES
 INSERT INTO users (username, password, email, admin_role) VALUES
  ('${username1}', '${adminHashedPassword}', '${email1}', 't');`;
 
- const requests = `INSERT INTO requests(request_title, request_content, department, user_id) VALUES('Fix Car', 'The brake pad needs replacement', 'Repairs', '${user.user_id}'),
- ('Fix Generator', 'The plug needs replacement', 'Repairs', '${user.user_id}');`;
+ const requests = `INSERT INTO requests(request_title, request_content, department, user_id, status) VALUES('Fix Car', 'The brake pad needs replacement', 'Repairs', '${user.user_id}', 'pending'),
+ ('Fix Generator', 'The plug needs replacement', 'Repairs', '${user.user_id}', 'resolved');`;
 
 /**
  * after all tests clear table
@@ -116,6 +116,23 @@ const userDataWithEmptyField =  {
     email: "ralph@gmail.com",
   };
 
+  const requestWithMissingFields = {
+          content: 'Game of the year',
+          department: 'Repairs',
+        };
+
+  const requestWithEmptyFields = {
+          title: '',
+          content: 'Game of the year',
+          department: 'Repairs',
+        };
+
+  const requestWithValidData = {
+          title: 'Clean Engine',
+          content: 'Engine of the airplane',
+          department: 'Repairs',
+        };
+
 export {
   user,
   adminUser,
@@ -127,5 +144,8 @@ export {
   userDataThatUsernameExists,
   userWithPresentEmail,
   userToken,
-  adminToken
+  adminToken,
+  requestWithMissingFields,
+  requestWithEmptyFields,
+  requestWithValidData
 };
