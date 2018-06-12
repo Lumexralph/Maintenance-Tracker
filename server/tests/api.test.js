@@ -16,7 +16,8 @@ import {
         adminToken,
         requestWithMissingFields,
         requestWithEmptyFields,
-        requestWithValidData        
+        requestWithValidData,
+        requestWithNewData        
    } 
     from './seed/seed';
 
@@ -490,71 +491,144 @@ describe('POST /users/requests API endpoint', () => {
     });
 });
 
-// describe('PUT /users/requests/:requestId API endpoint', () => {
-//   it('should not update request with wrong requestId', (done) => {
-//     const requestId = 4;
 
-//     const reqBody = {
-//       title: 'The Game of the year',
-//       content: 'It is played in the continent',
-//       user,
-//     };
+describe('PUT /users/requests/:requestId API endpoint', () => {
 
-//     request(app)
-//       .put(`/api/v1/users/requests/${requestId}`)
-//       .set('Authorization', userToken)
-//       .send(reqBody)
-//       .expect(404)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.message).toBe('Request not found');
-//       })
-//       .end(done);
-//   });
+  it('should not allow user that fails authentication with invalid token', (done) => {
 
-//   it('should update request with valid requestId', (done) => {
-//     const requestId = 1;
+    let requestId = 1;
 
-//     const reqBody = {
-//       title: 'The Game of the year',
-//       content: 'It is played in the continent',
-//       user,
-//     };
+    request(app)
+    .put(`/api/v1/users/requests/${requestId}`)
+    .set('Authorization', 'ahahadhdjsskskfkjffk')
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('The system could not verify the user with the token');
+    })
+    .end(done);
+  });
 
-//     request(app)
-//       .put(`/api/v1/users/requests/${requestId}`)
-//       .set('Authorization', userToken)
-//       .send(reqBody)
-//       .expect(200)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('request_id');
-//         expect(res.body.message).toBe('Request not found');
-//       })
-//       .end(done);
-//   });
+  it('should not allow unregistered user without a token', (done) => {
+    let requestId = 1;
 
-//   it('should not update approved request', (done) => {
-//     const requestId = 1;
+    request(app)
+    .put(`/api/v1/users/requests/${requestId}`)
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('You are not allowed to perform action if not registered user');
+    })
+    .end(done);
+  });
 
-//     const reqBody = {
-//       title: 'The Game of the year',
-//       content: 'It is played in the continent',
-//       status: 'approved',
-//       user,
-//     };
+  it('should not update request with missing fields', (done) => {    
+    let requestId = 1;
 
-//     request(app)
-//       .put(`/api/v1/users/requests/${requestId}`)
-//       .set('Authorization', userToken)
-//       .send(reqBody)
-//       .expect(401)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.message).toBe('You cannot modify request');
-//       })
-//       .end(done);
-//   });
-// });
+    request(app)
+      .put(`/api/v1/users/requests/${requestId}`)
+      .set('Authorization', userToken)
+      .send(requestWithMissingFields)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Ensure no field is empty');
+      })
+      .end(done);
+  });
+
+  it('should not update request with empty fields', (done) => {
+
+    let requestId = 1;
+
+    request(app)
+      .put(`/api/v1/users/requests/${requestId}`)
+      .set('Authorization', userToken)
+      .send(requestWithEmptyFields)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Ensure no field is empty');
+      })
+      .end(done);
+  });
+
+  it('should not update request with id not created by user', (done) => {
+
+    const requestId = 4;
+
+    requestWithNewData.user = {
+      userId: user.user_id,
+      username: user.username,
+      adminRole: user.admin_role,
+    };
+
+    request(app)
+      .put(`/api/v1/users/requests/${requestId}`)
+      .set('Authorization', userToken)
+      .send(requestWithNewData)
+      .expect(404)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Request cannot be found, please ensure it is in the system or created by you');
+      })
+      .end(done);
+  });
+
+  it('should not update user request that does not have a pending status', (done) => {
+
+    const requestId = 2;
+
+    requestWithNewData.user = {
+      userId: user.user_id,
+      username: user.username,
+      adminRole: user.admin_role,
+    };
+
+    request(app)
+      .put(`/api/v1/users/requests/${requestId}`)
+      .set('Authorization', userToken)
+      .send(requestWithNewData)
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('You can only modify request if status is pending');
+      })
+      .end(done);
+  });
+
+  it('should update request', (done) => {
+
+    const requestId = 1;
+
+    requestWithNewData.user = {
+      userId: user.user_id,
+      username: user.username,
+      adminRole: user.admin_role,
+    };
+
+    request(app)
+      .put(`/api/v1/users/requests/${requestId}`)
+      .set('Authorization', userToken)
+      .send(requestWithNewData)
+      .expect(201)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('request_id');
+          expect(res.body).toHaveProperty('request_title');
+          expect(res.body).toHaveProperty('request_content');
+          expect(res.body).toHaveProperty('department');
+          expect(res.body).toHaveProperty('status');
+          expect(res.body.request_id).toBe(1);
+          expect(res.body.request_title).toBe('Clean Gear');
+          expect(res.body.request_content).toBe('Gear of the airplane');
+          expect(res.body.department).toBe('Repairs');
+          expect(res.body.status).toBe('pending'); 
+          expect(res.body.user_id).toBe(1);  
+      })
+      .end(done);
+  });
+  
+ });
 
 // describe('GET /requests API endpoint', () => {
 //   it('should not get requests for non-admin', (done) => {

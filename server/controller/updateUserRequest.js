@@ -26,25 +26,25 @@ const updateUserRequest = (req, res) => {
    */
 
   if (!user.adminRole) {
-    const text3 = `SELECT * FROM requests WHERE request_id = '${requestId}'`;
+    const text3 = `SELECT * FROM requests WHERE request_id = '${requestId}' AND user_id = '${user.userId}'`;
 
     return db.query(text3)
       .then((request) => {
-        if (request.rows[0].status === 'approved') {
+        if (request.rows[0].status !== 'pending') {
           return res.status(401).send({ message: 'You can only modify request if status is pending' });
         }
 
         const text = `UPDATE requests
-  SET request_title='${title}', request_content='${content}', department='${department}'
-  FROM
-  users
-  WHERE
-  requests.user_id = users.user_id AND request_id = '${requestId}' AND requests.user_id = '${user.userId}';`;
+                      SET request_title='${title}', request_content='${content}', department='${department}'
+                      FROM
+                      users
+                      WHERE
+                      requests.user_id = users.user_id AND request_id = '${requestId}' AND requests.user_id = '${user.userId}';`;
 
         return db.query(text)
           .then((result) => {
             if (result.rowCount === 0) {
-              return res.status(200).send({ message: 'Request cannot be found' });
+              return res.status(404).send({ message: 'Request cannot be found' });
             }
 
             const text2 = `SELECT * FROM requests WHERE request_id = '${requestId}';`;
@@ -55,7 +55,7 @@ const updateUserRequest = (req, res) => {
           })
           .catch(err => res.status(404).send({ message: 'Request cannot be found' }));
       })
-      .catch(err => res.status(404).send({ message: 'Request cannot be found, please ensure it is in the system' }));
+      .catch(err => res.status(404).send({ message: 'Request cannot be found, please ensure it is in the system or created by you' }));
   }
 
   return undefined;
