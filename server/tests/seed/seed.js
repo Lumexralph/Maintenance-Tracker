@@ -117,21 +117,26 @@ const userDataWithEmptyField =  {
   };
 
   const requestWithMissingFields = {
-          content: 'Game of the year',
-          department: 'Repairs',
-        };
+    content: 'Game of the year',
+    department: 'Repairs',
+  };
 
   const requestWithEmptyFields = {
-          title: '',
-          content: 'Game of the year',
-          department: 'Repairs',
-        };
+    title: '',
+    content: 'Game of the year',
+    department: 'Repairs',
+  };
 
   const requestWithValidData = {
-          title: 'Clean Engine',
-          content: 'Engine of the airplane',
-          department: 'Repairs',
-        };
+    title: 'Clean Engine',
+    content: 'Engine of the airplane',
+    department: 'Repairs',
+  };
+  const requestWithNewData = {
+    title: 'Clean Gear',
+    content: 'Gear of the airplane',
+    department: 'Repairs',
+  };
 
 export {
   user,
@@ -147,5 +152,6 @@ export {
   adminToken,
   requestWithMissingFields,
   requestWithEmptyFields,
-  requestWithValidData
+  requestWithValidData,
+  requestWithNewData
 };
