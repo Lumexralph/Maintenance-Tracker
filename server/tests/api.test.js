@@ -23,7 +23,7 @@ import {
 beforeEach(createTables);
 
 
-describe('GET / homepage', () => {
+describe('GET / homepage API endpoint', () => {
   it('should give the status code and JSON', (done) => {
     request(app)
       .get('/api/v1/')
@@ -38,7 +38,7 @@ describe('GET / homepage', () => {
 });
 
 
-describe('POST /api/v1/auth/signup', () => {
+describe('POST /api/v1/auth/signup API endpoint', () => {
   it('should not create user with invalid email', (done) => {
 
     request(app)
@@ -134,7 +134,7 @@ describe('POST /api/v1/auth/signup', () => {
 });
 
 
-describe('POST /api/v1/auth/login', () => {
+describe('POST /api/v1/auth/login API endpoint', () => {
 
   it('should login the user with valid credentials', (done) => {
     const userCredentials = {
@@ -232,7 +232,7 @@ describe('POST /api/v1/auth/login', () => {
 });
 
 
-describe('GET /users/requests', () => {
+describe('GET /users/requests API endpoint', () => {
 
   it('should get the requests a user created', (done) => {
 
@@ -316,7 +316,7 @@ describe('GET /users/requests', () => {
 
 });
 
-describe('GET /users/requests/:requestId', () => {
+describe('GET /users/requests/:requestId API endpoint', () => {
   
 
   it('should get a request created by the user', (done) => {
@@ -406,7 +406,7 @@ describe('GET /users/requests/:requestId', () => {
 
 });
 
-describe('POST /users/requests', () => {
+describe('POST /users/requests API endpoint', () => {
 
   it('should not allow user that fails authentication with invalid token', (done) => {
 
@@ -469,28 +469,28 @@ describe('POST /users/requests', () => {
             adminRole: user.admin_role,
         };
     
-    request(app)
-      .post('/api/v1/users/requests/')
-      .set('Authorization', userToken)
-      .send(requestWithValidData)
-      .expect(201)
-      .expect((res) => {
-        expect(res.body).toHaveProperty('request_id');
-        expect(res.body).toHaveProperty('request_title');
-        expect(res.body).toHaveProperty('request_content');
-        expect(res.body).toHaveProperty('department');
-        expect(res.body).toHaveProperty('status');
-        expect(res.body.request_id).toBe(3);
-        expect(res.body.request_title).toBe('Clean Engine');
-        expect(res.body.request_content).toBe('Engine of the airplane');
-        expect(res.body.department).toBe('Repairs');
-        expect(res.body.status).toBe('pending');
-      })
-      .end(done);
-  });
+      request(app)
+        .post('/api/v1/users/requests/')
+        .set('Authorization', userToken)
+        .send(requestWithValidData)
+        .expect(201)
+        .expect((res) => {
+          expect(res.body).toHaveProperty('request_id');
+          expect(res.body).toHaveProperty('request_title');
+          expect(res.body).toHaveProperty('request_content');
+          expect(res.body).toHaveProperty('department');
+          expect(res.body).toHaveProperty('status');
+          expect(res.body.request_id).toBe(3);
+          expect(res.body.request_title).toBe('Clean Engine');
+          expect(res.body.request_content).toBe('Engine of the airplane');
+          expect(res.body.department).toBe('Repairs');
+          expect(res.body.status).toBe('pending');
+        })
+        .end(done);
+    });
 });
 
-// describe('PUT /users/requests/:requestId', () => {
+// describe('PUT /users/requests/:requestId API endpoint', () => {
 //   it('should not update request with wrong requestId', (done) => {
 //     const requestId = 4;
 
@@ -556,7 +556,7 @@ describe('POST /users/requests', () => {
 //   });
 // });
 
-// describe('GET /requests', () => {
+// describe('GET /requests API endpoint', () => {
 //   it('should not get requests for non-admin', (done) => {
 //     request(app)
 //       .get('/api/v1/requests')
