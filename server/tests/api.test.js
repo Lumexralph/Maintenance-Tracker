@@ -630,32 +630,70 @@ describe('PUT /users/requests/:requestId API endpoint', () => {
   
  });
 
-// describe('GET /requests API endpoint', () => {
-//   it('should not get requests for non-admin', (done) => {
-//     request(app)
-//       .get('/api/v1/requests')
-//       .set('Authorization', userToken)
-//       .expect(401)
-//       .expect((res) => {
-//         expect(res.body).toHaveProperty('message');
-//         expect(res.body.message).toBe('only Admin allowed');
-//       })
-//       .end(done);
-//   });
+describe('GET /requests API endpoint', () => {
+  
+  it('should not allow user that fails authentication with invalid token', (done) => {
 
-//   it('should get requests for admin', (done) => {
-//     const admin = {
-//       admin_role: 'true',
-//     };
-//     request(app)
-//       .get('/api/v1/requests')
-//       .set('Authorization', adminToken)
-//       .send(admin.admin_role)
-//       .expect(200)
-//       .expect((res) => {
-//         expect(res.body.length).toHaveProperty('message');
-//         expect(res.body.message).toBe('only Admin allowed');
-//       })
-//       .end(done);
-//   });
-// });
+    let requestId = 1;
+
+    request(app)
+    .put(`/api/v1/users/requests/${requestId}`)
+    .set('Authorization', 'ahahadhdjsskskfkjffk')
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('The system could not verify the user with the token');
+    })
+    .end(done);
+  });
+
+  it('should not allow unregistered user without a token', (done) => {
+    let requestId = 1;
+
+    request(app)
+    .put(`/api/v1/users/requests/${requestId}`)
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('You are not allowed to perform action if not registered user');
+    })
+    .end(done);
+  });
+
+  it('should not get requests for non-admin user', (done) => {
+    request(app)
+      .get('/api/v1/requests')
+      .set('Authorization', userToken)
+      .send(user)
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Only Admin is allowed to carry out the action');
+      })
+      .end(done);
+  });
+
+  it('should get all requests for an admin user', (done) => {
+    
+    request(app)
+      .get('/api/v1/requests')
+      .set('Authorization', adminToken)
+      .send(adminUser)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.length).toBe(2);
+        expect(res.body[0]).toHaveProperty('request_id');
+        expect(res.body[0]).toHaveProperty('request_title');
+        expect(res.body[0]).toHaveProperty('request_content');
+        expect(res.body[0]).toHaveProperty('department');
+        expect(res.body[0]).toHaveProperty('status');
+        expect(res.body[1].request_id).toBe(2);
+        expect(res.body[1].request_title).toBe('Fix Generator');
+        expect(res.body[1].request_content).toBe('The plug needs replacement');
+        expect(res.body[1].department).toBe('Repairs');
+        expect(res.body[1].status).toBe('resolved');
+        
+      })
+      .end(done);
+  });
+});
