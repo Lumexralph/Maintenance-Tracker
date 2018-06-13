@@ -18,7 +18,7 @@ const getAllRequest = (req, res) => {
     return db.query(text)
       .then((result) => {
         if (result.rows.length === 0) {
-          return res.status(200).send({ message: 'There is no request that matches the condition' });
+          return res.status(200).send({ message: 'There are no request that matches the filter condition' });
         }
         return res.status(200).send(result.rows);
       })

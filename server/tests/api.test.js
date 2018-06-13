@@ -693,6 +693,73 @@ describe('GET /requests API endpoint', () => {
       })
       .end(done);
   });
+
+  it('should filter pending requests', (done) => {
+
+    const filterCondition = 'pending';
+
+    request(app)
+      .get(`/api/v1/requests?filter=${filterCondition}`)
+      .set('Authorization', adminToken)
+      .send(adminUser)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.length).toBe(1);
+        expect(res.body[0]).toHaveProperty('request_id');
+        expect(res.body[0]).toHaveProperty('request_title');
+        expect(res.body[0]).toHaveProperty('request_content');
+        expect(res.body[0]).toHaveProperty('department');
+        expect(res.body[0]).toHaveProperty('status');
+        expect(res.body[0].request_id).toBe(1);
+        expect(res.body[0].request_title).toBe('Fix Car');
+        expect(res.body[0].request_content).toBe('The brake pad needs replacement');
+        expect(res.body[0].department).toBe('Repairs');
+        expect(res.body[0].status).toBe('pending');
+      })
+      .end(done);
+  });
+
+  it('should filter resolved requests', (done) => {
+
+    const filterCondition = 'resolved';
+
+    request(app)
+      .get(`/api/v1/requests?filter=${filterCondition}`)
+      .set('Authorization', adminToken)
+      .send(adminUser)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.length).toBe(1);
+        expect(res.body[0]).toHaveProperty('request_id');
+        expect(res.body[0]).toHaveProperty('request_title');
+        expect(res.body[0]).toHaveProperty('request_content');
+        expect(res.body[0]).toHaveProperty('department');
+        expect(res.body[0]).toHaveProperty('status');
+        expect(res.body[0].request_id).toBe(2);
+        expect(res.body[0].request_title).toBe('Fix Generator');
+        expect(res.body[0].request_content).toBe('The plug needs replacement');
+        expect(res.body[0].department).toBe('Repairs');
+        expect(res.body[0].status).toBe('resolved');
+      })
+      .end(done);
+  });
+
+  it('should not return filtered requests with no matching condition', (done) => {
+
+    const filterCondition = 'rejected';
+
+    request(app)
+      .get(`/api/v1/requests?filter=${filterCondition}`)
+      .set('Authorization', adminToken)
+      .send(adminUser)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('There are no request that matches the filter condition');
+      })
+      .end(done);
+  });
+  
 });
 
 
