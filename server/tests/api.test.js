@@ -696,7 +696,7 @@ describe('GET /requests API endpoint', () => {
 });
 
 
-describe('PUT /requests/:requestId/approve', () => {
+describe('PUT /requests/:requestId/approve API endpoint', () => {
 
   it('should not allow user that fails authentication with invalid token to approve request', (done) => {
 
