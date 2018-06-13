@@ -317,8 +317,7 @@ describe('GET /users/requests API endpoint', () => {
 
 });
 
-describe('GET /users/requests/:requestId API endpoint', () => {
-  
+describe('GET /users/requests/:requestId API endpoint', () => {  
 
   it('should get a request created by the user', (done) => {
 
@@ -614,16 +613,16 @@ describe('PUT /users/requests/:requestId API endpoint', () => {
       .expect(201)
       .expect((res) => {
         expect(res.body).toHaveProperty('request_id');
-          expect(res.body).toHaveProperty('request_title');
-          expect(res.body).toHaveProperty('request_content');
-          expect(res.body).toHaveProperty('department');
-          expect(res.body).toHaveProperty('status');
-          expect(res.body.request_id).toBe(1);
-          expect(res.body.request_title).toBe('Clean Gear');
-          expect(res.body.request_content).toBe('Gear of the airplane');
-          expect(res.body.department).toBe('Repairs');
-          expect(res.body.status).toBe('pending'); 
-          expect(res.body.user_id).toBe(1);  
+        expect(res.body).toHaveProperty('request_title');
+        expect(res.body).toHaveProperty('request_content');
+        expect(res.body).toHaveProperty('department');
+        expect(res.body).toHaveProperty('status');
+        expect(res.body.request_id).toBe(1);
+        expect(res.body.request_title).toBe('Clean Gear');
+        expect(res.body.request_content).toBe('Gear of the airplane');
+        expect(res.body.department).toBe('Repairs');
+        expect(res.body.status).toBe('pending'); 
+        expect(res.body.user_id).toBe(user.user_id);  
       })
       .end(done);
   });
@@ -634,10 +633,8 @@ describe('GET /requests API endpoint', () => {
   
   it('should not allow user that fails authentication with invalid token', (done) => {
 
-    let requestId = 1;
-
     request(app)
-    .put(`/api/v1/users/requests/${requestId}`)
+    .get('/api/v1/requests')
     .set('Authorization', 'ahahadhdjsskskfkjffk')
     .expect(401)
     .expect((res) => {
@@ -648,10 +645,9 @@ describe('GET /requests API endpoint', () => {
   });
 
   it('should not allow unregistered user without a token', (done) => {
-    let requestId = 1;
 
     request(app)
-    .put(`/api/v1/users/requests/${requestId}`)
+    .get('/api/v1/requests')
     .expect(401)
     .expect((res) => {
       expect(res.body).toHaveProperty('message');
@@ -661,6 +657,7 @@ describe('GET /requests API endpoint', () => {
   });
 
   it('should not get requests for non-admin user', (done) => {
+
     request(app)
       .get('/api/v1/requests')
       .set('Authorization', userToken)
@@ -696,4 +693,92 @@ describe('GET /requests API endpoint', () => {
       })
       .end(done);
   });
+});
+
+
+describe('PUT /requests/:requestId/approve', () => {
+
+  it('should not allow user that fails authentication with invalid token to approve request', (done) => {
+
+    let requestId = 1;
+
+    request(app)
+    .put(`/api/v1/requests/${requestId}/approve`)
+    .set('Authorization', 'ahahadhdjsskskfkjffk')
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('The system could not verify the user with the token');
+    })
+    .end(done);
+  });
+
+  it('should not allow unregistered user without a token to approve request', (done) => {
+
+    let requestId = 1;
+
+    request(app)
+    .put(`/api/v1/requests/${requestId}/approve`)
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('You are not allowed to perform action if not registered user');
+    })
+    .end(done);
+  });
+
+  it('should not approve a request for non-admin user', (done) => {
+    let requestId = 1;
+
+    request(app)
+      .put(`/api/v1/requests/${requestId}/approve`)
+      .set('Authorization', userToken)
+      .send(user)
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Only Admin is allowed to approve a request');
+      })
+      .end(done);
+  });
+
+  it('should not allow admin approve a request that cannot be found', (done) => {
+    let requestId = 5;
+
+    request(app)
+      .put(`/api/v1/requests/${requestId}/approve`)
+      .set('Authorization', adminToken)
+      .send(adminUser)
+      .expect(404)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Request cannot be found');
+      })
+      .end(done);
+  });
+
+  it('should approve a request', (done) => {
+    let requestId = 1;
+
+    request(app)
+      .put(`/api/v1/requests/${requestId}/approve`)
+      .set('Authorization', adminToken)
+      .send(adminUser)
+      .expect(201)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('request_id');
+        expect(res.body).toHaveProperty('request_title');
+        expect(res.body).toHaveProperty('request_content');
+        expect(res.body).toHaveProperty('department');
+        expect(res.body).toHaveProperty('status');
+        expect(res.body.request_id).toBe(1);
+        expect(res.body.request_title).toBe('Fix Car');
+        expect(res.body.request_content).toBe('The brake pad needs replacement');
+        expect(res.body.department).toBe('Repairs');
+        expect(res.body.status).toBe('approved'); 
+        expect(res.body.user_id).toBe(user.user_id);    
+      })
+      .end(done);
+  });
+  
 });
