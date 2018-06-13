@@ -5,7 +5,7 @@ const rejectRequest = (req, res) => {
   const { user } = req.body;
 
   if (!user.adminRole) {
-    return res.status(401).send({ message: 'Only Admin is allowed to carry out the action.' });
+    return res.status(401).send({ message: 'Only Admin is allowed to disapprove a request' });
   }
 
   const text = `UPDATE requests
@@ -15,17 +15,27 @@ const rejectRequest = (req, res) => {
 
   const text2 = `SELECT * FROM requests WHERE request_id = '${requestId}'`;
 
-  return db.query(text)
+  return db.query(text2)
     .then((result) => {
-      if (result.rowCount === 0) {
-        return res.status(404).send({ message: 'Request cannot be found' });
+      if (result.rows[0].status === 'resolved' ||
+      result.rows[0].status === 'rejected') {
+        return res.status(400).send({ message: 'Resolved or already rejected request cannot be disapproved' });
       }
 
-      return db.query(text2)
-        .then(request => res.send(request.rows[0]))
-        .catch(err => res.status(404).send({ message: 'Request cannot be found' }));
+      return db.query(text)
+        .then((request) => {
+          if (request.rowCount === 1) {
+            /** if the request is rejected, fetch for it */
+            return db.query(text2)
+              .then(data => res.status(201).send(data.rows[0]))
+              .catch(err => res.status(501).send({
+                message: 'Error fetching the request',
+              }));
+          }
+          return undefined;
+        });
     })
-    .catch(err => res.status(404).send({ message: 'Request cannot be found, please ensure it is in the system' }));
+    .catch(err => res.status(404).send({ message: 'Request cannot be found' }));
 };
 
 export default rejectRequest;
