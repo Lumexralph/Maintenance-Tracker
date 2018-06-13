@@ -34,7 +34,7 @@ const resolveRequest = (req, res) => {
           return undefined;
         });
     })
-    .catch(err => res.status.send({ message: 'Request cannot be found, please ensure it is in the system' }));
+    .catch(err => res.status(404).send({ message: 'Request cannot be found' }));
 };
 
 export default resolveRequest;
