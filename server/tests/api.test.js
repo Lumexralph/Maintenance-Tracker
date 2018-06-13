@@ -806,7 +806,7 @@ describe('PUT /requests/:requestId/approve', () => {
       .expect(400)
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toBe('Request cannot be found');
+        expect(res.body.message).toBe('Resolved or already approved request cannot be approved');
       })
       .end(done);
   });
