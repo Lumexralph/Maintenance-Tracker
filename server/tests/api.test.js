@@ -696,7 +696,7 @@ describe('GET /requests API endpoint', () => {
 });
 
 
-describe('PUT /requests/:requestId/approve', () => {
+describe('PUT /requests/:requestId/approve API endpoint', () => {
 
   it('should not allow user that fails authentication with invalid token to approve request', (done) => {
 
@@ -777,6 +777,36 @@ describe('PUT /requests/:requestId/approve', () => {
         expect(res.body.department).toBe('Repairs');
         expect(res.body.status).toBe('approved'); 
         expect(res.body.user_id).toBe(user.user_id);    
+      })
+      .end(done);
+  });
+
+  it('should not allow admin approve a request that cannot be found', (done) => {
+    let requestId = 5;
+
+    request(app)
+      .put(`/api/v1/requests/${requestId}/approve`)
+      .set('Authorization', adminToken)
+      .send(adminUser)
+      .expect(404)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Request cannot be found');
+      })
+      .end(done);
+  });
+
+  it('should not allow admin approve a resolved or approved request', (done) => {
+    let requestId = 2;
+
+    request(app)
+      .put(`/api/v1/requests/${requestId}/approve`)
+      .set('Authorization', adminToken)
+      .send(adminUser)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Resolved or already approved request cannot be approved');
       })
       .end(done);
   });
