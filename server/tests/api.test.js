@@ -781,21 +781,6 @@ describe('PUT /requests/:requestId/approve API endpoint', () => {
       .end(done);
   });
 
-  it('should not allow admin approve a request that cannot be found', (done) => {
-    let requestId = 5;
-
-    request(app)
-      .put(`/api/v1/requests/${requestId}/approve`)
-      .set('Authorization', adminToken)
-      .send(adminUser)
-      .expect(404)
-      .expect((res) => {
-        expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toBe('Request cannot be found');
-      })
-      .end(done);
-  });
-
   it('should not allow admin approve a resolved or approved request', (done) => {
     let requestId = 2;
 
@@ -815,7 +800,7 @@ describe('PUT /requests/:requestId/approve API endpoint', () => {
 
 describe('PUT /requests/:requestId/disapprove API endpoint', () => {
 
-  it('should not allow user that fails authentication with invalid token to approve request', (done) => {
+  it('should not allow user that fails authentication with invalid token to disapprove request', (done) => {
 
     let requestId = 1;
 
@@ -830,7 +815,7 @@ describe('PUT /requests/:requestId/disapprove API endpoint', () => {
     .end(done);
   });
 
-  it('should not allow unregistered user without a token to approve request', (done) => {
+  it('should not allow unregistered user without a token to disapprove request', (done) => {
 
     let requestId = 1;
 
@@ -844,7 +829,7 @@ describe('PUT /requests/:requestId/disapprove API endpoint', () => {
     .end(done);
   });
 
-  it('should not approve a request for non-admin user', (done) => {
+  it('should not disapprove a request for non-admin user', (done) => {
     let requestId = 1;
 
     request(app)
@@ -855,6 +840,60 @@ describe('PUT /requests/:requestId/disapprove API endpoint', () => {
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
         expect(res.body.message).toBe('Only Admin is allowed to disapprove a request');
+      })
+      .end(done);
+  });
+
+  it('should not allow admin disapprove a request that cannot be found', (done) => {
+    let requestId = 5;
+
+    request(app)
+      .put(`/api/v1/requests/${requestId}/disapprove`)
+      .set('Authorization', adminToken)
+      .send(adminUser)
+      .expect(404)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Request cannot be found');
+      })
+      .end(done);
+  });
+
+  it('should disapprove a request', (done) => {
+    let requestId = 1;
+
+    request(app)
+      .put(`/api/v1/requests/${requestId}/disapprove`)
+      .set('Authorization', adminToken)
+      .send(adminUser)
+      .expect(201)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('request_id');
+        expect(res.body).toHaveProperty('request_title');
+        expect(res.body).toHaveProperty('request_content');
+        expect(res.body).toHaveProperty('department');
+        expect(res.body).toHaveProperty('status');
+        expect(res.body.request_id).toBe(1);
+        expect(res.body.request_title).toBe('Fix Car');
+        expect(res.body.request_content).toBe('The brake pad needs replacement');
+        expect(res.body.department).toBe('Repairs');
+        expect(res.body.status).toBe('rejected'); 
+        expect(res.body.user_id).toBe(user.user_id);    
+      })
+      .end(done);
+  });
+
+  it('should not allow admin disapprove a resolved or rejected request', (done) => {
+    let requestId = 2;
+
+    request(app)
+      .put(`/api/v1/requests/${requestId}/disapprove`)
+      .set('Authorization', adminToken)
+      .send(adminUser)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Resolved or already rejected request cannot be disapproved');
       })
       .end(done);
   });
