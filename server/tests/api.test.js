@@ -899,3 +899,8 @@ describe('PUT /requests/:requestId/disapprove API endpoint', () => {
   });
   
 });
+
+describe('PUT /requests/:requestId/resolve', () => {
+
+  
+});
