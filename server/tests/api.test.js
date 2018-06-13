@@ -780,5 +780,35 @@ describe('PUT /requests/:requestId/approve', () => {
       })
       .end(done);
   });
+
+  it('should not allow admin approve a request that cannot be found', (done) => {
+    let requestId = 5;
+
+    request(app)
+      .put(`/api/v1/requests/${requestId}/approve`)
+      .set('Authorization', adminToken)
+      .send(adminUser)
+      .expect(404)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Request cannot be found');
+      })
+      .end(done);
+  });
+
+  it('should not allow admin approve a resolved or approved request', (done) => {
+    let requestId = 2;
+
+    request(app)
+      .put(`/api/v1/requests/${requestId}/approve`)
+      .set('Authorization', adminToken)
+      .send(adminUser)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Request cannot be found');
+      })
+      .end(done);
+  });
   
 });

@@ -17,12 +17,9 @@ const approveRequest = (req, res) => {
 
   return db.query(text2)
     .then((result) => {
-      if (result.rows[0].status === 'resolved') {
-        return res.status(400).send({ message: 'Resolved request cannot be approved' });
-      }
-
-      if (result.rows[0].status === 'approved') {
-        return res.status(400).send({ message: 'Request has already been approved' });
+      if (result.rows[0].status === 'resolved' ||
+      result.rows[0].status === 'approved') {
+        return res.status(400).send({ message: 'Resolved or already approved request cannot be approved' });
       }
 
       return db.query(text)
