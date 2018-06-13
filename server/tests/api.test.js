@@ -812,3 +812,51 @@ describe('PUT /requests/:requestId/approve API endpoint', () => {
   });
   
 });
+
+describe('PUT /requests/:requestId/disapprove API endpoint', () => {
+
+  it('should not allow user that fails authentication with invalid token to approve request', (done) => {
+
+    let requestId = 1;
+
+    request(app)
+    .put(`/api/v1/requests/${requestId}/disapprove`)
+    .set('Authorization', 'ahahadhdjsskskfkjffk')
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('The system could not verify the user with the token');
+    })
+    .end(done);
+  });
+
+  it('should not allow unregistered user without a token to approve request', (done) => {
+
+    let requestId = 1;
+
+    request(app)
+    .put(`/api/v1/requests/${requestId}/disapprove`)
+    .expect(401)
+    .expect((res) => {
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toBe('You are not allowed to perform action if not registered user');
+    })
+    .end(done);
+  });
+
+  it('should not approve a request for non-admin user', (done) => {
+    let requestId = 1;
+
+    request(app)
+      .put(`/api/v1/requests/${requestId}/disapprove`)
+      .set('Authorization', userToken)
+      .send(user)
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Only Admin is allowed to disapprove a request');
+      })
+      .end(done);
+  });
+  
+});
