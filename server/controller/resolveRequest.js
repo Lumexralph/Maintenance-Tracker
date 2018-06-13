@@ -5,7 +5,7 @@ const resolveRequest = (req, res) => {
   const { user } = req.body;
 
   if (!user.adminRole) {
-    return res.status(401).send({ message: 'Only Admin is allowed to carry out the action.' });
+    return res.status(401).send({ message: 'Only Admin is allowed to resolve a request' });
   }
 
   const text = `UPDATE requests
@@ -15,17 +15,26 @@ const resolveRequest = (req, res) => {
 
   const text2 = `SELECT * FROM requests WHERE request_id = '${requestId}';`;
 
-  return db.query(text)
+  return db.query(text2)
     .then((result) => {
-      if (result.rowCount === 0) {
-        return res.status(404).send({ message: 'Request not found' });
+      if (result.rows[0].status === 'resolved') {
+        return res.status(400).send({ message: 'Action cannot be performed, request is already resolved' });
       }
 
-      return db.query(text2)
-        .then(request => res.send(request.rows[0]))
-        .catch(err => res.status(404).send({ message: 'Request not found' }));
+      return db.query(text)
+        .then((request) => {
+          if (request.rowCount === 1) {
+            /** if the request is not resolved, fetch for it */
+            return db.query(text2)
+              .then(data => res.status(201).send(data.rows[0]))
+              .catch(err => res.status(501).send({
+                message: 'Error fetching the request',
+              }));
+          }
+          return undefined;
+        });
     })
-    .catch(err => res.status.send({ message: 'Request cannot be found, please ensure it is in the system' }));
+    .catch(err => res.status(404).send({ message: 'Request cannot be found' }));
 };
 
 export default resolveRequest;
