@@ -6,7 +6,7 @@ const getAllRequest = (req, res) => {
 
 
   if (!user.adminRole) {
-    return res.status(401).send({ message: 'Only Admin is allowed to carry out the action.' });
+    return res.status(401).send({ message: 'Only Admin is allowed to carry out the action' });
   }
 
   if (filter) {
