@@ -50,6 +50,6 @@ api.put('/requests/:requestId/disapprove', authenticate, routeController.rejectR
 api.put('/requests/:requestId/resolve', authenticate, routeController.resolveRequest);
 
 /** API Docs page */
-api.get('/docs', displayApiDocumentation);
+api.get('/docs', routeController.displayApiDocumentation);
 
 export default api;

@@ -16,3 +16,40 @@ status of their request.
         { 
             "message": "Welcome to FixZit, a Maintenance Tracker"
         }
+
+## Register a User [/auth/signup]
+
+### Create a New User [POST]
+
+You may allow user create an account using this action. It takes a JSON
+object containing username, password1, password2, email.
+
++ usernane (string) - new user's username which is unique
++ password1 (string) - first password 
++ password2 (string) - second password to check against first password
++ email (string) - email of the user which is unique and cannot be used twice
++ Authorization (string) - JWT token generated and set in header on signup
+
++ Request (application/json)
+
+        {
+            "username": "Adedayo",
+            "password1": "gatekeeper",
+            "password2": "gatekeeper",
+            "email": "adedayo@gmail.com"
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Authorization: {JWT token}
+
+    + Body
+
+            {
+                "userId": 10,
+                "username": "Adedayo",
+                "adminRole": false,
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMCIsImFkbWluUm9sZSI6ZmFsc2UsImFjY2VzcyI6ImF1dGgiLCJpYXQiOjE1Mjg5OTA5MjZ9.zwAhpjclTsDfihDp5huEkw6KXUJ-1MBcdMXRfZzMjbs"
+            }
