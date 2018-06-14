@@ -53,3 +53,37 @@ object containing username, password1, password2, email.
                 "adminRole": false,
                 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMCIsImFkbWluUm9sZSI6ZmFsc2UsImFjY2VzcyI6ImF1dGgiLCJpYXQiOjE1Mjg5OTA5MjZ9.zwAhpjclTsDfihDp5huEkw6KXUJ-1MBcdMXRfZzMjbs"
             }
+
+## Sigin a Registered User [/auth/login]
+
+### Login User [POST]
+
+You may allow user login to their account using this action. It takes a JSON
+object containing username and password.
+
++ usernane (string) - new user's username which is unique
++ password (string) - supplied password 
++ Authorization (string) - JWT token generated and set in header on signup
+
++ Request (application/json)
+
+        {
+            "username": "bj",
+            "password": "gatekeeper",
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Authorization: {JWT token}
+
+    + Body
+
+            {
+                "message": "Login successful",
+                "userId": 1,
+                "username": "bj",
+                "adminRole": false,
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMCIsImFkbWluUm9sZSI6ZmFsc2UsImFjY2VzcyI6ImF1dGgiLCJpYXQiOjE1Mjg5OTA5MjZ9.zwAhpjclTsDfihDp5huEkw6KXUJ-1MBcdMXRfZzMjbs"
+            }
