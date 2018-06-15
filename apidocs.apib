@@ -17,6 +17,8 @@ status of their request.
             "message": "Welcome to FixZit, a Maintenance Tracker"
         }
 
+# Group User
+
 ## Register a User [/auth/signup]
 
 ### Create a New User [POST]
@@ -54,7 +56,7 @@ object containing username, password1, password2, email.
                 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMCIsImFkbWluUm9sZSI6ZmFsc2UsImFjY2VzcyI6ImF1dGgiLCJpYXQiOjE1Mjg5OTA5MjZ9.zwAhpjclTsDfihDp5huEkw6KXUJ-1MBcdMXRfZzMjbs"
             }
 
-## Sigin a Registered User [/auth/login]
+## Signin a Registered User [/auth/login]
 
 ### Login User [POST]
 
@@ -87,3 +89,54 @@ object containing username and password.
                 "adminRole": false,
                 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMCIsImFkbWluUm9sZSI6ZmFsc2UsImFjY2VzcyI6ImF1dGgiLCJpYXQiOjE1Mjg5OTA5MjZ9.zwAhpjclTsDfihDp5huEkw6KXUJ-1MBcdMXRfZzMjbs"
             }
+
+# Group Requests
+
+## User Requests [/users/requests]
+
+### List All User Requests [GET]
+
+You may allow user to access all their requests using this action. The user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                {
+                    "request_id": 47,
+                    "request_title": "Service the generator",
+                    "request_content": "Check if things are in order",
+                    "department": "maintenance",
+                    "status": "pending"
+                },
+                {
+                    "request_id": 50,
+                    "request_title": "Service the generator",
+                    "request_content": "Check if things are in order",
+                    "department": "maintenance",
+                    "status": "pending"
+                },
+                {
+                    "request_id": 48,
+                    "request_title": "Service the generator",
+                    "request_content": "Check if things are in order",
+                    "department": "maintenance",
+                    "status": "approved"
+                },
+                {
+                    "request_id": 49,
+                    "request_title": "Service the generator",
+                    "request_content": "Check if things are in order",
+                    "department": "maintenance",
+                    "status": "approved"
+                }
+            ]
