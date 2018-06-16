@@ -108,8 +108,6 @@ You may allow user to access all their requests using this action. The user requ
 
 + Response 200 (application/json)
 
-    + Body
-
             [
                 {
                     "request_id": 47,
@@ -140,3 +138,167 @@ You may allow user to access all their requests using this action. The user requ
                     "status": "approved"
                 }
             ]
+
+### Create User Request [POST]
+
+You may allow user to create a request using this action. The user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+            
+    + Body
+    
+            {
+                "title": "Game of life",
+                "content": "Game of the year",
+                "department": "Repairs"
+            }
+
++ Response 201 (application/json)
+    
+            {
+                "request_id": 39,
+                "request_title": "Game of life",
+                "request_content": "Game of the year",
+                "department": "Repairs",
+                "user_id": 21,
+                "status": "pending"
+            }
+
+## A Request [/users/requests/{requestId}]
+
++ Parameters
+
+    + requestId: `1` (number, required) - ID of the Request in the form of an integer
+
+### View a Request Detail [GET]
+
+You may allow user to view a request using this action. The user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup/login
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+            
++ Response 200 (application/json)
+
+            {
+                "request_id": 1,
+                "request_title": "Service the generator",
+                "request_content": "Check if things are in order",
+                "department": "maintenance",
+                "status": "rejected"
+            }
+            
+### Edit a Request [PUT]
+
+You may allow user to edit a request if it has not been approved or resolved using this action. The user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup/login
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+            
+    + Body
+    
+            {
+                "title": "Service the generator",
+                "content": "Check if engine and carburetor are in order",
+                "department": "maintenance",
+            }
+            
++ Response 201 (application/json)
+
+            {
+                "request_id": 1,
+                "request_title": "Service the generator",
+                "request_content": "Check if engine and carburetor are in order",
+                "department": "maintenance",
+                "status": "rejected"
+            }
+            
+## All requests created by all users [/requests]
+
+### Get All the Requests [GET]
+
+You may allow only admin user to fetch all requests that has been created by users using this action. The adimin user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup/login
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+            
++ Response 200 (application/json)
+
+        [
+            {
+                "request_id": 1,
+                "request_title": "The Game of the year",
+                "request_content": "It is played in the continent",
+                "department": "Maintenance",
+                "user_id": 1,
+                "status": "approved"
+            },
+            {
+                "request_id": 2,
+                "request_title": "The Game of the year",
+                "request_content": "It is played in the continent",
+                "department": "Maintenance",
+                "user_id": 3,
+                "status": "resolved"
+            },
+            {
+                "request_id": 3,
+                "request_title": "The Game of the year",
+                "request_content": "It is played in the continent",
+                "department": "Maintenance",
+                "user_id": 4,
+                "status": "resolved"
+            },
+            {
+                "request_id": 4,
+                "request_title": "Kitchen ",
+                "request_content": "The wash hand basin needs to be welded tomorrow. ",
+                "department": "Repairs",
+                "user_id": 9,
+                "status": "resolved"
+            },
+            {
+                "request_id": 5,
+                "request_title": "Game of life",
+                "request_content": "Game of the year",
+                "department": "Repairs",
+                "user_id": 10,
+                "status": "resolved"
+            },
+            {
+                "request_id": 6,
+                "request_title": "Spoilt hammer needs repairs",
+                "request_content": " vbvbnd vbvhjsvh h . vegfhgdvhjb",
+                "department": "Repairs",
+                "user_id": 14,
+                "status": "resolved"
+            },
+            {
+                "request_id": 7,
+                "request_title": "fngbndj",
+                "request_content": "ndgbndjbefjb nbjhbjhbhbhj",
+                "department": "Repairs",
+                "user_id": 14,
+                "status": "pending"
+            }
+        ]

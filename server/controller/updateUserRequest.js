@@ -30,8 +30,8 @@ const updateUserRequest = (req, res) => {
 
     return db.query(text3)
       .then((request) => {
-        if (request.rows[0].status !== 'pending') {
-          return res.status(401).send({ message: 'You can only modify request if status is pending' });
+        if (request.rows[0].status === 'approved' || request.rows[0].status === 'resolved') {
+          return res.status(401).send({ message: 'You cannot modify a request that has been approved or resolved ' });
         }
 
         const text = `UPDATE requests
