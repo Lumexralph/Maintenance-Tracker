@@ -228,7 +228,11 @@ You may allow user to edit a request if it has not been approved or resolved usi
                 "status": "rejected"
             }
             
-## All requests created by all users [/requests]
+## All requests created by all users [/requests{?filter}]
+
++ Parameters
+
+    + filter: `pending` (optional, string) - filter is an optional query parameter that takes in 4 different strings to list requests by status field. It can be pending, approved, rejected and resolved.
 
 ### Get All the Requests [GET]
 
