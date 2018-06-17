@@ -306,3 +306,97 @@ You may allow only admin user to fetch all requests that has been created by use
                 "status": "pending"
             }
         ]
+
+## Approving a Request [/requests/{requestId}/approve]
+
++ Parameters
+
+    + requestId: `1` (number, required) - ID of the Request in the form of an integer
+    
+### Approve request [PUT]
+
+Only admin users can approve a request using this action, the status of
+the request should be
+pending. The adimin user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup/login
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+
++ Response 200 (application/json)
+
+        {
+            "request_id": 1,
+            "request_title": "The Game of the year",
+            "request_content": "It is played in the continent",
+            "department": "Maintenance",
+            "user_id": 3,
+            "status": "approved"
+        }
+        
+## Disapproving a Request [/requests/{requestId}/disapprove]
+
++ Parameters
+
+    + requestId: `1` (number, required) - ID of the Request in the form of an integer
+    
+### Disapprove request [PUT]
+
+Only admin users can disapprove a request using this action, the status of
+the request should be
+pending. The adimin user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup/login
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+
++ Response 200 (application/json)
+
+        {
+            "request_id": 1,
+            "request_title": "The Game of the year",
+            "request_content": "It is played in the continent",
+            "department": "Maintenance",
+            "user_id": 3,
+            "status": "rejected"
+        }
+        
+## Resolving a Request [/requests/{requestId}/resolve]
+
++ Parameters
+
+    + requestId: `1` (number, required) - ID of the Request in the form of an integer
+    
+### Resolve request [PUT]
+
+Only admin users can resolve a request using this action, the status of
+the request should be
+approved. The adimin user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup/login
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+
++ Response 200 (application/json)
+
+        {
+            "request_id": 1,
+            "request_title": "The Game of the year",
+            "request_content": "It is played in the continent",
+            "department": "Maintenance",
+            "user_id": 3,
+            "status": "resolved"
+        }
+
