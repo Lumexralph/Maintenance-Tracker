@@ -17,7 +17,7 @@ const updateUserRequest = (req, res) => {
 
   if (validator.isEmpty(title) || validator.isEmpty(content)) {
     return res.status(400).send({
-      message: 'Ensure no field is empty',
+      message: 'Ensure title and content fields are not empty',
     });
   }
 
@@ -31,7 +31,7 @@ const updateUserRequest = (req, res) => {
     return db.query(text3)
       .then((request) => {
         if (request.rows[0].status === 'approved' || request.rows[0].status === 'resolved') {
-          return res.status(401).send({ message: 'You cannot modify a request that has been approved or resolved ' });
+          return res.status(401).send({ message: 'You cannot modify a request that has been approved or resolved' });
         }
 
         const text = `UPDATE requests

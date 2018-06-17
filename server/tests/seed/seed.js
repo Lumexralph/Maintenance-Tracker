@@ -121,6 +121,10 @@ const userDataWithEmptyField =  {
     email: "ralph@gmail.com",
   };
 
+  const loginDataWithMissingField = {
+    username: "Bola"
+  };
+
   const requestWithMissingFields = {
     content: 'Game of the year',
     department: 'Repairs',
@@ -159,5 +163,6 @@ export {
   requestWithEmptyFields,
   requestWithValidData,
   requestWithNewData,
-  userDataWithMissingFields
+  userDataWithMissingFields,
+  loginDataWithMissingField
 };

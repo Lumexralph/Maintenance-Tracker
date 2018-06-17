@@ -5,11 +5,13 @@ import utils from './utils/index';
 
 
 const loginUser = (req, res) => {
-  const { username, password } = req.body;
 
-  /** clean up the data of white spaces */
-  validator.trim(username);
-  validator.trim(password);
+  /** Check if the request came with no data or missing fields */
+  if (!Object.prototype.hasOwnProperty.call(req.body, 'username') || !Object.prototype.hasOwnProperty.call(req.body, 'password')) {
+    return res.status(400).send({ message: 'Please provide valid data with required fields' });
+  }
+
+  let { username, password } = req.body;
 
   if (validator.isEmpty(username) ||
      validator.isEmpty(password)) {
@@ -17,6 +19,10 @@ const loginUser = (req, res) => {
       message: 'It seems one of the field is empty, Ensure no field is empty',
     });
   }
+
+  /** clean up the data of white spaces */
+  username = validator.trim(username);
+  password = validator.trim(password);
 
   /**
    * @constant {string}

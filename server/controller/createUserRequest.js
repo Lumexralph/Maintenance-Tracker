@@ -3,21 +3,28 @@ import validator from 'validator';
 import db from '../db/index';
 
 const createUserRequest = (req, res) => {
-  const {
+  let title = null;
+  let content = null;
+  let user = null;
+  let department = null;
+  ({
     title, content, user, department = 'Maintenance',
-  } = req.body;
+  } = req.body);
 
   if (!title || !content) {
     return res.status(400).send({
-      message: 'Ensure no field is empty',
+      message: 'Ensure title and content fields are not empty missing',
     });
   }
 
   if (validator.isEmpty(title) || validator.isEmpty(content)) {
     return res.status(400).send({
-      message: 'Ensure no field is empty',
+      message: 'Ensure title and content fields are not empty',
     });
   }
+
+  title = validator.trim(title);
+  content = validator.trim(content);
 
   const text = `INSERT INTO requests(request_title, request_content, department, user_id) VALUES('${title}', '${content}', '${department}', '${user.userId}') RETURNING *;`;
 

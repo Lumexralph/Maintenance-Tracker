@@ -13,17 +13,10 @@ const createUserAccount = (req, res) => {
     return res.status(400).send({ message: 'Please provide valid data with required fields' });
   }
 
-  const {
+  let {
     password1, password2, email,
   } = req.body;
   ({ username } = req.body);
-
-  /** clean up the data of white spaces */
-  validator.trim(username);
-  validator.trim(password1);
-  validator.trim(password2);
-  validator.trim(email);
-
 
   if (validator.isEmpty(username) ||
      validator.isEmpty(password1) ||
@@ -33,6 +26,12 @@ const createUserAccount = (req, res) => {
       message: 'It seems one of the field is empty, Ensure no field is empty',
     });
   }
+
+  /** clean up the data of white spaces */
+ username =  validator.trim(username);
+ password1 = validator.trim(password1);
+ password2 = validator.trim(password2);
+ email = validator.trim(email);
 
   if (password1 !== password2) {
     return res.status(400).send({

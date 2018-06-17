@@ -19,7 +19,8 @@ import {
         requestWithValidData,
         requestWithNewData,
         userDataWithMissingField,       
-        userDataWithMissingFields
+        userDataWithMissingFields,
+        loginDataWithMissingField
    } 
     from './seed/seed';
 
@@ -174,6 +175,19 @@ describe('POST /api/v1/auth/login API endpoint', () => {
         expect(res.body.username).toBe(user.username);
         expect(res.body.adminRole).toBe(false);
         expect(res.body.token).toEqual(res.header.authorization);
+      })
+      .end(done);
+  });
+
+  it('should not login user with missing field(s)', (done) => {
+    
+    request(app)
+      .post('/api/v1/auth/login')
+      .send(loginDataWithMissingField)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Please provide valid data with required fields');
       })
       .end(done);
   });
@@ -352,17 +366,16 @@ describe('GET /users/requests/:requestId API endpoint', () => {
       .send(requestBody)
       .expect(200)
       .expect((res) => {
-        expect(res.body.length).toBe(1);
-        expect(res.body[0]).toHaveProperty('request_id');
-        expect(res.body[0]).toHaveProperty('request_title');
-        expect(res.body[0]).toHaveProperty('request_content');
-        expect(res.body[0]).toHaveProperty('department');
-        expect(res.body[0]).toHaveProperty('status');
-        expect(res.body[0].request_id).toBe(1);
-        expect(res.body[0].request_title).toBe('Fix Car');
-        expect(res.body[0].request_content).toBe('The brake pad needs replacement');
-        expect(res.body[0].department).toBe('Repairs');
-        expect(res.body[0].status).toBe('pending');
+        expect(res.body).toHaveProperty('request_id');
+        expect(res.body).toHaveProperty('request_title');
+        expect(res.body).toHaveProperty('request_content');
+        expect(res.body).toHaveProperty('department');
+        expect(res.body).toHaveProperty('status');
+        expect(res.body.request_id).toBe(1);
+        expect(res.body.request_title).toBe('Fix Car');
+        expect(res.body.request_content).toBe('The brake pad needs replacement');
+        expect(res.body.department).toBe('Repairs');
+        expect(res.body.status).toBe('pending');
       })
       .end(done);
   });
@@ -457,7 +470,7 @@ describe('POST /users/requests API endpoint', () => {
       .expect(400)
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toBe('Ensure no field is empty');
+        expect(res.body.message).toBe('Ensure title and content fields are not empty missing');
       })
       .end(done);
   });
@@ -471,7 +484,7 @@ describe('POST /users/requests API endpoint', () => {
       .expect(400)
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toBe('Ensure no field is empty');
+        expect(res.body.message).toBe('Ensure title and content fields are not empty missing');
       })
       .end(done);
   });
@@ -606,7 +619,7 @@ describe('PUT /users/requests/:requestId API endpoint', () => {
       .expect(401)
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toBe('You can only modify request if status is pending');
+        expect(res.body.message).toBe('You cannot modify a request that has been approved or resolved');
       })
       .end(done);
   });
