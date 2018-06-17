@@ -1,0 +1,402 @@
+FORMAT: 1A
+HOST: https://maintenance-tracker-lumexralph.herokuapp.com/api/v1
+
+# FixZit
+
+FixZit is an api that provides users with the ability to reach out to
+operations or repairs department regarding repair or maintenance requests and monitor the
+status of their request.
+
+## Starting Endpoint [/]
+
+### Display Welcome Message [GET]
+
++ Response 200 (application/json)
+
+        { 
+            "message": "Welcome to FixZit, a Maintenance Tracker"
+        }
+
+# Group User
+
+## Register a User [/auth/signup]
+
+### Create a New User [POST]
+
+You may allow user create an account using this action. It takes a JSON
+object containing username, password1, password2, email.
+
++ usernane (string) - new user's username which is unique
++ password1 (string) - first password 
++ password2 (string) - second password to check against first password
++ email (string) - email of the user which is unique and cannot be used twice
++ Authorization (string) - JWT token generated and set in header on signup
+
++ Request (application/json)
+
+        {
+            "username": "Adedayo",
+            "password1": "gatekeeper",
+            "password2": "gatekeeper",
+            "email": "adedayo@gmail.com"
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Authorization: {JWT token}
+
+    + Body
+
+            {
+                "userId": 10,
+                "username": "Adedayo",
+                "adminRole": false,
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMCIsImFkbWluUm9sZSI6ZmFsc2UsImFjY2VzcyI6ImF1dGgiLCJpYXQiOjE1Mjg5OTA5MjZ9.zwAhpjclTsDfihDp5huEkw6KXUJ-1MBcdMXRfZzMjbs"
+            }
+
+## Signin a Registered User [/auth/login]
+
+### Login User [POST]
+
+You may allow user login to their account using this action. It takes a JSON
+object containing username and password.
+
++ usernane (string) - new user's username which is unique
++ password (string) - supplied password 
++ Authorization (string) - JWT token generated and set in header on signup
+
++ Request (application/json)
+
+        {
+            "username": "bj",
+            "password": "gatekeeper",
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Authorization: {JWT token}
+
+    + Body
+
+            {
+                "message": "Login successful",
+                "userId": 1,
+                "username": "bj",
+                "adminRole": false,
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMCIsImFkbWluUm9sZSI6ZmFsc2UsImFjY2VzcyI6ImF1dGgiLCJpYXQiOjE1Mjg5OTA5MjZ9.zwAhpjclTsDfihDp5huEkw6KXUJ-1MBcdMXRfZzMjbs"
+            }
+
+# Group Requests
+
+## User Requests [/users/requests]
+
+### List All User Requests [GET]
+
+You may allow user to access all their requests using this action. The user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+
++ Response 200 (application/json)
+
+            [
+                {
+                    "request_id": 47,
+                    "request_title": "Service the generator",
+                    "request_content": "Check if things are in order",
+                    "department": "maintenance",
+                    "status": "pending"
+                },
+                {
+                    "request_id": 50,
+                    "request_title": "Service the generator",
+                    "request_content": "Check if things are in order",
+                    "department": "maintenance",
+                    "status": "pending"
+                },
+                {
+                    "request_id": 48,
+                    "request_title": "Service the generator",
+                    "request_content": "Check if things are in order",
+                    "department": "maintenance",
+                    "status": "approved"
+                },
+                {
+                    "request_id": 49,
+                    "request_title": "Service the generator",
+                    "request_content": "Check if things are in order",
+                    "department": "maintenance",
+                    "status": "approved"
+                }
+            ]
+
+### Create User Request [POST]
+
+You may allow user to create a request using this action. The user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+            
+    + Body
+    
+            {
+                "title": "Game of life",
+                "content": "Game of the year",
+                "department": "Repairs"
+            }
+
++ Response 201 (application/json)
+    
+            {
+                "request_id": 39,
+                "request_title": "Game of life",
+                "request_content": "Game of the year",
+                "department": "Repairs",
+                "user_id": 21,
+                "status": "pending"
+            }
+
+## A Request [/users/requests/{requestId}]
+
++ Parameters
+
+    + requestId: `1` (number, required) - ID of the Request in the form of an integer
+
+### View a Request Detail [GET]
+
+You may allow user to view a request using this action. The user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup/login
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+            
++ Response 200 (application/json)
+
+            {
+                "request_id": 1,
+                "request_title": "Service the generator",
+                "request_content": "Check if things are in order",
+                "department": "maintenance",
+                "status": "rejected"
+            }
+            
+### Edit a Request [PUT]
+
+You may allow user to edit a request if it has not been approved or resolved using this action. The user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup/login
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+            
+    + Body
+    
+            {
+                "title": "Service the generator",
+                "content": "Check if engine and carburetor are in order",
+                "department": "maintenance",
+            }
+            
++ Response 201 (application/json)
+
+            {
+                "request_id": 1,
+                "request_title": "Service the generator",
+                "request_content": "Check if engine and carburetor are in order",
+                "department": "maintenance",
+                "status": "rejected"
+            }
+            
+## All requests created by all users [/requests{?filter}]
+
++ Parameters
+
+    + filter: `pending` (optional, string) - filter is an optional query parameter that takes in 4 different strings to list requests by status field. It can be pending, approved, rejected and resolved.
+
+### Get All the Requests [GET]
+
+You may allow only admin user to fetch all requests that has been created by users using this action. The adimin user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup/login
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+            
++ Response 200 (application/json)
+
+        [
+            {
+                "request_id": 1,
+                "request_title": "The Game of the year",
+                "request_content": "It is played in the continent",
+                "department": "Maintenance",
+                "user_id": 1,
+                "status": "approved"
+            },
+            {
+                "request_id": 2,
+                "request_title": "The Game of the year",
+                "request_content": "It is played in the continent",
+                "department": "Maintenance",
+                "user_id": 3,
+                "status": "resolved"
+            },
+            {
+                "request_id": 3,
+                "request_title": "The Game of the year",
+                "request_content": "It is played in the continent",
+                "department": "Maintenance",
+                "user_id": 4,
+                "status": "resolved"
+            },
+            {
+                "request_id": 4,
+                "request_title": "Kitchen ",
+                "request_content": "The wash hand basin needs to be welded tomorrow. ",
+                "department": "Repairs",
+                "user_id": 9,
+                "status": "resolved"
+            },
+            {
+                "request_id": 5,
+                "request_title": "Game of life",
+                "request_content": "Game of the year",
+                "department": "Repairs",
+                "user_id": 10,
+                "status": "resolved"
+            },
+            {
+                "request_id": 6,
+                "request_title": "Spoilt hammer needs repairs",
+                "request_content": " vbvbnd vbvhjsvh h . vegfhgdvhjb",
+                "department": "Repairs",
+                "user_id": 14,
+                "status": "resolved"
+            },
+            {
+                "request_id": 7,
+                "request_title": "fngbndj",
+                "request_content": "ndgbndjbefjb nbjhbjhbhbhj",
+                "department": "Repairs",
+                "user_id": 14,
+                "status": "pending"
+            }
+        ]
+
+## Approving a Request [/requests/{requestId}/approve]
+
++ Parameters
+
+    + requestId: `1` (number, required) - ID of the Request in the form of an integer
+    
+### Approve request [PUT]
+
+Only admin users can approve a request using this action, the status of
+the request should be
+pending. The adimin user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup/login
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+
++ Response 200 (application/json)
+
+        {
+            "request_id": 1,
+            "request_title": "The Game of the year",
+            "request_content": "It is played in the continent",
+            "department": "Maintenance",
+            "user_id": 3,
+            "status": "approved"
+        }
+        
+## Disapproving a Request [/requests/{requestId}/disapprove]
+
++ Parameters
+
+    + requestId: `1` (number, required) - ID of the Request in the form of an integer
+    
+### Disapprove request [PUT]
+
+Only admin users can disapprove a request using this action, the status of
+the request should be
+pending. The adimin user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup/login
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+
++ Response 200 (application/json)
+
+        {
+            "request_id": 1,
+            "request_title": "The Game of the year",
+            "request_content": "It is played in the continent",
+            "department": "Maintenance",
+            "user_id": 3,
+            "status": "rejected"
+        }
+        
+## Resolving a Request [/requests/{requestId}/resolve]
+
++ Parameters
+
+    + requestId: `1` (number, required) - ID of the Request in the form of an integer
+    
+### Resolve request [PUT]
+
+Only admin users can resolve a request using this action, the status of
+the request should be
+approved. The adimin user requires a valid JWT token in the Authorization field of the header  to pass authentication.
+
++ Authorization (string) - JWT token generated and set in header on signup/login
+
++ Request (application/json)
+
+    + Headers 
+    
+            Authorization: {JWT Token}
+
++ Response 200 (application/json)
+
+        {
+            "request_id": 1,
+            "request_title": "The Game of the year",
+            "request_content": "It is played in the continent",
+            "department": "Maintenance",
+            "user_id": 3,
+            "status": "resolved"
+        }
+

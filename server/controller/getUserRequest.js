@@ -10,7 +10,7 @@ const getUserRequest = (req, res) => {
   db.query(text)
     .then((result) => {
       if (result.rows.length > 0) {
-        return res.status(200).send(result.rows);
+        return res.status(200).send(result.rows[0]);
       }
       return res.status(404).send({ message: 'Particular request not found' });
     })

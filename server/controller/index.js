@@ -9,6 +9,7 @@ import getAllRequest from './getAllRequest';
 import approveRequest from './approveRequest';
 import rejectRequest from './rejectRequest';
 import resolveRequest from './resolveRequest';
+import displayApiDocumentation from './apiDocs';
 
 export default {
   getHomePage,
@@ -22,4 +23,5 @@ export default {
   approveRequest,
   rejectRequest,
   resolveRequest,
+  displayApiDocumentation,
 };
