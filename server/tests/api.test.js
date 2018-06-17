@@ -17,7 +17,9 @@ import {
         requestWithMissingFields,
         requestWithEmptyFields,
         requestWithValidData,
-        requestWithNewData        
+        requestWithNewData,
+        userDataWithMissingField,       
+        userDataWithMissingFields
    } 
     from './seed/seed';
 
@@ -65,6 +67,19 @@ describe('POST /api/v1/auth/signup API endpoint', () => {
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
         expect(res.body.message).toBe('It seems one of the field is empty, Ensure no field is empty');
+      })
+      .end(done);
+  });
+
+  it('should not create user with missing field(s)', (done) => {
+    
+    request(app)
+      .post('/api/v1/auth/signup')
+      .send(userDataWithMissingFields)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Please provide valid data with required fields');
       })
       .end(done);
   });

@@ -8,6 +8,11 @@ const createUserAccount = (req, res) => {
   let hashedPassword = null;
   let username = null;
 
+  /** Check if the request came with no data or missing fields */
+  if (!Object.prototype.hasOwnProperty.call(req.body, 'username') || !Object.prototype.hasOwnProperty.call(req.body, 'password1') || !Object.prototype.hasOwnProperty.call(req.body, 'password2') || !Object.prototype.hasOwnProperty.call(req.body, 'email')) {
+    return res.status(400).send({ message: 'Please provide valid data with required fields' });
+  }
+
   const {
     password1, password2, email,
   } = req.body;
@@ -19,6 +24,7 @@ const createUserAccount = (req, res) => {
   validator.trim(password2);
   validator.trim(email);
 
+
   if (validator.isEmpty(username) ||
      validator.isEmpty(password1) ||
      validator.isEmpty(password2) ||
@@ -27,7 +33,6 @@ const createUserAccount = (req, res) => {
       message: 'It seems one of the field is empty, Ensure no field is empty',
     });
   }
-
 
   if (password1 !== password2) {
     return res.status(400).send({

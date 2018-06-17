@@ -88,6 +88,11 @@ const userDataWithEmptyField =  {
     email: 'oldrlpkookh@gmail.com',
   };
 
+  const userDataWithMissingFields =  {
+    password2: 'gatekeeper',
+    email: 'oldrlpkookh@gmail.com',
+  };
+
   const userDataWithDifferentPasswords = {
     username: 'Lumexy',
     password1: 'gatekee',
@@ -153,5 +158,6 @@ export {
   requestWithMissingFields,
   requestWithEmptyFields,
   requestWithValidData,
-  requestWithNewData
+  requestWithNewData,
+  userDataWithMissingFields
 };
