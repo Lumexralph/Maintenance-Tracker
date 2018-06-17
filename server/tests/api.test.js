@@ -1092,7 +1092,7 @@ describe('PUT /requests/:requestId/resolve', () => {
       .expect(400)
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toBe('Action cannot be performed, request is already resolved');
+        expect(res.body.message).toBe('Resolved or rejected request cannot be resolved');
       })
       .end(done);
   });

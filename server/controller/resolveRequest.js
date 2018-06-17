@@ -17,8 +17,8 @@ const resolveRequest = (req, res) => {
 
   return db.query(text2)
     .then((result) => {
-      if (result.rows[0].status === 'resolved') {
-        return res.status(400).send({ message: 'Action cannot be performed, request is already resolved' });
+      if (result.rows[0].status === 'resolved' || result.rows[0].status === 'rejected') {
+        return res.status(400).send({ message: 'Resolved or rejected request cannot be resolved' });
       }
 
       return db.query(text)
