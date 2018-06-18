@@ -14,33 +14,31 @@
   <body class="container">
     <header class="background-primary-2">
       <img class="header-logo" src="img/logo-1.png" alt="header logo">
-      <nav class="header-nav">
-        <p>Welcome User,
-          <a href="index.html">Log Out</a>
-        </p>
+      <nav>
+        <ul class="nav">
+          <li>
+            <a href="index.html" class="btn nav-btn nav-link">Home</a>
+          </li>
+          <li>
+            <a href="index.html" class="btn nav-btn nav-link">Logout</a>
+          </li>
+          <p>Welcome User</p>
+        </ul>
       </nav>
+      
     </header>
-    <nav class=" background-secondary">
-      <ul class="nav">
-        <li>
-          <a href="index.html" class="btn nav-btn nav-link">Home</a>
-        </li>
-        <li>
-          <a href="index.html" class="btn nav-btn nav-link">Logout</a>
-        </li>
-      </ul>
-    </nav>
+    
     <main class="user-home-bg-img">
       <section class="user-home-container">
-          <div class="container">
-              <h3>Update  Request</h3>
+          <div class="container edit-request-form">
+              <h3 class="edit-form-text">Update  Request</h3>
 
               <form action="">
       
                 <label for="title"></label>
                 <input type="text" id="request-title" name="request-title" placeholder="Your request title.." required>
       
-                <label for="department">Department</label>
+                <label for="department"><h3 class="edit-form-text">Department</h3></label>
                 <select id="department" name="department">
                   <option value="maintenance">Maintenance</option>
                   <option value="Repairs">Repairs</option>
@@ -49,7 +47,7 @@
                 <label for="requestSubject"></label>
                 <textarea id="subject" name="requestSubject" placeholder="Compose your requests.." style="height:200px" required></textarea>
       
-                <button id="updateRequest" class="btn btn-send" type="button">Update Request</button>
+                <button id="updateRequest" class="btn btn-update" type="button">Update Request</button>
                 <button id="cancelRequest" class="btn cancel-request-btn" type="button">Cancel</button>
       
               </form>
@@ -65,52 +63,7 @@
       </section>
       
     </main>
-    <footer class="footer background-quarternary">
-      <div>
-        <a href="index.html">
-          <img class="footer-logo" src="img/logo-2.png" alt="">
-        </a>
-      </div>
-      <div>
-        <div class="footer-details text-secondary">
-          <div class="footer-info">
-            <div>FixZit 5555 Address St. #555 City, State 55555</div>
-            <div>01-2245-789</div>
-            <div class="footer-icon">
-              <a href="#">
-                <i class="fab fa-facebook-f text-secondary"></i>
-              </a>
-              <a href="#">
-                <i class="fab fa-linkedin-in text-secondary"></i>
-              </a>
-              <a href="#">
-                <i class="fab fa-twitter text-secondary"></i>
-              </a>
-              <a href="#">
-                <i class="fab fa-instagram text-secondary"></i>
-              </a>
-            </div>
-          </div>
-          <div class="footer-links">
-
-            <div class="footer-links-copyright">Copyright &copy; 2018 ALL RIGHTS RESERVED</div>
-            <div class="footer-nav-links-container">
-              <ul class="footer-nav-links">
-                <li>
-                  <a href="">ABOUT US</a>
-                </li>
-                <li>
-                  <a href="">PRIVACY</a>
-                </li>
-                <li>
-                  <a href="">TERMS OF USE</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-    </footer>
-
+    
     <script src="scripts/editRequest.js"></script>
     <script src="scripts/cancelRequestEdit.js"></script>
   </body>
