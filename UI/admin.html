@@ -14,130 +14,83 @@
 <body class="container">
   <header class="background-primary-2">
     <img class="header-logo" src="img/logo-1.png" alt="header logo">
-  </header>
-    <nav class=" background-secondary">
+    <nav>
       <ul class="nav">
         <li>
           <a href="index.html" class="btn nav-btn nav-link">Home</a>
         </li>
         <li>
-            <span class="log-out"><a href="index.html" class="btn nav-btn nav-link">Logout</a></span>
+          <span class="log-out">
+            <a href="index.html" class="btn nav-btn nav-link">Logout</a>
+          </span>
         </li>
       </ul>
     </nav>
-    <main>
-      <section class="admin-container">
-        <!-- container for admin panel -->
-        <nav class="admin-panel-1 background-tertiary text-primary admin-panel-1-text">
-          <p>Admin Panel</p>
-          <p>Welcome, Admin User</p>
-          <p>
-            <label for="filter-by">Filter Requests</label>
-            <select id="filter-by" name="filter-by">
-              <option value="none">none</option>
-              <option value="approved">approved</option>
-              <option value="pending">pending</option>
-              <option value="rejected">rejected</option>
-              <option value="resolved">resolved</option>
-            </select>
-          </p>
-          <p>
-              <span class="log-out"><a class="text-primary" href="">Log Out</a></span>
-          </p>
-        </nav>
-        <nav class="admin-panel-2 admin-panel-2-text background-secondary">
-          <p>All Requests(22)</p>
-          <p>Accepted(12)</p>
-          <p>Rejected(10)</p>
-          <p>Resolved(8)</p>
-        </nav>
-      </section>
-      <section>
-          <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Request Id</th>
-                    <th>Status</th>
-                    <th>Request Title</th>
-                    <th>Action</th>
-                    <th>Resolved</th>
-                  </tr>
-                </thead>
-                <!-- hold all the returned requests -->
-                <tbody><tbody>
-              </table>
-            </div>
-      </section>
-        
-      
-      <div id="request-modal" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-          <div class="modal-header">
-            <span class="close">&times;</span>
-            <h2></h2>
-          </div>
-          <div class="modal-body">
-            
-          </div>
-          <div class="modal-footer">
-            <p>Request by: Femi</p>
-            <p>Date: May 22 2018</p>
-          </div>
-        </div>
-
+  </header>
+  <main>
+    <section class="admin-container">
+      <!-- container for admin panel -->
+      <nav class="admin-panel-1 background-tertiary text-primary admin-panel-1-text">
+        <p>Admin Panel</p>
+        <p>Welcome, Admin User</p>
+        <p>
+          <label for="filter-by">Filter Requests</label>
+          <select id="filter-by" name="filter-by">
+            <option value="none">none</option>
+            <option value="approved">approved</option>
+            <option value="pending">pending</option>
+            <option value="rejected">rejected</option>
+            <option value="resolved">resolved</option>
+          </select>
+        </p>
+      </nav>
+      <nav class="admin-panel-2 admin-panel-2-text background-secondary">
+        <p>All Requests(22)</p>
+        <p>Accepted(12)</p>
+        <p>Rejected(10)</p>
+        <p>Resolved(8)</p>
+      </nav>
+    </section>
+    <section>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Request Id</th>
+              <th>Status</th>
+              <th>Request Title</th>
+              <th>Action</th>
+              <th>Resolved</th>
+            </tr>
+          </thead>
+          <!-- hold all the returned requests -->
+          <tbody>
+            <tbody>
+        </table>
       </div>
+    </section>
 
-    </main>
-    <footer class="footer background-quarternary">
-      <div>
-        <a href="index.html">
-          <img class="footer-logo" src="img/logo-2.png" alt="">
-        </a>
-      </div>
-      <div>
-        <div class="footer-details text-secondary">
-          <div class="footer-info">
-            <div>FixZit 5555 Address St. #555 City, State 55555</div>
-            <div>01-2245-789</div>
-            <div class="footer-icon">
-              <a href="#">
-                <i class="fab fa-facebook-f text-secondary"></i>
-              </a>
-              <a href="#">
-                <i class="fab fa-linkedin-in text-secondary"></i>
-              </a>
-              <a href="#">
-                <i class="fab fa-twitter text-secondary"></i>
-              </a>
-              <a href="#">
-                <i class="fab fa-instagram text-secondary"></i>
-              </a>
-            </div>
-          </div>
-          <div class="footer-links">
 
-            <div class="footer-links-copyright">Copyright &copy; 2018 ALL RIGHTS RESERVED</div>
-            <div class="footer-nav-links-container">
-              <ul class="footer-nav-links">
-                <li>
-                  <a href="">ABOUT US</a>
-                </li>
-                <li>
-                  <a href="">PRIVACY</a>
-                </li>
-                <li>
-                  <a href="">TERMS OF USE</a>
-                </li>
-              </ul>
-            </div>
-          </div>
+    <div id="request-modal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2></h2>
         </div>
-    </footer>
-    <script src="scripts/displayAdminRequests.js"></script>
-    <script src="scripts/logout.js"></script>
+        <div class="modal-body">
+
+        </div>
+        <div class="modal-footer">
+          <p>Request by: Femi</p>
+          <p>Date: May 22 2018</p>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="scripts/displayAdminRequests.js"></script>
+  <script src="scripts/logout.js"></script>
 </body>
 
 </html>
