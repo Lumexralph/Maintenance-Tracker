@@ -1,4 +1,3 @@
-const signupButton = document.getElementById('signupButton');
 const form = document.querySelector('form');
 
 const formField = document.forms;
@@ -61,9 +60,10 @@ const createAccount = (formInputs) => {
       }
      
       /**
-       * set the token in local storage
+       * set the token and current user in local storage
        */
       window.localStorage.setItem('token', result.token);
+      window.localStorage.setItem('currentUser', result.username);
 
       /** direct the user to userpage */
       window.location.href = 'userpage.html';

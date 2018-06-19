@@ -11,55 +11,61 @@
 
 </head>
 
-  <body class="container">
-    <header class="background-primary-2">
-      <img class="header-logo" src="img/logo-1.png" alt="header logo">
+<body class="container">
+  <header class="background-primary-2">
+    <img class="header-logo" src="img/logo-1.png" alt="header logo">
 
-      <nav>
-        <ul class="nav">
-          <li>
-            <a href="index.html" class="btn nav-btn nav-link">Home</a>
-          </li>
-          <li>
-            <span class="log-out"><a href="index.html" class="btn nav-btn nav-link">Logout</a></span>
-          </li>
-          <li><button class="btn nav-btn nav-link" id="makeRequest">Make A Request</button></li>
-          <li>          <p class="nav-btn">Welcome User</p>
-          </li>
-        </ul>
-      </nav>
-    </header>
-    <main class="user-home-bg-img">
-      <section class="user-home-container">
-        <div class="tab-header">
-          <div class="tab">            
-            <button id="defaultOpen" class="tablinks">My Requests</button>
-            
-          </div>
-          <div id="myRequests" class="tabcontent active">
-            <h3>Request List</h3>
-           
-          </div>
-            
-          </div>
-        </div>
-        
-      </section>
-      
-      
-    </main>
-    
-    <div id="request-modal" class="modal">
+    <nav>
+      <ul class="nav">
+        <li>
+          <a href="index.html" class="btn nav-btn nav-link">Home</a>
+        </li>
+        <li>
+          <span class="log-out">
+            <a href="index.html" class="btn nav-btn nav-link">Logout</a>
+          </span>
+        </li>
+        <li>
+          <button class="btn nav-btn nav-link" id="makeRequest">Make A Request</button>
+        </li>
+        <li>
+          <p class="nav-btn">Welcome
+            <span id="username"></span>
+          </p>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main class="user-home-bg-img">
+    <section class="user-home-container">
+      <div class="tab-header">
+        <div class="tab">
+          <button id="defaultOpen" class="tablinks">My Requests</button>
 
-      <!-- Modal content -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <span class="close">&times;</span>
-          <h2>FixZit</h2>
         </div>
-        <div class="modal-body">
-          <h3>Create a request</h3>
-      <!-- <div class="container"> -->
+        <div id="myRequests" class="tabcontent active">
+          <h3>Request List</h3>
+          <h4 id="noRequestText">Hmm... Seems you don't have any request created yet. Make your request.</h4>
+
+        </div>
+
+      </div>
+    </section>
+
+
+  </main>
+
+  <div id="request-modal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>FixZit</h2>
+      </div>
+      <div class="modal-body">
+        <h3>Create a request</h3>
+        <!-- <div class="container"> -->
         <form action="">
 
           <label for="title"></label>
@@ -74,17 +80,17 @@
           <label for="requestSubject"></label>
           <textarea id="subject" name="requestSubject" placeholder="Tell us about your request.." style="height:200px" required></textarea>
 
-          <input id="sendRequest" class="btn btn-send" type="button" value="Send Request">
+          <input id="sendRequest" class="btn btn-send" type="submit" value="Send Request">
 
         </form>
-      <!-- </div> -->
-        </div>
+        <!-- </div> -->
       </div>
-
     </div>
-    <script src="scripts/makeRequest.js"></script>
-    <script src="scripts/userModal.js"></script>
-    <script src="scripts/logout.js"></script>
-  </body>
+
+  </div>
+  <script src="scripts/makeRequest.js"></script>
+  <script src="scripts/userModal.js"></script>
+  <script src="scripts/logout.js"></script>
+</body>
 
 </html>

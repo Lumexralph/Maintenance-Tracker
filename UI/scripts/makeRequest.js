@@ -1,5 +1,7 @@
+const form = document.querySelector('form');
 const token = window.localStorage.getItem('token');
 const body = document.querySelector('body');
+const noRequestText = document.getElementById('noRequestText');
 
 if (!token) {
   /**
@@ -12,7 +14,12 @@ if (!token) {
   alert('Not recognised user, please register or login');
 }
 
-const sendRequestButton = document.getElementById('sendRequest');
+const userNameHolder = document.getElementById('username');
+const currentuser = window.localStorage.getItem('currentUser');
+
+/** display the current user */
+userNameHolder.innerText = currentuser;
+
 
 const requestContainer = document.getElementById('myRequests');
 
@@ -85,6 +92,9 @@ const createRequest = () => {
   fetch(request)
     .then(res => res.json())
     .then((result) => {
+      /** since there is a request remove the no request created text */
+      noRequestText.style.display = 'none';
+      
       /** update the stored requests */
       let requests = window.localStorage.getItem('userRequests');
 
@@ -150,6 +160,8 @@ const displayAllRequest = () => {
     .then(res => res.json())
     .then((result) => {
       if (!Array.isArray(result)) {
+        /** if no requests are created */
+        noRequestText.style.display = 'block';
         window.localStorage.setItem('userRequests', JSON.stringify([]));
       } else {
         /** store the user requests */
@@ -192,4 +204,8 @@ const displayAllRequest = () => {
 
 window.addEventListener('load', displayAllRequest);
 
-sendRequestButton.addEventListener('click', createRequest);
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  createRequest();
+});
+

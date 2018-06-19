@@ -54,9 +54,10 @@ const userLogin = (formInputs) => {
     .then(res => res.json())
     .then((result) => {
       if (result.userId) {
-        // set the token in local storage
+        // set the token and userin local storage
         window.localStorage.setItem('token', result.token);
-
+        window.localStorage.setItem('currentUser', result.username);
+        
         /** Check if the user is an admin or regular user */
         if (result.adminRole) {
           window.location.href = 'admin.html';

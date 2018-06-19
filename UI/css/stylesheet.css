@@ -561,6 +561,9 @@ pop up
     background-size: cover;
  }
 
+ #noRequestText {
+   display: none;
+ }
  
  /* Style the tab */
  .tab {
