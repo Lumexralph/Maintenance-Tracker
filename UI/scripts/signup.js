@@ -3,12 +3,28 @@ const signupButton = document.getElementById('signupButton');
 const form = document.forms;
 const formValue = form[0];
 
+
 const popupMessage = (passwordCheck, text = '') => {
   const popup = document.getElementById('myPopup');
   popup.innerText = text;
 
   return passwordCheck ? popup.classList.add('show') : popup.classList.remove('show');
 };
+
+/** clear pop message on input field change */
+const clearPopWhenInputChanges = () => {
+  popupMessage(false);
+};
+
+/** length - 1 is used to exclude the signup button 
+* since it is also a form input
+ */
+
+for (let index = 0; index < formValue.length - 1; index += 1) {
+  const element = formValue[index];
+  element.addEventListener('change', clearPopWhenInputChanges);
+  
+}
 
 const createAccount = (event) => {
   event.preventDefault();
@@ -17,6 +33,10 @@ const createAccount = (event) => {
   const email = formValue[1].value;
   const password1 = formValue[2].value;
   const password2 = formValue[3].value;
+
+  if (!username || !email || !password1 || !password2) {
+    return popupMessage(true, 'hmmm... it is like one of the input field is empty.');
+  }
 
   if (password1 !== password2) {
     return popupMessage(true, 'Passwords do not match, please check');
