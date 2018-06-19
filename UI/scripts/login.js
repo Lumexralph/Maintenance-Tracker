@@ -1,21 +1,35 @@
 const loginButton = document.getElementById('loginButton');
+const form = document.querySelector('form');
 
-const form = document.forms;
-const formValue = form[0];
+const formField = document.forms;
+const formValue = formField[0];
 
-const popupMessage = (validCredentials, text = '') => {
+const popupMessage = (hasError, text = '') => {
   const popup = document.getElementById('myPopup');
 
   popup.innerText = text;
 
-  return validCredentials ? popup.classList.add('show') : popup.classList.remove('show');
+  return hasError ? popup.classList.add('show') : popup.classList.remove('show');
 };
 
-const userLogin = (event) => {
-  event.preventDefault();
+/** clear pop message on input field change */
+const clearPopWhenInputChanges = () => {
+  popupMessage(false);
+};
 
-  const username = formValue[0].value;
-  const password = formValue[1].value;
+/** length - 1 is used to exclude the signup button
+* since it is also a form input
+ */
+
+for (let index = 0; index < formValue.length - 1; index += 1) {
+  const element = formValue[index];
+  element.addEventListener('change', clearPopWhenInputChanges);
+}
+
+
+const userLogin = (formInputs) => {
+  const username = formInputs[0].value;
+  const password = formInputs[1].value;
 
   /**
    * create json with data
@@ -39,8 +53,7 @@ const userLogin = (event) => {
   fetch(request)
     .then(res => res.json())
     .then((result) => {
-      if (result.message === 'Login successful') {
-        popupMessage(false);
+      if (result.userId) {
         // set the token in local storage
         window.localStorage.setItem('token', result.token);
 
@@ -58,4 +71,7 @@ const userLogin = (event) => {
     .catch(err => popupMessage(true, err));
 };
 
-loginButton.addEventListener('click', userLogin);
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  userLogin(formValue);
+});

@@ -98,8 +98,6 @@ const validateUserInput = (formInputs) => {
 
 };
 
-
-
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   validateUserInput(formValue);
