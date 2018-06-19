@@ -55,26 +55,21 @@ const createAccount = (formInputs) => {
   return fetch(request)
     .then(res => res.json())
     .then((result) => {
-      // Handle response we get from the API
+      // Handle response if we get a message other than created user from the API
       if (!result.userId) {
         return popupMessage(true, result.message);
       }
-
-      /**
-       * Remove popup if any
-       */
-
-      popupMessage(false);
+     
       /**
        * set the token in local storage
        */
-
       window.localStorage.setItem('token', result.token);
 
       /** direct the user to userpage */
-      // window.location.href = 'userpage.html';
+      window.location.href = 'userpage.html';
+      
     })
-    .catch(err => err);
+    .catch(err => popupMessage(true, err));
 };
 
 const validateUserInput = (formInputs) => {
