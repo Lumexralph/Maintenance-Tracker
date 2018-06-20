@@ -13,16 +13,16 @@ const loginUser = (req, res) => {
 
   let { username, password } = req.body;
 
+  /** clean up the data of white spaces */
+  username = validator.trim(username);
+  password = validator.trim(password);
+
   if (validator.isEmpty(username) ||
      validator.isEmpty(password)) {
     return res.status(400).send({
       message: 'It seems one of the field is empty, Ensure no field is empty',
     });
   }
-
-  /** clean up the data of white spaces */
-  username = validator.trim(username);
-  password = validator.trim(password);
 
   /**
    * @constant {string}

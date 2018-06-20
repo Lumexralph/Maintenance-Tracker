@@ -18,6 +18,13 @@ const createUserAccount = (req, res) => {
   } = req.body;
   ({ username } = req.body);
 
+  /** clean up the data of white spaces */
+  username =  validator.trim(username);
+  password1 = validator.trim(password1);
+  password2 = validator.trim(password2);
+  email = validator.trim(email);
+
+
   if (validator.isEmpty(username) ||
      validator.isEmpty(password1) ||
      validator.isEmpty(password2) ||
@@ -26,12 +33,6 @@ const createUserAccount = (req, res) => {
       message: 'It seems one of the field is empty, Ensure no field is empty',
     });
   }
-
-  /** clean up the data of white spaces */
- username =  validator.trim(username);
- password1 = validator.trim(password1);
- password2 = validator.trim(password2);
- email = validator.trim(email);
 
   if (password1 !== password2) {
     return res.status(400).send({
