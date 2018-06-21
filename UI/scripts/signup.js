@@ -58,7 +58,7 @@ const createAccount = (formInputs) => {
       if (!result.userId) {
         return popupMessage(true, result.message);
       }
-     
+
       /**
        * set the token and current user in local storage
        */
@@ -67,9 +67,9 @@ const createAccount = (formInputs) => {
 
       /** direct the user to userpage */
       window.location.href = 'userpage.html';
-      
+
     })
-    .catch(err => popupMessage(true, err));
+    .catch(err => popupMessage(true, err.message ? 'Oops!...seems we have lost connection to server' : err));
 };
 
 const validateUserInput = (formInputs) => {

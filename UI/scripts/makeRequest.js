@@ -174,7 +174,7 @@ const createRequest = () => {
       form[0].value = '';
       form[2].value = '';
     })
-    .catch(err => popupMessage(true, err));
+    .catch(err => popupMessage(true, err.message ? 'Oops!...seems we have lost connection to server' : err));
 };
 
 
@@ -238,7 +238,7 @@ const displayAllRequest = () => {
         });
       }
     })
-    .catch(err => err);
+    .catch(err => popupMessage(true, err.message ? 'Oops!...seems we have lost connection to server' : err));
 };
 
 window.addEventListener('load', displayAllRequest);

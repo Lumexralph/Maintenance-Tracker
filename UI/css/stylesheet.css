@@ -666,6 +666,15 @@ pop up
   color: white;
 }
 
+#errorMessage {
+  width: 100%;
+  background-color: rebeccapurple;
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+  display: none;
+}
+
 /* ########################
   ADMIN PAGE
 ########################### */

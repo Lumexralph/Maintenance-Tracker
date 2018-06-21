@@ -57,7 +57,7 @@ const userLogin = (formInputs) => {
         // set the token and userin local storage
         window.localStorage.setItem('token', result.token);
         window.localStorage.setItem('currentUser', result.username);
-        
+
         /** Check if the user is an admin or regular user */
         if (result.adminRole) {
           window.location.href = 'admin.html';
@@ -69,7 +69,7 @@ const userLogin = (formInputs) => {
       }
       return undefined;
     })
-    .catch(err => popupMessage(true, err));
+    .catch(err => popupMessage(true, 'Oops!...seems we have lost connection to server'));
 };
 
 form.addEventListener('submit', (event) => {

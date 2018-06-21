@@ -22,7 +22,7 @@
           <li>
             <a href="index.html" class="btn nav-btn nav-link">Logout</a>
           </li>
-          <p>Welcome User</p>
+          <p>Welcome <span id="username"></span></p>
         </ul>
       </nav>
       
@@ -32,6 +32,7 @@
       <section class="user-home-container">
           <div class="container edit-request-form">
               <h3 class="edit-form-text">Update  Request</h3>
+              <p id="errorMessage"></p>
 
               <form action="">
       
@@ -47,7 +48,7 @@
                 <label for="requestSubject"></label>
                 <textarea id="subject" name="requestSubject" placeholder="Compose your requests.." style="height:200px" required></textarea>
       
-                <button id="updateRequest" class="btn btn-update" type="button">Update Request</button>
+                <button id="updateRequest" class="btn btn-update" type="submit">Update Request</button>
                 <button id="cancelRequest" class="btn cancel-request-btn" type="button">Cancel</button>
       
               </form>
