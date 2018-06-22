@@ -475,6 +475,18 @@ pop up
   border-color: #555 transparent transparent transparent;
 }
 
+#formPopup {
+  background-color: #f7564a;
+  width: 100%;
+  padding: 5px;
+  border-radius: 4px;
+  display:none;
+}
+
+.show-form-popup {
+  display: block;
+}
+
 /* Toggle this class when clicking on the popup container (hide and show the popup) */
 .popup .show {
   visibility: visible;
@@ -561,6 +573,9 @@ pop up
     background-size: cover;
  }
 
+ #noRequestText {
+   display: none;
+ }
  
  /* Style the tab */
  .tab {
@@ -649,6 +664,15 @@ pop up
 
 .edit-form-text {
   color: white;
+}
+
+#errorMessage {
+  width: 100%;
+  background-color: rebeccapurple;
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+  display: none;
 }
 
 /* ########################

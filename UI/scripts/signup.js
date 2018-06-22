@@ -1,26 +1,36 @@
-const signupButton = document.getElementById('signupButton');
+const form = document.querySelector('form');
 
-const form = document.forms;
-const formValue = form[0];
+const formField = document.forms;
+const formValue = formField[0];
 
-const popupMessage = (passwordCheck, text = '') => {
+
+const popupMessage = (hasError, text = '') => {
   const popup = document.getElementById('myPopup');
   popup.innerText = text;
 
-  return passwordCheck ? popup.classList.add('show') : popup.classList.remove('show');
+  return hasError ? popup.classList.add('show') : popup.classList.remove('show');
 };
 
-const createAccount = (event) => {
-  event.preventDefault();
+/** clear pop message on input field change */
+const clearPopWhenInputChanges = () => {
+  popupMessage(false);
+};
 
-  const username = formValue[0].value;
-  const email = formValue[1].value;
-  const password1 = formValue[2].value;
-  const password2 = formValue[3].value;
+/** length - 1 is used to exclude the signup button
+* since it is also a form input
+ */
 
-  if (password1 !== password2) {
-    return popupMessage(true, 'Passwords do not match, please check');
-  }
+for (let index = 0; index < formValue.length - 1; index += 1) {
+  const element = formValue[index];
+  element.addEventListener('change', clearPopWhenInputChanges);
+}
+
+
+const createAccount = (formInputs) => {
+  const username = formInputs[0].value;
+  const email = formInputs[1].value;
+  const password1 = formInputs[2].value;
+  const password2 = formInputs[3].value;
 
   /**
    * create json with data
@@ -41,30 +51,54 @@ const createAccount = (event) => {
     body: JSON.stringify(data),
   });
 
-  fetch(request)
+  return fetch(request)
     .then(res => res.json())
     .then((result) => {
-      // Handle response we get from the API
+      // Handle response if we get a message other than created user from the API
       if (!result.userId) {
         return popupMessage(true, result.message);
       }
 
       /**
-       * Remove popup if any
+       * set the token and current user in local storage
        */
-
-      popupMessage(false);
-      /**
-       * set the token in local storage
-       */
-
       window.localStorage.setItem('token', result.token);
+      window.localStorage.setItem('currentUser', result.username);
 
       /** direct the user to userpage */
       window.location.href = 'userpage.html';
 
     })
-    .catch(err => err);
+    .catch(err => popupMessage(true, err.message ? 'Oops!...seems we have lost connection to server' : err));
 };
 
-signupButton.addEventListener('click', createAccount);
+const validateUserInput = (formInputs) => {
+  /** extract the input values */
+  let username = formInputs[0].value;
+  let email = formInputs[1].value;
+  let password1 = formInputs[2].value;
+  let password2 = formInputs[3].value;
+
+  /** clean the inputs of whitespaces
+   * remember to make it a reusable function
+   */
+  username = username.trim();
+  email = email.trim();
+  password1 = password1.trim();
+  password2 = password2.trim();
+
+  if (password1 !== password2) {
+    return popupMessage(true, 'Passwords do not match, please check');
+  }
+
+  /** If all the above runs without issue
+   * create an account for user
+   */
+  createAccount(formInputs);
+
+};
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  validateUserInput(formValue);
+});

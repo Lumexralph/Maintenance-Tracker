@@ -2,15 +2,24 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import path from 'path';
+import cors from 'cors';
 
 /**
  * Represents the api using non-persistent data
  */
 import apiVersion1 from './routes/api';
 
+const corOptions = {
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+ };
+
 const app = express();
 
 // configure third party middleware
+app.use(cors(corOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies

@@ -1,5 +1,8 @@
+const form = document.querySelector('form');
 const token = window.localStorage.getItem('token');
+const forms = document.forms[0];
 const body = document.querySelector('body');
+const noRequestText = document.getElementById('noRequestText');
 
 if (!token) {
   /**
@@ -12,7 +15,12 @@ if (!token) {
   alert('Not recognised user, please register or login');
 }
 
-const sendRequestButton = document.getElementById('sendRequest');
+const userNameHolder = document.getElementById('username');
+const currentuser = window.localStorage.getItem('currentUser');
+
+/** display the current user */
+userNameHolder.innerText = currentuser;
+
 
 const requestContainer = document.getElementById('myRequests');
 
@@ -44,6 +52,28 @@ const accordion = (el) => {
   });
 };
 
+const popupMessage = (hasError, text = '') => {
+  const popup = document.getElementById('formPopup');
+  popup.innerText = text;
+
+  if (hasError) popup.style.display = 'block';
+  else popup.style.display = 'none';
+};
+
+/** clear pop message on input field change */
+const clearPopWhenInputChanges = () => {
+  popupMessage(false);
+};
+
+/** length - 1 is used to exclude the signup button
+* since it is also a form input
+ */
+
+for (let index = 0; index < forms.length - 1; index += 1) {
+  const element = forms[index];
+  element.addEventListener('change', clearPopWhenInputChanges);
+}
+
 /** To make the text editable */
 const editRequest = (index) => {
   let requests = window.localStorage.getItem('userRequests');
@@ -58,13 +88,20 @@ const user = parseJwt(token);
 
 const createRequest = () => {
   const modal = document.getElementById('request-modal');
-  const form = document.forms[0];
-  const department = form[1].value;
-  const title = form[0].value;
-  const content = form[2].value;
-
+  const department = forms[1].value;
+  let title = forms[0].value;
+  let content = forms[2].value;
 
   const url = '/api/v1/users/requests/';
+
+  /** cleanup the data of whitespace */
+  title = title.trim();
+  content = content.trim();
+
+  /** check if the fields are empty */
+  if (!title || !content) {
+    return popupMessage(true, 'Please ensure that the title and content fileds are not empty');
+  }
 
   const data = {
     title, department, content, user,
@@ -74,7 +111,6 @@ const createRequest = () => {
   headers.append('Content-Type', 'application/json');
   headers.append('Authorization', token);
 
-
   // Create our request constructor with all the parameters we need
   const request = new Request(url, {
     method: 'POST',
@@ -83,8 +119,18 @@ const createRequest = () => {
   });
 
   fetch(request)
+    .then((response) => {
+      if (response.status === 400) {
+        throw new Error('Error occured, request could not be created');
+      }
+
+      return response;
+    })
     .then(res => res.json())
     .then((result) => {
+      /** since there is a request remove the no request created text */
+      noRequestText.style.display = 'none';
+
       /** update the stored requests */
       let requests = window.localStorage.getItem('userRequests');
 
@@ -128,7 +174,7 @@ const createRequest = () => {
       form[0].value = '';
       form[2].value = '';
     })
-    .catch(err => err);
+    .catch(err => popupMessage(true, err.message ? 'Oops!...seems we have lost connection to server' : err));
 };
 
 
@@ -150,7 +196,12 @@ const displayAllRequest = () => {
     .then(res => res.json())
     .then((result) => {
       if (!Array.isArray(result)) {
+        /** if no requests are created */
+        noRequestText.style.display = 'block';
         window.localStorage.setItem('userRequests', JSON.stringify([]));
+
+        /** stop execution */
+        throw new Error(result.message);
       } else {
         /** store the user requests */
         window.localStorage.setItem('userRequests', JSON.stringify(result));
@@ -187,9 +238,13 @@ const displayAllRequest = () => {
         });
       }
     })
-    .catch(err => err);
+    .catch(err => popupMessage(true, err.message ? 'Oops!...seems we have lost connection to server' : err));
 };
 
 window.addEventListener('load', displayAllRequest);
 
-sendRequestButton.addEventListener('click', createRequest);
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  createRequest();
+});
+

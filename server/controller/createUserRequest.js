@@ -11,6 +11,14 @@ const createUserRequest = (req, res) => {
     title, content, user, department = 'Maintenance',
   } = req.body);
 
+  /** Check if the request came with no data or missing fields */
+  if (!Object.prototype.hasOwnProperty.call(req.body, 'title') || !Object.prototype.hasOwnProperty.call(req.body, 'content')) {
+    return res.status(400).send({ message: 'Please provide valid data with required fields' });
+  }
+
+  title = validator.trim(title);
+  content = validator.trim(content);
+
   if (!title || !content) {
     return res.status(400).send({
       message: 'Ensure title and content fields are not empty missing',

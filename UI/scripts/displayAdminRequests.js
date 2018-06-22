@@ -52,6 +52,14 @@ if (!user.adminRole) {
 
 }
 
+/** display the current Admin User */
+const userNameHolder = document.getElementById('displayAdminUser');
+const currentuser = window.localStorage.getItem('currentUser');
+
+/** display the current user */
+userNameHolder.innerText = currentuser;
+
+
 // ################################################
 
 const modalDisplay = () => {
@@ -95,7 +103,9 @@ const modalDisplay = () => {
 
 
   // When the user clicks on <span> (x), close the modal
-  span.onclick = () => requestModal.style.display = 'none';
+  span.onclick = () => {
+    requestModal.style.display = 'none';
+  };
 
   // When the user clicks anywhere outside of the modal, close it
   window.addEventListener('click', (event) => {

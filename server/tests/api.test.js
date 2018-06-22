@@ -470,7 +470,7 @@ describe('POST /users/requests API endpoint', () => {
       .expect(400)
       .expect((res) => {
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toBe('Ensure title and content fields are not empty missing');
+        expect(res.body.message).toBe('Please provide valid data with required fields');
       })
       .end(done);
   });
